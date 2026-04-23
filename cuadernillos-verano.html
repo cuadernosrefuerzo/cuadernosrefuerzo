@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Cuadernillos de repaso de verano personalizados para Primaria, ESO y Bachillerato. Sin horarios fijos. Material adaptado a los fallos reales de tu hijo/a. Elena De Miguel.">
+<title>Cuadernillos de Verano · Elena De Miguel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --sun: #F5A623; --sun-dark: #C47D05; --sun-light: #FEF3DC;
+  --sky: #1D68D4; --sky-light: #DBEAFE;
+  --leaf: #16A34A; --leaf-light: #DCFCE7;
+  --coral: #D94F22; --coral-light: #FEE8DC;
+  --ink: #1C1917; --muted: #78716C;
+  --surface: #FFFDF9; --card: #FFFFFF; --border: #E8E0D4; --border2: #D4C9B8;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.65; font-size: 16px; }
+
+nav { position: sticky; top: 0; z-index: 100; background: rgba(255,253,249,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 58px; }
+.nav-brand { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--ink); text-decoration: none; }
+.nav-brand em { font-style: italic; color: var(--coral); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta { background: var(--ink); color: white !important; padding: 8px 20px; border-radius: 100px; font-size: 13px !important; font-weight: 500; text-decoration: none; transition: background 0.15s; }
+.nav-cta:hover { background: #444 !important; }
+@media (max-width: 640px) { .nav-links { display: none; } }
+
+.hero { padding: 96px 24px 80px; text-align: center; background: linear-gradient(170deg, #FEF3DC 0%, #FFFDF9 55%); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+.sun-deco { position: absolute; top: -30px; right: -30px; width: 220px; height: 220px; background: radial-gradient(circle, #FAD07A 0%, transparent 70%); opacity: 0.5; pointer-events: none; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--sun); color: #7A3D00; font-size: 12px; font-weight: 500; padding: 5px 16px; border-radius: 100px; margin-bottom: 28px; text-transform: uppercase; letter-spacing: 0.08em; animation: fadeDown 0.5s ease both; }
+@keyframes fadeDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.hero h1 { font-family: 'Fraunces', serif; font-size: clamp(34px,6vw,62px); font-weight: 700; line-height: 1.12; color: var(--ink); max-width: 780px; margin: 0 auto 22px; animation: fadeUp 0.5s 0.1s ease both; }
+.hero h1 em { font-style: italic; color: var(--coral); }
+.hero-sub { font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 auto 40px; font-weight: 300; animation: fadeUp 0.5s 0.2s ease both; }
+.hero-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; animation: fadeUp 0.5s 0.3s ease both; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 32px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; text-decoration: none; border: none; cursor: pointer; transition: transform 0.15s, background 0.15s, box-shadow 0.15s; }
+.btn-primary { background: var(--ink); color: white; box-shadow: 0 4px 20px rgba(28,25,23,0.18); }
+.btn-primary:hover { background: #333; transform: translateY(-2px); }
+.btn-wa { background: #25D366; color: white; box-shadow: 0 4px 20px rgba(37,211,102,0.25); }
+.btn-wa:hover { background: #1EBE5A; transform: translateY(-2px); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--border2); }
+.btn-ghost:hover { background: var(--sun-light); border-color: var(--sun); }
+.hero-pills { display: flex; justify-content: center; gap: 10px; margin-top: 52px; flex-wrap: wrap; animation: fadeUp 0.5s 0.4s ease both; }
+.pill { display: flex; align-items: center; gap: 7px; background: white; border: 1px solid var(--border); padding: 7px 16px; border-radius: 100px; font-size: 13px; color: var(--muted); }
+.pill-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+
+.quote-section { background: linear-gradient(150deg, #FEF3DC, #FFFDF9); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 60px 24px; text-align: center; }
+.quote-text { font-family: 'Fraunces', serif; font-size: clamp(20px,3vw,28px); font-style: italic; color: var(--ink); max-width: 640px; margin: 0 auto 16px; line-height: 1.4; }
+.quote-author { font-size: 13px; color: var(--muted); }
+
+.section { max-width: 960px; margin: 0 auto; padding: 80px 24px; }
+.section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); margin-bottom: 10px; }
+.section-title { font-family: 'Fraunces', serif; font-size: clamp(28px,4vw,44px); font-weight: 600; color: var(--ink); line-height: 1.18; margin-bottom: 14px; }
+.section-sub { font-size: 16px; color: var(--muted); max-width: 520px; margin-bottom: 52px; font-weight: 300; }
+.sep { height: 1px; background: var(--border); }
+
+.steps { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 20px; }
+.step { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 32px 24px; transition: border-color 0.2s, transform 0.2s; }
+.step:hover { border-color: var(--border2); transform: translateY(-3px); }
+.step-num { font-family: 'Fraunces', serif; font-size: 52px; font-weight: 700; color: var(--border); line-height: 1; margin-bottom: 14px; }
+.step h3 { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+.step p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+.diag-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 16px; }
+.diag-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 26px 22px; transition: border-color 0.2s; }
+.diag-card:hover { border-color: var(--border2); }
+.diag-icon { font-size: 30px; margin-bottom: 12px; display: block; }
+.diag-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.diag-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+.level-tabs { display: flex; gap: 8px; margin-bottom: 36px; flex-wrap: wrap; }
+.tab-btn { padding: 9px 24px; border-radius: 100px; border: 1.5px solid var(--border); background: white; font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; color: var(--muted); transition: all 0.15s; }
+.tab-btn.active { background: var(--ink); color: white; border-color: var(--ink); }
+.tab-btn:not(.active):hover { border-color: var(--border2); background: var(--sun-light); }
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+@media (max-width:640px) { .pricing-grid { grid-template-columns: 1fr; } }
+.pack-card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 30px 24px; position: relative; transition: transform 0.15s, border-color 0.15s; display: flex; flex-direction: column; }
+.pack-card:hover { transform: translateY(-4px); }
+.pack-card.featured { border: 2px solid var(--sky); background: #F0F7FF; }
+.featured-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--sky); color: white; font-size: 11px; font-weight: 500; padding: 4px 16px; border-radius: 100px; white-space: nowrap; }
+.pack-name { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.pack-price { font-family: 'Fraunces', serif; font-size: 46px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+.pack-price sup { font-size: 20px; font-weight: 400; vertical-align: super; }
+.pack-since { font-size: 12px; color: var(--muted); margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+.pack-features { list-style: none; margin-bottom: 28px; flex: 1; }
+.pack-features li { font-size: 13px; color: var(--ink); padding: 7px 0; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px; }
+.pack-features li:last-child { border-bottom: none; }
+.check { width: 16px; height: 16px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; flex-shrink: 0; margin-top: 2px; background: var(--leaf-light); color: var(--leaf); font-weight: 700; }
+.pack-btn { display: block; text-align: center; padding: 13px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; border: 1.5px solid var(--border2); background: transparent; color: var(--ink); text-decoration: none; transition: all 0.15s; margin-top: auto; }
+.pack-btn:hover { background: var(--ink); color: white; border-color: var(--ink); }
+.pack-card.featured .pack-btn { background: var(--sky); color: white; border-color: var(--sky); }
+.pack-card.featured .pack-btn:hover { background: #1555B7; }
+.price-display { display: none; }
+.price-display.active { display: block; }
+.price-note { margin-top: 12px; background: var(--sky-light); border: 1px solid #BFDBFE; border-radius: 14px; padding: 14px 20px; font-size: 13px; color: #1E3A6E; display: flex; gap: 8px; align-items: flex-start; }
+.discount-banner { margin-top: 12px; background: var(--sun-light); border: 1px solid #FAD898; border-radius: 14px; padding: 18px 22px; font-size: 14px; color: #7A3D00; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+.warning-strip { background: #FFF3EE; border-left: 4px solid var(--coral); border-radius: 0 12px 12px 0; padding: 16px 20px; font-size: 14px; color: #7A1C00; margin-top: 44px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+
+.materias-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 12px; }
+.materia-chip { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px 14px; text-align: center; transition: border-color 0.15s, transform 0.15s; }
+.materia-chip:hover { border-color: var(--sun); transform: translateY(-2px); }
+.materia-chip .m-icon { font-size: 26px; margin-bottom: 6px; display: block; }
+.materia-chip p { font-size: 13px; font-weight: 500; color: var(--ink); }
+
+.faq-list { display: flex; flex-direction: column; }
+.faq-item { border-bottom: 1px solid var(--border); overflow: hidden; }
+.faq-q { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; cursor: pointer; font-size: 15px; font-weight: 500; color: var(--ink); user-select: none; gap: 16px; }
+.faq-q:hover { color: var(--coral); }
+.faq-icon { font-size: 20px; flex-shrink: 0; transition: transform 0.2s; color: var(--muted); }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a { font-size: 14px; color: var(--muted); line-height: 1.65; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding-bottom 0.3s; }
+.faq-item.open .faq-a { max-height: 300px; padding-bottom: 20px; }
+
+.band { background: var(--ink); color: white; padding: 72px 24px; text-align: center; }
+.band h2 { font-family: 'Fraunces', serif; font-size: clamp(26px,4vw,40px); font-weight: 600; margin-bottom: 12px; }
+.band p { font-size: 16px; opacity: 0.6; margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+footer { background: #F5EFE4; border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; }
+.f-brand { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--ink); margin-bottom: 8px; text-decoration: none; display: block; }
+.f-brand em { font-style: italic; color: var(--coral); }
+footer p { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.f-links { display: flex; justify-content: center; gap: 24px; margin: 20px 0; flex-wrap: wrap; }
+.f-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.f-links a:hover { color: var(--coral); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#">Repaso de <em>Verano</em></a>
+  <ul class="nav-links">
+    <li><a href="#como-funciona">Cómo funciona</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#materias">Materias</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/34622011814" class="nav-cta" target="_blank">Escribir ahora →</a>
+</nav>
+
+<section class="hero">
+  <div class="sun-deco"></div>
+  <div class="hero-badge">☀️ Verano 2025 · Plazas limitadas</div>
+  <h1>Cuadernillos de repaso<br><em>hechos para tu hijo/a,</em><br>no para todos</h1>
+  <p class="hero-sub">Sin horarios fijos. Sin libros genéricos. Material diseñado a partir de sus notas y sus errores reales.</p>
+  <div class="hero-actions">
+    <a href="https://wa.me/34622011814?text=Hola!%20Me%20gustar%C3%ADa%20pedir%20informaci%C3%B3n%20sobre%20los%20cuadernillos%20de%20verano." class="btn btn-wa" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.855L.057 23.454a.5.5 0 00.61.61l5.624-1.474A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.873 9.873 0 01-5.031-1.374l-.36-.215-3.733.979.996-3.638-.235-.374A9.862 9.862 0 012.1 12C2.1 6.534 6.534 2.1 12 2.1c5.466 0 9.9 4.434 9.9 9.9 0 5.466-4.434 9.9-9.9 9.9z"/></svg>
+      Pedir información
+    </a>
+    <a href="#precios" class="btn btn-ghost">Ver precios</a>
+  </div>
+  <div class="hero-pills">
+    <div class="pill"><span class="pill-dot" style="background:#16A34A"></span>100% flexible</div>
+    <div class="pill"><span class="pill-dot" style="background:#1D68D4"></span>Diagnóstico previo</div>
+    <div class="pill"><span class="pill-dot" style="background:#D94F22"></span>Material exclusivo</div>
+    <div class="pill"><span class="pill-dot" style="background:#F5A623"></span>Pago único por asignatura</div>
+  </div>
+</section>
+
+<div class="quote-section">
+  <p class="quote-text">"Nada de libros genéricos que repiten lo mismo para todos. Cada cuadernillo se construye analizando los fallos reales de tu hijo/a."</p>
+  <p class="quote-author">Elena De Miguel · Profesora especializada en Pedagogía Terapéutica · Desde 2018</p>
+</div>
+
+<div class="section" id="como-funciona">
+  <div class="section-label">El proceso</div>
+  <h2 class="section-title">Simple, personalizado y sin sorpresas</h2>
+  <p class="section-sub">Todo empieza con un diagnóstico breve para que el material sea de verdad útil.</p>
+  <div class="steps">
+    <div class="step"><div class="step-num">01</div><h3>Envías el diagnóstico</h3><p>Foto del boletín, índice del libro y un semáforo de temas (rojo / amarillo / verde).</p></div>
+    <div class="step"><div class="step-num">02</div><h3>Analizamos juntos</h3><p>Identifico los puntos débiles y diseño el plan de trabajo adaptado a su nivel.</p></div>
+    <div class="step"><div class="step-num">03</div><h3>Pago y creación</h3><p>Tras el pago (100% por adelantado), creo el cuadernillo personalizado para esa asignatura.</p></div>
+    <div class="step"><div class="step-num">04</div><h3>Recibes el PDF</h3><p>Material listo para imprimir o usar en pantalla, al ritmo de la familia.</p></div>
+    <div class="step"><div class="step-num">05</div><h3>Seguimiento opcional</h3><p>Con los packs PRO y Tutorizado incluyo revisiones y vídeos explicativos.</p></div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section">
+  <div class="section-label">Diagnóstico previo</div>
+  <h2 class="section-title">¿Qué necesito de ti?</h2>
+  <p class="section-sub">Solo tres cosas rápidas para personalizar el material de verdad.</p>
+  <div class="diag-grid">
+    <div class="diag-card"><span class="diag-icon">📋</span><h3>Foto del boletín</h3><p>Para ver qué trimestres han sido más flojos y qué asignaturas necesitan más refuerzo.</p></div>
+    <div class="diag-card"><span class="diag-icon">📖</span><h3>Índice del libro</h3><p>Para saber exactamente qué temario han dado y no incluir temas que no han visto en clase.</p></div>
+    <div class="diag-card"><span class="diag-icon">🚦</span><h3>El semáforo de temas</h3><p>Cada tema en rojo (mal), amarillo (regular) o verde (bien). Rápido y muy útil.</p></div>
+  </div>
+  <div class="warning-strip"><span>⚠️</span><div>Las plazas son <strong>limitadas</strong> para garantizar la calidad de cada cuadernillo. ¡No esperes al último momento!</div></div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section" id="precios">
+  <div class="section-label">Precios</div>
+  <h2 class="section-title">Elige nivel y pack</h2>
+  <p class="section-sub">Selecciona la etapa educativa para ver los precios exactos de cada pack.</p>
+  <div class="level-tabs">
+    <button class="tab-btn active" onclick="showLevel('primaria',this)">Primaria</button>
+    <button class="tab-btn" onclick="showLevel('eso',this)">ESO</button>
+    <button class="tab-btn" onclick="showLevel('bach',this)">Bachillerato</button>
+  </div>
+
+  <div class="price-display active" id="level-primaria">
+    <div class="pricing-grid">
+      <div class="pack-card">
+        <div class="pack-name">Pack Básico</div>
+        <div class="pack-price"><sup>€</sup>30</div>
+        <div class="pack-since">1 asignatura · pago único</div>
+        <ul class="pack-features">
+          <li><span class="check">✓</span>Cuadernillo PDF personalizado</li>
+          <li><span class="check">✓</span>Ejercicios centrados en sus fallos</li>
+          <li><span class="check">✓</span>Soluciones incluidas</li>
+          <li><span class="check">✓</span>Sin horarios · a su ritmo</li>
+        </ul>
+        <a href="https://wa.me/34622011814?text=Hola!%20Me%20interesa%20el%20Pack%20B%C3%A1sico%20de%20Primaria." class="pack-btn" target="_blank">Solicitar →</a>
+      </div>
+      <div class="pack-card featured">
+        <div class="featured-badge">Más popular</div>
+        <div class="pack-name">Pack PRO</div>
+        <div class="pack-price"><sup>€</sup>45</div>
+        <div class="pack-since">1 asignatura · pago único</div>
+        <ul class="pack-features">
+          <li><span class="check">✓</span>Todo lo del pack Básico</li>
+          <li><span class="check">✓</span>Soluciones paso a paso</li>
+          <li><span class="check">✓</span>Revisión mensual de progreso</li>
+          <li><span class="check">✓</span>Ejercicios extra de refuerzo</li>
+        </ul>
+        <a href="https://wa.me/34622011814?text=Hola!%20Me%20interesa%20el%20Pack%20PRO%20de%20Primaria." class="pack-btn" target="_blank">Solicitar →</a>
+      </div>
+      <div class="pack-card">
+        <div class="pack-name">Pack Tutorizado</div>
+        <div class="pack-price"><sup>€</sup>75</div>
+        <div class="pack-since">1 asignatura · pago único</div>
+        <ul class="pack-features">
+          <li><span class="check">✓</span>Todo lo del pack PRO</li>
+          <li><span class="check">✓</span>Revisión quincenal</li>
+          <li><span class="check">✓</span>Vídeos en pizarra de sus errores</li>
+          <li><span class="check">✓</span>Resolución de dudas directa</li>
+        </ul>
+        <a href="https://wa.me/34622011814?text=Hola!%20Me%20interesa%20el%20Pack%20Tutorizado%20de%20Primaria." class="pack-btn" target="_blank">Solicitar →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="price-display" id="level-eso">
+    <div class="pricing-grid">
+      <div class="pack-card">
+        <div class="pack-name">Pack Básico</div>
+        <div class="pack-price"><sup>€</sup>35</div>
+        <div class="pack-since">1 asignatura · pago único</div>
+        <ul class="pack-features">
+          <li><span class="check">✓</span>Cuadernillo PDF personalizado</li>
+          <li><span class="check">✓</span>Ejercicios centrados en sus fallos</li>
+          <li><span class="check">✓</span>Soluciones incluidas</li>
+          <li><span class="check">✓</span>Sin horarios · a su ritmo</li>
+        </ul>
+        <a href="https://wa.me/34622011814?text=Hola!%20Me%20interesa%20el%20Pack%20B%C3%A1sico%20de%20ESO." class="pack-btn" target="_blank">Solicitar →</a>
+      </div>
+      <div class="pack-card featured">
+        <div class="featured-badge">Más popular</div>
+        <div class="pack-name">Pack PRO</div>
+        <div class="pack-price"><sup>€</sup>55</div>
+        <div class="pack-since">1 asignatura · pago único</div>
+        <ul class="pack-features">
+          <li><span class="check">✓</span>Todo lo del pack Básico</li>
+          <li><span class="check">✓</span>Soluciones paso a paso</li>
+          <li><span class="check">✓</span>Revisión mensual de progreso</li>
+          <li><span class="check">✓</span>Ejercicios extra de refuerzo</li>
+        </ul>
+        <a href="https://wa.me/34622011814?text=Hola!%20Me%20interesa%20el%20Pack%20PRO%20de%20ESO." class="pack-btn" target="_blank">Solicitar →</a>
+      </div>
+      <div class="pack-card">
+        <div class="pack-name">Pack Tutorizado</div>
+        <div class="pack-price"><sup>€</sup>90</div>
+        <div class="pack-since">1 asignatura · pago único</div>
+        <ul class="pack-features">
+          <li><span class="check">✓</span>Todo lo del pack PRO</li>
+          <li><span class="check">✓</span>Revisión quincenal</li>
+          <li><span class="check">✓</span>Vídeos en pizarra de sus errores</li>
+          <li><span class="check">✓</span>Resolución de dudas directa</li>
+        </ul>
+        <a href="https://wa.me/34622011814?text=Hola!%20Me%20interesa%20el%20Pack%20Tutorizado%20de%20ESO." class="pack-btn" target="_blank">Solicitar →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="price-display" id="level-bach">
+    <div class="pricing-grid">
+      <div class="pack-card">
+        <div class="pack-name">Pack Básico</div>
+        <div class="pack-price"><sup>€</sup>45</div>
+        <div class="pack-since">1 asignatura · pago único</div>
+        <ul class="pack-features">
+          <li><span class="check">✓</span>Cuadernillo PDF personalizado</li>
+          <li><span class="check">✓</span>Ejercicios centrados en sus fallos</li>
+          <li><span class="check">✓</span>Soluciones incluidas</li>
+          <li><span class="check">✓</span>Sin horarios · a su ritmo</li>
+        </ul>
+        <a href="https://wa.me/34622011814?text=Hola!%20Me%20interesa%20el%20Pack%20B%C3%A1sico%20de%20Bachillerato." class="pack-btn" target="_blank">Solicitar →</a>
+      </div>
+      <div class="pack-card featured">
+        <div class="featured-badge">Más popular</div>
+        <div class="pack-name">Pack PRO</div>
+        <div class="pack-price"><sup>€</sup>70</div>
+        <div class="pack-since">1 asignatura · pago único</div>
+        <ul class="pack-features">
+          <li><span class="check">✓</span>Todo lo del pack Básico</li>
+          <li><span class="check">✓</span>Soluciones paso a paso</li>
+          <li><span class="check">✓</span>Revisión mensual de progreso</li>
+          <li><span class="check">✓</span>Ejercicios extra de refuerzo</li>
+        </ul>
+        <a href="https://wa.me/34622011814?text=Hola!%20Me%20interesa%20el%20Pack%20PRO%20de%20Bachillerato." class="pack-btn" target="_blank">Solicitar →</a>
+      </div>
+      <div class="pack-card">
+        <div class="pack-name">Pack Tutorizado</div>
+        <div class="pack-price"><sup>€</sup>120</div>
+        <div class="pack-since">1 asignatura · pago único</div>
+        <ul class="pack-features">
+          <li><span class="check">✓</span>Todo lo del pack PRO</li>
+          <li><span class="check">✓</span>Revisión quincenal</li>
+          <li><span class="check">✓</span>Vídeos en pizarra de sus errores</li>
+          <li><span class="check">✓</span>Resolución de dudas directa</li>
+        </ul>
+        <a href="https://wa.me/34622011814?text=Hola!%20Me%20interesa%20el%20Pack%20Tutorizado%20de%20Bachillerato." class="pack-btn" target="_blank">Solicitar →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="price-note"><span>ℹ️</span><div><strong>Cada precio es por una sola asignatura.</strong> Si necesitas más de una, consulta el Pack Ahorro y ahorra entre 10 € y 20 €.</div></div>
+  <div class="discount-banner"><span>🎁</span><div><strong>Pack Ahorro — 2 asignaturas:</strong> Ahorra entre 10 € y 20 € contratando Matemáticas, Inglés, Lengua o Valenciano juntos. ¡Pregúntame!</div></div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section" id="materias">
+  <div class="section-label">Materias disponibles</div>
+  <h2 class="section-title">¿Para qué asignaturas?</h2>
+  <p class="section-sub">Me especializo en las materias clave de cada etapa educativa.</p>
+  <div class="materias-grid">
+    <div class="materia-chip"><span class="m-icon">➕</span><p>Matemáticas</p></div>
+    <div class="materia-chip"><span class="m-icon">🇬🇧</span><p>Inglés</p></div>
+    <div class="materia-chip"><span class="m-icon">📝</span><p>Lengua Castellana</p></div>
+    <div class="materia-chip"><span class="m-icon">🌸</span><p>Valenciano</p></div>
+    <div class="materia-chip"><span class="m-icon">🔭</span><p>Ciencias Naturales</p></div>
+    <div class="materia-chip"><span class="m-icon">🏛️</span><p>Ciencias Sociales</p></div>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-top:20px;">¿No ves la asignatura que necesitas? Escríbeme y lo valoramos.</p>
+</div>
+
+<div class="band" id="contacto">
+  <h2>¿Empezamos?</h2>
+  <p>Escríbeme por WhatsApp y en pocos minutos diseñamos el plan ideal para tu hijo/a.</p>
+  <a href="https://wa.me/34622011814?text=Hola!%20Me%20gustar%C3%ADa%20pedir%20informaci%C3%B3n%20sobre%20los%20cuadernillos%20de%20verano." class="btn btn-wa" target="_blank" style="margin:0 auto;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.855L.057 23.454a.5.5 0 00.61.61l5.624-1.474A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.873 9.873 0 01-5.031-1.374l-.36-.215-3.733.979.996-3.638-.235-.374A9.862 9.862 0 012.1 12C2.1 6.534 6.534 2.1 12 2.1c5.466 0 9.9 4.434 9.9 9.9 0 5.466-4.434 9.9-9.9 9.9z"/></svg>
+    Escribir al 622 011 814
+  </a>
+</div>
+
+<div class="section" id="faq">
+  <div class="section-label">Preguntas frecuentes</div>
+  <h2 class="section-title">Dudas habituales</h2>
+  <p class="section-sub">Si no encuentras lo que buscas, escríbeme sin compromiso.</p>
+  <div class="faq-list">
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">¿Los precios son por asignatura?<span class="faq-icon">+</span></div><div class="faq-a">Sí, cada precio indicado es por <strong>una sola asignatura</strong>. Si necesitas más de una materia, consulta el Pack Ahorro: contratar dos asignaturas incluye un descuento de 10 € a 20 € sobre el total.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">¿Cuándo y cómo se realiza el pago?<span class="faq-icon">+</span></div><div class="faq-a">El pago es 100% por adelantado antes de enviar el PDF. Puedes hacerlo por Bizum al 622 011 814. Una vez confirmado, empiezo a crear el cuadernillo.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">¿Cuánto tiempo tarda en estar listo?<span class="faq-icon">+</span></div><div class="faq-a">Normalmente entre 3 y 7 días hábiles desde que recibes el diagnóstico. Por eso es importante no esperar: las plazas son limitadas.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">¿Qué diferencia hay entre PRO y Tutorizado?<span class="faq-icon">+</span></div><div class="faq-a">El Pack PRO incluye soluciones paso a paso, revisión mensual y ejercicios extra. El Tutorizado añade revisiones quincenales y vídeos grabados en pizarra donde explico los errores concretos de tu hijo/a.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">¿Necesita internet o alguna app?<span class="faq-icon">+</span></div><div class="faq-a">No. El material se entrega en PDF: se puede imprimir o usar en cualquier tablet sin apps ni conexión. Perfecto para verano y viajes.</div></div>
+  </div>
+</div>
+
+<footer>
+  <a class="f-brand" href="#">Repaso de <em>Verano</em></a>
+  <p>Elena De Miguel · Cuadernillos personalizados · Primaria, ESO y Bachillerato</p>
+  <div class="f-links">
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#precios">Precios</a>
+    <a href="#materias">Materias</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="https://wa.me/34622011814" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:white;padding:12px 28px;border-radius:100px;font-size:15px;font-weight:500;text-decoration:none;" target="_blank">📲 622 011 814</a>
+  <p style="margin-top:24px;font-size:11px;opacity:0.5;">© 2025 · Pago 100% por adelantado · Plazas limitadas</p>
+</footer>
+
+<script>
+function showLevel(level, btn) {
+  document.querySelectorAll('.price-display').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('level-' + level).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
