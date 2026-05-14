@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuadernillo de Verano · Elena De Miguel</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lora:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FFFBF4;--bg2:#FFF6E8;--card:#FFFFFF;
+  --border:#F0E4CC;--border2:#E2CCA8;
+  --orange:#F97316;--orange-l:#FEF0E4;
+  --green:#16A34A;--green-l:#DCFCE7;
+  --red:#DC2626;--sky-l:#E0F2FE;--sky-b:#BAE6FD;
+  --ink:#2C1810;--muted:#92745C;--muted2:#C4A882;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;margin:0}
+header{background:linear-gradient(160deg,#FFF6E0,#FFFBF4);border-bottom:1px solid var(--border);padding:32px 24px 28px;text-align:center}
+header h1{font-family:'Lora',serif;font-size:clamp(22px,4vw,36px);font-weight:600;color:var(--ink);margin-bottom:8px}
+header h1 em{font-style:italic;color:var(--orange)}
+header p{font-size:14px;color:var(--muted);max-width:500px;margin:0 auto}
+.progress-wrap{background:var(--border);height:5px;position:sticky;top:0;z-index:50}
+.progress-bar{height:100%;background:var(--orange);width:0%;transition:width 0.4s}
+.form-wrap{max-width:680px;margin:0 auto;padding:32px 20px 80px}
+.screen{display:none}
+.screen.active{display:block}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px 20px;margin-bottom:16px}
+.card-title{font-size:17px;font-weight:800;color:var(--ink);margin-bottom:5px}
+.card-sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+label.field-label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:7px}
+.req{color:var(--orange)}
+input[type=text],textarea{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--ink);background:white;outline:none;transition:border-color 0.15s}
+input:focus,textarea:focus{border-color:var(--orange)}
+textarea{resize:vertical;min-height:70px}
+.fw{margin-bottom:16px}
+.option-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-bottom:4px}
+.option-card input[type=radio]{display:none}
+.option-card label{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 6px;border:2px solid var(--border);border-radius:12px;cursor:pointer;font-size:11px;font-weight:700;color:var(--muted);text-align:center;background:white;transition:all 0.15s}
+.option-card label:hover{border-color:var(--orange);color:var(--orange)}
+.option-card input[type=radio]:checked + label{border-color:var(--orange);background:var(--orange-l);color:var(--orange)}
+.opt-icon{font-size:20px}
+.errmsg{font-size:12px;color:var(--red);font-weight:700;margin-top:5px;display:none}
+.field-error .errmsg{display:block}
+.field-error input,.field-error textarea{border-color:var(--red)}
+.legend{display:flex;gap:14px;margin-bottom:12px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-weight:600}
+.legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.topics-list{display:flex;flex-direction:column;gap:10px}
+.topic-row{border:1.5px solid var(--border);border-radius:12px;background:white}
+.topic-header{display:flex;align-items:center;gap:10px;padding:11px 13px}
+.topic-main{flex:1}
+.topic-name{font-size:13px;font-weight:700;color:var(--ink)}
+.topic-ex{font-size:11px;color:var(--muted);margin-top:2px;font-style:italic}
+.topic-ex b{font-style:normal;font-weight:700;color:var(--orange);background:var(--orange-l);padding:1px 5px;border-radius:3px;font-size:10px;margin-right:3px}
+.semaforo{display:flex;gap:5px;flex-shrink:0}
+.sem-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);cursor:pointer;font-size:15px;background:white;display:flex;align-items:center;justify-content:center;transition:transform 0.15s}
+.sem-btn:hover{transform:scale(1.1)}
+.sem-btn.sel-red{background:var(--red);border-color:var(--red)}
+.sem-btn.sel-yellow{background:#FBBF24;border-color:#FBBF24}
+.sem-btn.sel-green{background:var(--green);border-color:var(--green)}
+.topic-row.st-red{border-color:#FCA5A5;background:#FFF5F5}
+.topic-row.st-yellow{border-color:#FCD34D;background:#FFFDF0}
+.topic-row.st-green{border-color:#86EFAC;background:#F0FDF4}
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.check-item input[type=checkbox]{display:none}
+.check-item label{display:flex;align-items:center;gap:8px;padding:10px 12px;border:2px solid var(--border);border-radius:10px;cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);background:white;transition:all 0.15s}
+.check-item label:hover{border-color:var(--orange);color:var(--orange)}
+.check-item input[type=checkbox]:checked + label{border-color:var(--orange);background:var(--orange-l);color:var(--ink)}
+.check-box{width:18px;height:18px;border-radius:5px;border:2px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px}
+.check-item input[type=checkbox]:checked + label .check-box{background:var(--orange);border-color:var(--orange);color:white}
+.nivel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.nivel-opt input[type=radio]{display:none}
+.nivel-opt label{display:block;text-align:center;padding:10px 6px;border:2px solid var(--border);border-radius:10px;cursor:pointer;font-size:12px;font-weight:700;color:var(--muted);transition:all 0.15s}
+.nivel-opt.bajo input[type=radio]:checked + label{background:var(--red);border-color:var(--red);color:white}
+.nivel-opt.medio input[type=radio]:checked + label{background:#D97706;border-color:#D97706;color:white}
+.nivel-opt.alto input[type=radio]:checked + label{background:var(--green);border-color:var(--green);color:white}
+.pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pack-opt input[type=radio]{display:none}
+.pack-opt label{display:flex;flex-direction:column;gap:4px;padding:14px 12px;border:2px solid var(--border);border-radius:14px;cursor:pointer;background:white;transition:all 0.15s}
+.pack-opt label:hover{border-color:var(--orange)}
+.pack-opt input[type=radio]:checked + label{border-color:var(--orange);background:var(--orange-l)}
+.pack-name{font-size:12px;font-weight:800;color:var(--ink)}
+.pack-price{font-family:'Lora',serif;font-size:24px;font-weight:600;color:var(--orange);line-height:1}
+.pack-per{font-size:10px;color:var(--muted);font-weight:600}
+.pack-desc{font-size:11px;color:var(--muted);line-height:1.4;margin-top:4px}
+.desc-wrap{margin-top:14px;background:var(--orange-l);border:1px solid #FED7AA;border-radius:12px;padding:14px 16px}
+.desc-wrap label{display:block;font-size:11px;font-weight:800;color:#92400E;margin-bottom:7px;text-transform:uppercase;letter-spacing:0.06em}
+.desc-row{display:flex;gap:8px}
+.desc-input{flex:1;padding:10px 13px;border:2px solid #FED7AA;border-radius:9px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;color:var(--ink);background:white;outline:none;text-transform:uppercase}
+.desc-input:focus{border-color:var(--orange)}
+.desc-btn{background:var(--orange);color:white;border:none;border-radius:9px;padding:10px 16px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer}
+.desc-ok{display:none;margin-top:7px;font-size:13px;font-weight:700;color:var(--green)}
+.desc-err{display:none;margin-top:7px;font-size:13px;font-weight:700;color:var(--red)}
+.info-box{background:var(--sky-l);border:1px solid var(--sky-b);border-radius:10px;padding:12px 14px;font-size:12px;color:#0C4A6E;display:flex;gap:7px;margin-bottom:14px}
+.btn-row{display:flex;gap:10px;justify-content:space-between;margin-top:22px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:12px 24px;border-radius:100px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all 0.15s}
+.btn-orange{background:var(--orange);color:white;box-shadow:0 4px 14px rgba(249,115,22,0.28)}
+.btn-orange:hover{background:#EA6C0A}
+.btn-ghost{background:white;color:var(--muted);border:2px solid var(--border2)}
+.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+.btn-green{background:var(--green);color:white;box-shadow:0 4px 14px rgba(22,163,74,0.28)}
+.btn-green:hover{background:#15803D}
+.sum-block{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:12px}
+.sum-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:7px}
+.sum-val{font-size:13px;color:var(--ink);font-weight:500;line-height:1.6}
+.pay-wrap{max-width:460px;margin:0 auto;padding:28px 20px}
+.pay-header{text-align:center;margin-bottom:24px}
+.pay-header h2{font-family:'Lora',serif;font-size:24px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.pay-header p{font-size:13px;color:var(--muted)}
+.order-sum{background:#FDEFD6;border:1px solid var(--border2);border-radius:12px;padding:16px 18px;margin-bottom:18px}
+.order-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+.order-row:last-child{border-bottom:none;font-size:15px;font-weight:800;padding-top:10px}
+.order-lbl{font-weight:600;color:var(--ink)}
+.order-val{font-weight:700;color:var(--orange)}
+.stripe-form{background:white;border:1px solid var(--border);border-radius:12px;padding:18px}
+.stripe-form h3{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:14px}
+.stripe-field{margin-bottom:12px}
+.stripe-field label{display:block;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:5px}
+.stripe-input{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--ink);background:white;outline:none}
+.stripe-input:focus{border-color:#635BFF}
+.stripe-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-stripe{width:100%;background:#635BFF;color:white;border:none;border-radius:100px;padding:14px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-stripe:hover{background:#4F46E5}
+.stripe-badge{text-align:center;font-size:11px;color:var(--muted);margin-top:10px}
+.bizum-alt{text-align:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.bizum-alt p{font-size:12px;color:var(--muted);margin-bottom:7px}
+.bizum-btn{display:inline-flex;align-items:center;gap:6px;background:#00A3FF;color:white;padding:9px 18px;border-radius:100px;font-size:13px;font-weight:700;border:none;cursor:pointer}
+.desc-screen{display:none;text-align:center;padding:48px 24px}
+.desc-screen.active{display:block}
+.desc-icon{font-size:64px;margin-bottom:16px}
+.desc-screen h2{font-family:'Lora',serif;font-size:26px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.desc-screen p{font-size:14px;color:var(--muted);max-width:420px;margin:0 auto 24px}
+.spinner{display:inline-block;width:18px;height:18px;border:3px solid rgba(255,255,255,0.3);border-radius:50%;border-top-color:white;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gen-wrap{text-align:center;padding:48px 24px}
+.gen-icon{font-size:56px;margin-bottom:14px}
+.gen-title{font-family:'Lora',serif;font-size:24px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.gen-sub{font-size:13px;color:var(--muted);margin-bottom:24px;max-width:400px;margin-left:auto;margin-right:auto}
+.gen-steps{display:flex;flex-direction:column;gap:8px;max-width:340px;margin:0 auto}
+.gen-step{display:flex;align-items:center;gap:10px;padding:11px 14px;background:white;border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;color:var(--muted)}
+.gen-step.active{border-color:var(--orange);color:var(--orange);background:var(--orange-l)}
+.gen-step.done{border-color:var(--green);color:var(--green);background:var(--green-l)}
+.gen-prog{width:100%;height:7px;background:var(--border);border-radius:100px;margin-top:20px;overflow:hidden}
+.gen-prog-bar{height:100%;background:linear-gradient(90deg,var(--orange),#FBBF24);border-radius:100px;width:0%;transition:width 0.5s}
+.dato-wrap{margin-top:24px;background:linear-gradient(135deg,#FFF6E0,#FEF3DC);border:1px solid #FAD898;border-radius:14px;padding:18px 20px;max-width:440px;margin-left:auto;margin-right:auto}
+.dato-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:7px}
+.dato-text{font-size:13px;color:var(--ink);line-height:1.6;font-weight:500;min-height:52px}
+.prev-wrap{max-width:680px;margin:0 auto;padding:28px 20px}
+.prev-header{text-align:center;margin-bottom:24px}
+.prev-header h2{font-family:'Lora',serif;font-size:26px;font-weight:600;color:var(--ink);margin-bottom:7px}
+.prev-header p{font-size:13px;color:var(--muted)}
+.stat-pills{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:16px 0}
+.stat-pill{background:white;border:1px solid var(--border);border-radius:100px;padding:7px 16px;font-size:12px;font-weight:700;color:var(--ink)}
+.stat-pill span{color:var(--orange)}
+.cuad-preview{background:white;border:2px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:18px}
+.cuad-cover{background:linear-gradient(135deg,#FFF6E0,#FDEFD6);padding:28px 24px;border-bottom:1px solid var(--border);text-align:center}
+.cuad-cover h3{font-family:'Lora',serif;font-size:20px;font-weight:600;color:var(--ink);margin-bottom:5px}
+.cuad-cover p{font-size:12px;color:var(--muted)}
+.alumno-name{font-size:17px;font-weight:800;color:var(--orange);margin:8px 0 3px}
+.cuad-content{padding:18px}
+.cuad-sec-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid var(--orange-l)}
+.ej-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px}
+.ej-num{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
+.ej-text{font-size:12px;color:var(--ink);line-height:1.6}
+.ej-space{height:40px;border:1px dashed var(--border2);border-radius:5px;margin-top:8px;background:white}
+.sol-box{background:var(--green-l);border:1px solid #A7F3D0;border-radius:5px;padding:7px 11px;margin-top:7px;font-size:11px;color:#15803D;font-weight:700}
+.more-pages{text-align:center;padding:16px;background:var(--bg2);border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+.dl-ready{background:white;border:2px solid var(--green);border-radius:16px;padding:24px;max-width:420px;margin:20px auto 0;text-align:center}
+.dl-ready h3{font-family:'Lora',serif;font-size:18px;font-weight:600;color:var(--ink);margin-bottom:7px}
+.dl-ready p{font-size:13px;color:var(--muted);margin-bottom:16px}
+.btn-dl{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:white;padding:13px 28px;border-radius:100px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(22,163,74,0.28);width:100%;justify-content:center;transition:background 0.15s}
+.btn-dl:hover{background:#15803D}
+.btn-dl:disabled{background:var(--muted2);cursor:not-allowed}
+.dl-note{font-size:12px;color:var(--muted);margin-top:10px}
+.dl-ok{display:none;margin-top:10px;background:var(--green-l);border:1px solid #86EFAC;border-radius:8px;padding:10px 14px;font-size:13px;color:#15803D;font-weight:700}
+@media(max-width:480px){
+  .pack-grid{grid-template-columns:1fr}
+  .check-grid{grid-template-columns:1fr}
+  .stripe-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Cuadernillo de <em>Verano</em> ☀️</h1>
+  <p>Rellena el diagnóstico y en menos de 24h tienes tu cuadernillo personalizado</p>
+</header>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="form-wrap">
+
+<!-- PASO 1 -->
+<div class="screen active" id="screen1">
+  <div class="card">
+    <div class="card-title">👋 Datos de contacto</div>
+    <div class="card-sub">Para enviarte el cuadernillo y mantenernos en contacto.</div>
+    <div class="fw" id="wrap-nombre"><label class="field-label">Nombre del padre/madre <span class="req">*</span></label><input type="text" id="nombre" placeholder="Tu nombre completo"><div class="errmsg">Campo obligatorio</div></div>
+    <div class="fw" id="wrap-telefono"><label class="field-label">WhatsApp <span class="req">*</span></label><input type="text" id="telefono" placeholder="6XX XXX XXX"><div class="errmsg">Campo obligatorio</div></div>
+    <div class="fw" id="wrap-alumno"><label class="field-label">Nombre del alumno/a <span class="req">*</span></label><input type="text" id="alumno" placeholder="Nombre de tu hijo/a"><div class="errmsg">Campo obligatorio</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📚 Curso y asignatura</div>
+    <div class="card-sub">Selecciona el curso actual y la asignatura a reforzar.</div>
+    <div class="fw" id="wrap-curso">
+      <label class="field-label">Curso <span class="req">*</span></label>
+      <div class="option-grid">
+        <div class="option-card"><input type="radio" name="curso" id="c5p" value="5P"><label for="c5p"><span class="opt-icon">🌱</span>5º Prim.</label></div>
+        <div class="option-card"><input type="radio" name="curso" id="c6p" value="6P"><label for="c6p"><span class="opt-icon">🌿</span>6º Prim.</label></div>
+        <div class="option-card"><input type="radio" name="curso" id="c1e" value="1E"><label for="c1e"><span class="opt-icon">⭐</span>1º ESO</label></div>
+        <div class="option-card"><input type="radio" name="curso" id="c2e" value="2E"><label for="c2e"><span class="opt-icon">🌟</span>2º ESO</label></div>
+        <div class="option-card"><input type="radio" name="curso" id="c3e" value="3E"><label for="c3e"><span class="opt-icon">💫</span>3º ESO</label></div>
+        <div class="option-card"><input type="radio" name="curso" id="c4e" value="4E"><label for="c4e"><span class="opt-icon">🚀</span>4º ESO</label></div>
+        <div class="option-card"><input type="radio" name="curso" id="c1b" value="1B"><label for="c1b"><span class="opt-icon">🎓</span>1º Bach.</label></div>
+        <div class="option-card"><input type="radio" name="curso" id="c2b" value="2B"><label for="c2b"><span class="opt-icon">🏆</span>2º Bach.</label></div>
+      </div>
+      <div class="errmsg">Selecciona el curso</div>
+    </div>
+    <div class="fw" id="wrap-asig">
+      <label class="field-label">Asignatura <span class="req">*</span></label>
+      <div class="option-grid">
+        <div class="option-card"><input type="radio" name="asig" id="amat" value="mates"><label for="amat"><span class="opt-icon">➕</span>Matemáticas</label></div>
+        <div class="option-card"><input type="radio" name="asig" id="aval" value="valenciano"><label for="aval"><span class="opt-icon">🌸</span>Valenciano</label></div>
+        <div class="option-card"><input type="radio" name="asig" id="acast" value="castellano"><label for="acast"><span class="opt-icon">📝</span>Castellano</label></div>
+        <div class="option-card"><input type="radio" name="asig" id="aing" value="ingles"><label for="aing"><span class="opt-icon">🇬🇧</span>Inglés</label></div>
+      </div>
+      <div class="errmsg">Selecciona la asignatura</div>
+    </div>
+  </div>
+  <div class="btn-row"><div></div><button class="btn btn-orange" onclick="ir(1,2)">Siguiente →</button></div>
+</div>
+
+<!-- PASO 2 -->
+<div class="screen" id="screen2">
+  <div class="card">
+    <div class="card-title" id="sem-title">🚦 Semáforo de temas</div>
+    <div class="card-sub">Valora cada tema. El ejemplo te ayuda a recordar de qué trata.</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#DC2626"></div>Mal</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FBBF24"></div>Regular</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#16A34A"></div>Bien</div>
+    </div>
+    <div class="topics-list" id="topicsList"></div>
+    <div class="errmsg" id="sem-error" style="margin-top:8px">Valora al menos un tema</div>
+  </div>
+  <div class="btn-row"><button class="btn btn-ghost" onclick="ir(2,1)">← Atrás</button><button class="btn btn-orange" onclick="ir(2,3)">Siguiente →</button></div>
+</div>
+
+<!-- PASO 3 -->
+<div class="screen" id="screen3">
+  <div class="card">
+    <div class="card-title">🎯 Objetivos</div>
+    <div class="card-sub">¿Qué quieres conseguir este verano?</div>
+    <div class="check-grid" id="objGrid"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📊 Nivel actual</div>
+    <div class="card-sub">¿Cómo valorarías el nivel general en esta asignatura?</div>
+    <div class="nivel-grid">
+      <div class="nivel-opt bajo"><input type="radio" name="nivel" id="nbajo" value="Bajo"><label for="nbajo">😓 Bajo<br><small style="font-weight:400">Muchas dificultades</small></label></div>
+      <div class="nivel-opt medio"><input type="radio" name="nivel" id="nmedio" value="Medio"><label for="nmedio">😐 Medio<br><small style="font-weight:400">Algunas lagunas</small></label></div>
+      <div class="nivel-opt alto"><input type="radio" name="nivel" id="nalto" value="Alto"><label for="nalto">😊 Alto<br><small style="font-weight:400">Quiere consolidar</small></label></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">📦 Elige tu pack</div>
+    <div class="card-sub">El precio es por asignatura.</div>
+    <div class="pack-grid" id="packGrid"></div>
+    <div class="errmsg" id="pack-error" style="margin-top:8px">Selecciona un pack</div>
+    <div class="desc-wrap">
+      <label>🎁 ¿Tienes un código de descuento?</label>
+      <div class="desc-row">
+        <input class="desc-input" type="text" id="codigoDesc" placeholder="Ej: VERANO5" maxlength="20">
+        <button type="button" class="desc-btn" onclick="aplicarCodigo()">Aplicar</button>
+      </div>
+      <div class="desc-ok" id="descOk"></div>
+      <div class="desc-err" id="descErr">Código no válido. Escríbeme por WhatsApp.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">💬 Comentarios (opcional)</div>
+    <div class="card-sub">Dificultades específicas, miedo a exámenes…</div>
+    <textarea id="comentarios" placeholder="Cualquier detalle adicional…"></textarea>
+  </div>
+  <div class="btn-row"><button class="btn btn-ghost" onclick="ir(3,2)">← Atrás</button><button class="btn btn-orange" onclick="iniciarGeneracion()">✨ Generar cuadernillo</button></div>
+</div>
+
+<!-- GENERANDO -->
+<div class="screen" id="screenGen">
+  <div class="gen-wrap">
+    <div class="gen-icon" id="genIcon">🧠</div>
+    <div class="gen-title">Creando tu cuadernillo…</div>
+    <div class="gen-sub">Elena está preparando ejercicios personalizados para ti. Tarda entre 30 y 60 segundos.</div>
+    <div class="gen-steps">
+      <div class="gen-step" id="gs1"><span>🔍</span> Analizando el diagnóstico…</div>
+      <div class="gen-step" id="gs2"><span>✏️</span> Creando ejercicios por tema…</div>
+      <div class="gen-step" id="gs3"><span>✅</span> Añadiendo soluciones…</div>
+      <div class="gen-step" id="gs4"><span>📄</span> Maquetando el cuadernillo…</div>
+    </div>
+    <div class="gen-prog"><div class="gen-prog-bar" id="genProgBar"></div></div>
+    <div class="dato-wrap">
+      <div class="dato-label">🧠 ¿Sabías que…?</div>
+      <div class="dato-text" id="datoText"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGO -->
+<div class="screen" id="screenPago">
+  <div class="pay-wrap">
+    <div class="pay-header"><div style="font-size:44px;margin-bottom:10px">🔒</div><h2>Pago seguro</h2><p>Tu cuadernillo está listo. Completa el pago para descargarlo.</p></div>
+    <div class="order-sum">
+      <div class="order-row"><span class="order-lbl">Alumno/a</span><span class="order-val" id="pay-alumno"></span></div>
+      <div class="order-row"><span class="order-lbl">Asignatura</span><span class="order-val" id="pay-asig"></span></div>
+      <div class="order-row"><span class="order-lbl">Pack</span><span class="order-val" id="pay-pack"></span></div>
+      <div class="order-row" id="pay-desc-row" style="display:none"><span class="order-lbl" style="color:var(--green)">🎁 Descuento</span><span class="order-val" style="color:var(--green)" id="pay-desc-val"></span></div>
+      <div class="order-row"><span class="order-lbl">TOTAL</span><span class="order-val" style="font-size:18px" id="pay-total"></span></div>
+    </div>
+    <div class="stripe-form">
+      <h3>💳 Datos de pago</h3>
+      <div class="stripe-field"><label>Nombre en la tarjeta</label><input class="stripe-input" type="text" id="card-name" placeholder="María García López"></div>
+      <div class="stripe-field"><label>Número de tarjeta</label><input class="stripe-input" type="text" id="card-num" placeholder="1234 5678 9012 3456" maxlength="19"></div>
+      <div class="stripe-row">
+        <div class="stripe-field"><label>Caducidad</label><input class="stripe-input" type="text" id="card-exp" placeholder="MM/AA" maxlength="5"></div>
+        <div class="stripe-field"><label>CVC</label><input class="stripe-input" type="text" id="card-cvc" placeholder="123" maxlength="4"></div>
+      </div>
+      <button class="btn-stripe" id="payBtn" onclick="procesarPago()"><span id="payTxt">🔒 Pagar <span id="pay-btn-amt"></span></span><span id="paySpinner" style="display:none"><div class="spinner"></div></span></button>
+      <div class="stripe-badge">🔒 Pago seguro con Stripe · SSL cifrado</div>
+    </div>
+    <div class="bizum-alt">
+      <p>¿Prefieres pagar con Bizum?</p>
+      <button class="bizum-btn" onclick="pagarBizum()">📱 Bizum al 622 011 814</button>
+    </div>
+  </div>
+</div>
+
+<!-- DESCARGA -->
+<div class="screen" id="screenDesc">
+  <div class="prev-wrap">
+    <div class="prev-header"><div style="font-size:52px;margin-bottom:10px">🎉</div><h2>¡Tu cuadernillo está listo!</h2><p id="prev-sub"></p></div>
+    <div class="stat-pills"><div class="stat-pill">📚 Temas: <span id="stat-temas"></span></div><div class="stat-pill">✏️ Ejercicios: <span id="stat-ej"></span></div><div class="stat-pill">✅ Con soluciones</div></div>
+    <div class="cuad-preview">
+      <div class="cuad-cover">
+        <div style="font-size:28px;margin-bottom:6px">☀️</div>
+        <h3>Cuadernillo de Repaso de Verano</h3>
+        <div class="alumno-name" id="prev-alumno"></div>
+        <p id="prev-info"></p>
+        <p style="font-size:11px;color:var(--muted2);margin-top:6px">Revisado por Elena De Miguel · Verano 2026</p>
+      </div>
+      <div class="cuad-content" id="cuadContent"></div>
+      <div class="more-pages" id="morePages"></div>
+    </div>
+    <div class="dl-ready">
+      <h3>✅ ¡Cuadernillo listo!</h3>
+      <p>Revisado y personalizado por Elena. Descárgalo en PDF.</p>
+      <button class="btn-dl" id="btnDl" onclick="descargar()">⬇️ Descargar PDF</button>
+      <div class="dl-note">El PDF se abre en tu dispositivo · Puedes imprimirlo</div>
+      <div class="dl-ok" id="dlOk">✅ PDF descargado correctamente.</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ── DATOS ──
+var CODIGOS = {'VERANO5':{euros:5,desc:'5 € de descuento'},'AMIGA5':{euros:5,desc:'5 € de descuento especial'},'ELENA5':{euros:5,desc:'5 € de descuento'}};
+var CURSO_N = {'5P':'5º Primaria','6P':'6º Primaria','1E':'1º ESO','2E':'2º ESO','3E':'3º ESO','4E':'4º ESO','1B':'1º Bachillerato','2B':'2º Bachillerato'};
+var ASIG_N = {'mates':'Matemáticas','valenciano':'Valenciano','castellano':'Castellano','ingles':'Inglés'};
+var PRECIOS = {'5P':{basico:30,pro:45,tutorizado:75},'6P':{basico:30,pro:45,tutorizado:75},'1E':{basico:35,pro:55,tutorizado:90},'2E':{basico:35,pro:55,tutorizado:90},'3E':{basico:35,pro:55,tutorizado:90},'4E':{basico:35,pro:55,tutorizado:90},'1B':{basico:45,pro:70,tutorizado:120},'2B':{basico:45,pro:70,tutorizado:120}};
+var DATOS_CURIOSOS = ['El cerebro tiene 86.000 millones de neuronas. Cada vez que aprendes algo nuevo, se forman conexiones entre ellas.','Estudiar en sesiones de 25 minutos con descansos es hasta un 40% más efectivo que estudiar horas seguidas.','Dormir bien después de estudiar consolida la memoria. El cerebro archiva lo aprendido mientras duermes.','El ejercicio físico aumenta el flujo de sangre al cerebro y mejora la concentración.','Escribir a mano activa más zonas del cerebro que leer en pantalla o subrayar.','Enseñar lo que has aprendido a otra persona es la técnica más potente para fijar el conocimiento.','El cerebro aprende mejor cuando conecta conceptos nuevos con cosas que ya conoce.','Los errores son esenciales para aprender. Cada vez que te equivocas, el cerebro refuerza el camino correcto.','Beber agua mejora el rendimiento cognitivo hasta un 30%. El cerebro es un 75% agua.','Estudiar en el mismo lugar y a la misma hora crea una rutina que ayuda al cerebro a concentrarse.'];
+
+var TEMAS = {};
+var OBJETIVOS = {};
+
+// Temas por curso y asignatura (versión compacta)
+TEMAS['5P'] = {};
+TEMAS['5P']['mates'] = [{n:'Números naturales hasta millones',e:'Ej: leer 4.305.720 · ordenar números grandes'},{n:'Fracciones: concepto y comparación',e:'Ej: ¿Cuál es mayor, 3/4 o 2/3?'},{n:'Operaciones con fracciones',e:'Ej: 1/2 + 1/3 = ?'},{n:'Números decimales',e:'Ej: ordenar 2,4 / 2,04 / 2,40'},{n:'Operaciones con decimales',e:'Ej: 4,5 × 1,2 = ?'},{n:'Múltiplos y divisores',e:'Ej: múltiplos de 6 · ¿4 es divisor de 20?'},{n:'Potencias y raíces cuadradas',e:'Ej: 3² = 9 · √49 = ?'},{n:'Geometría: ángulos y polígonos',e:'Ej: ángulo recto · lados de un hexágono'},{n:'Perímetros y áreas',e:'Ej: perímetro de rectángulo 5×3'},{n:'Unidades de medida',e:'Ej: 3 km a metros · 500 g a kg'},{n:'Estadística: tablas y gráficas',e:'Ej: leer diagrama de barras · calcular media'},{n:'Problemas de varias operaciones',e:'Ej: problemas de 2-3 pasos'}];
+TEMAS['5P']['valenciano'] = [{n:'Comprensió lectora textos narratius',e:'Ej: llegir un conte i respondre preguntes'},{n:'Expressió escrita: redacció i descripció',e:'Ej: descriure un personatge'},{n:'Ortografia: accent, dièresi i apòstrof',e:'Ej: l\'home vs el home'},{n:'Classes de paraules: nom, adjectiu, verb',e:'Ej: identificar el verb en «el gat corre»'},{n:'Vocabulari i diccionari',e:'Ej: sinònims de «content»'},{n:'Sinònims, antònims i polisèmia',e:'Ej: antònim de «calent»'},{n:'Textos informatius i expositius',e:'Ej: llegir una notícia'},{n:'Puntuació: coma i punt i comes',e:'Ej: posar comes en una llista'},{n:'Literatura: rondalla i poesia',e:'Ej: parts d\'un poema'}];
+TEMAS['5P']['castellano'] = [{n:'Comprensión lectora: textos narrativos',e:'Ej: leer un cuento y contestar preguntas'},{n:'Expresión escrita: narración y descripción',e:'Ej: describir un personaje'},{n:'Ortografía: b/v, g/j, h, mayúsculas',e:'Ej: ¿«vaca» o «baca»?'},{n:'Clases de palabras: sustantivo, adjetivo, verbo',e:'Ej: identificar el verbo en «el perro corre»'},{n:'Vocabulario y diccionario',e:'Ej: sinónimos de «feliz»'},{n:'Sinónimos, antónimos y polisemia',e:'Ej: antónimo de «caliente»'},{n:'Textos informativos y expositivos',e:'Ej: leer una noticia'},{n:'Puntuación: coma y punto y coma',e:'Ej: poner comas en una lista'},{n:'Literatura: fábulas y poesía',e:'Ej: la moraleja de una fábula'}];
+TEMAS['5P']['ingles'] = [{n:'Vocabulary: daily routines and hobbies',e:'Ej: I wake up at 7. I like swimming.'},{n:'Reading comprehension',e:'Ej: True/False sobre un texto'},{n:'Present simple',e:'Ej: She plays / Do you like music?'},{n:'Present continuous',e:'Ej: I am reading. / What are you doing?'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went / I ate'},{n:'Questions: Wh- and yes/no',e:'Ej: Where do you live? / Did you eat?'},{n:'Comparatives and superlatives',e:'Ej: bigger than · the tallest'},{n:'Future: going to',e:'Ej: I\'m going to travel this summer.'},{n:'Writing: short paragraphs',e:'Ej: 5 frases sobre tu familia'},{n:'Numbers, dates and time',e:'Ej: It\'s half past three.'}];
+
+TEMAS['6P'] = {};
+TEMAS['6P']['mates'] = [{n:'Números naturales y operaciones',e:'Ej: divisiones de varias cifras'},{n:'Fracciones equivalentes y operaciones',e:'Ej: 2/4 = 1/2 · fracciones distintos denominadores'},{n:'Números decimales: operaciones',e:'Ej: 3,14 × 2,5'},{n:'Porcentajes',e:'Ej: el 20% de 80'},{n:'Proporcionalidad directa',e:'Ej: si 3 kg cuestan 6€, ¿cuánto 7 kg?'},{n:'Geometría: circunferencia y círculo',e:'Ej: perímetro y área de un círculo'},{n:'Áreas y volúmenes básicos',e:'Ej: área de triángulo · volumen de cubo'},{n:'Unidades de medida',e:'Ej: 2,5 horas a minutos'},{n:'Estadística: media, moda y mediana',e:'Ej: media de 5,7,8,6,7'},{n:'Probabilidad básica',e:'Ej: probabilidad de sacar un 3 en un dado'},{n:'Problemas complejos',e:'Ej: problemas con varias preguntas'}];
+TEMAS['6P']['valenciano'] = [{n:'Comprensió de textos argumentatius',e:'Ej: llegir carta d\'opinió i identificar arguments'},{n:'Expressió oral: debat i exposició',e:'Ej: explicar un tema davant la classe'},{n:'Ortografia avançada: puntuació',e:'Ej: ús correcte del punt i la coma'},{n:'Categories gramaticals: pronoms i adverbis',e:'Ej: substituir «la Maria» per «ella»'},{n:'Sintagma nominal i verbal',e:'Ej: quin és el sintagma nominal?'},{n:'Oració simple: subjecte i predicat',e:'Ej: subjecte de «Els xiquets juguen»'},{n:'Textos periodístics i publicitaris',e:'Ej: distingir notícia d\'anunci'},{n:'Figures literàries bàsiques',e:'Ej: reconèixer una metàfora'},{n:'Creació literària: conte i poema',e:'Ej: poema amb rima · conte curt'}];
+TEMAS['6P']['castellano'] = [{n:'Comprensión de textos argumentativos',e:'Ej: carta de opinión e identificar argumentos'},{n:'Expresión oral: debate y exposición',e:'Ej: explicar un tema ante la clase'},{n:'Ortografía avanzada: acentuación diacrítica',e:'Ej: «él» vs «el»'},{n:'Pronombres y adverbios',e:'Ej: sustituir «María» por «ella»'},{n:'Sintagma nominal y verbal',e:'Ej: ¿cuál es el sintagma nominal?'},{n:'Oración simple: sujeto y predicado',e:'Ej: sujeto de «Los niños juegan»'},{n:'Textos periodísticos y publicitarios',e:'Ej: distinguir noticia de anuncio'},{n:'Figuras literarias básicas',e:'Ej: reconocer una metáfora'},{n:'Creación literaria: cuento y poema',e:'Ej: poema con rima · cuento corto'}];
+TEMAS['6P']['ingles'] = [{n:'Vocabulary: environment and technology',e:'Ej: recycle, pollution, screen time'},{n:'Present simple and continuous',e:'Ej: She reads / She is reading.'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went. Did she call?'},{n:'Modal verbs: must, should, can',e:'Ej: You should study.'},{n:'Future: going to and will',e:'Ej: I\'m going to travel. / I think it will rain.'},{n:'Comparatives and superlatives',e:'Ej: more interesting than · the most popular'},{n:'Reading: short texts',e:'Ej: leer texto de 2 párrafos y responder'},{n:'Writing: emails and paragraphs',e:'Ej: email a un amigo'},{n:'Vocabulary: daily life and feelings',e:'Ej: excited, nervous, bored'},{n:'Pronunciation basics',e:'Ej: entonación en preguntas'}];
+
+TEMAS['1E'] = {};
+TEMAS['1E']['mates'] = [{n:'Números enteros y operaciones',e:'Ej: –3 + 5 = ? · recta numérica'},{n:'Potencias y raíces',e:'Ej: 2⁵ = 32 · √81 = 9'},{n:'Divisibilidad: MCD y MCM',e:'Ej: MCD(12,18) = 6'},{n:'Fracciones: operaciones',e:'Ej: 2/3 + 3/4 · simplificar 12/16'},{n:'Decimales y porcentajes',e:'Ej: el 15% de 200'},{n:'Proporcionalidad directa e inversa',e:'Ej: 4 obreros tardan 6 días, ¿cuánto 3?'},{n:'Álgebra: ecuaciones 1er grado',e:'Ej: 2x + 3 = 11 → x = ?'},{n:'Geometría plana: triángulos',e:'Ej: tipos de triángulos · ángulos = 180°'},{n:'Teorema de Pitágoras',e:'Ej: a² + b² = c²'},{n:'Estadística y probabilidad básica',e:'Ej: tabla de frecuencias'},{n:'Funciones: concepto y representación',e:'Ej: representar y = 2x en ejes'},{n:'Problemas de aplicación',e:'Ej: problemas de velocidad, precio con IVA'}];
+TEMAS['1E']['valenciano'] = [{n:'Comprensió lectora textos literaris i no literaris',e:'Ej: llegir un poema · llegir una notícia'},{n:'Expressió escrita: tipologia textual',e:'Ej: text narratiu, descriptiu o argumentatiu'},{n:'Ortografia: normes generals del valencià',e:'Ej: apòstrof, contracció (del, al)'},{n:'Morfologia: nom, adjectiu i article',e:'Ej: concordança «els gats negres»'},{n:'Morfologia: el verb — present i passat',e:'Ej: conjugar «cantar» en present'},{n:'Sintaxi: subjecte i predicat',e:'Ej: subjecte de «La professora explica»'},{n:'Sintaxi: complements del verb',e:'Ej: CD, CI i CC en oracions senzilles'},{n:'Semàntica: sinònims i antònims',e:'Ej: sinònim de «gran»'},{n:'Textos narratius: estructura i elements',e:'Ej: narrador, personatges, espai, temps'},{n:'Connectors bàsics',e:'Ej: «però», «per tant», «a més»'}];
+TEMAS['1E']['castellano'] = [{n:'Comprensión lectora textos literarios y no literarios',e:'Ej: leer un poema · leer una noticia'},{n:'Expresión escrita: tipología textual',e:'Ej: texto narrativo, descriptivo o argumentativo'},{n:'Ortografía: normas generales',e:'Ej: uso de b/v, g/j, h'},{n:'Morfología: nombre, adjetivo y artículo',e:'Ej: concordancia «los gatos negros»'},{n:'Morfología: el verbo — presente y pasado',e:'Ej: conjugar «cantar» en presente'},{n:'Sintaxis: sujeto y predicado',e:'Ej: sujeto de «La maestra explica»'},{n:'Sintaxis: complementos del verbo',e:'Ej: CD, CI y CC en oraciones sencillas'},{n:'Semántica: sinónimos y antónimos',e:'Ej: sinónimo de «grande»'},{n:'Textos narrativos: estructura y elementos',e:'Ej: narrador, personajes, espacio, tiempo'},{n:'Conectores básicos',e:'Ej: «pero», «por tanto», «además»'}];
+TEMAS['1E']['ingles'] = [{n:'Present simple',e:'Ej: I study / She studies. / Do you like?'},{n:'Present continuous',e:'Ej: I am studying. / Are they playing?'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went / She saw.'},{n:'Future: going to and will',e:'Ej: I\'m going to visit / I think it will be fun.'},{n:'Modal verbs: can, must, should',e:'Ej: Can I help? / You must be quiet.'},{n:'Comparatives and superlatives',e:'Ej: bigger than · the tallest'},{n:'Vocabulary: school, family, free time',e:'Ej: classmates, siblings, hang out'},{n:'Reading comprehension',e:'Ej: leer texto y responder preguntas'},{n:'Writing: short paragraphs',e:'Ej: describir a tu mejor amigo'},{n:'Phrasal verbs básicos',e:'Ej: wake up, give up, look for'}];
+
+TEMAS['2E'] = {};
+TEMAS['2E']['mates'] = [{n:'Números racionales y decimales',e:'Ej: comparar –3/4 con –0,8'},{n:'Potencias: propiedades',e:'Ej: a³ × a² = a⁵ · a⁰ = 1'},{n:'Proporcionalidad y porcentajes',e:'Ej: precio con 30% de descuento'},{n:'Álgebra: polinomios y ecuaciones 1er grado',e:'Ej: resolver 2x – 5 = x + 3'},{n:'Sistemas de ecuaciones 1er grado',e:'Ej: {x+y=10, x–y=2}'},{n:'Funciones lineales y afines',e:'Ej: y = 2x – 1 · ¿qué es la pendiente?'},{n:'Estadística: media, mediana y moda',e:'Ej: media de una lista de notas'},{n:'Geometría: figuras planas y áreas',e:'Ej: área de trapezoide, rombo'},{n:'Semejanza y escalas',e:'Ej: mapa escala 1:50.000'},{n:'Cuerpos geométricos y volúmenes',e:'Ej: volumen de un prisma'},{n:'Probabilidad',e:'Ej: lanzar dos monedas'},{n:'Problemas contextualizados',e:'Ej: movimiento, mezclas, edades'}];
+TEMAS['2E']['valenciano'] = [{n:'Comprensió textos expositius i argumentatius',e:'Ej: separar fets d\'opinions'},{n:'Producció textos: narració i descripció',e:'Ej: text descriptiu d\'un lloc'},{n:'Ortografia: b/v, g/j, h i puntuació',e:'Ej: usar correctament la coma'},{n:'Morfologia: el verb — temps i modes',e:'Ej: imperfet vs indefinit'},{n:'Morfologia: pronoms febles',e:'Ej: «el veig» vs «li dic»'},{n:'Sintaxi: oració simple completa',e:'Ej: analitzar S+V+CD+CC'},{n:'Sintaxi: oració composta coordinada',e:'Ej: coordinada adversativa'},{n:'Lèxic: formació de paraules',e:'Ej: prefixos in-, des-'},{n:'Textos literaris: narració i poesia',e:'Ej: elements d\'un conte · versos'},{n:'Cohesió i coherència textual',e:'Ej: connectors per lligar paràgrafs'}];
+TEMAS['2E']['castellano'] = [{n:'Comprensión textos expositivos y argumentativos',e:'Ej: separar hechos de opiniones'},{n:'Producción textos: narración y descripción',e:'Ej: texto descriptivo de un lugar'},{n:'Ortografía: b/v, g/j, h y puntuación',e:'Ej: usar correctamente la coma'},{n:'Morfología: el verbo — tiempos y modos',e:'Ej: imperfecto vs indefinido'},{n:'Morfología: pronombres personales',e:'Ej: le/les vs lo/la'},{n:'Sintaxis: oración simple completa',e:'Ej: analizar S+V+CD+CC'},{n:'Sintaxis: oración compuesta coordinada',e:'Ej: coordinada adversativa'},{n:'Léxico: formación de palabras',e:'Ej: prefijos in-, des-'},{n:'Textos literarios: narración y poesía',e:'Ej: elementos de un cuento · versos'},{n:'Cohesión y coherencia textual',e:'Ej: conectores para enlazar párrafos'}];
+TEMAS['2E']['ingles'] = [{n:'Present simple and continuous',e:'Ej: She reads / She is reading.'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went. Did she call?'},{n:'Past continuous',e:'Ej: I was reading when she called.'},{n:'Future: will and going to',e:'Ej: I\'ll help you. vs I\'m going to travel.'},{n:'Present perfect (introducción)',e:'Ej: I have eaten. / Have you ever been?'},{n:'Modal verbs: must, should, can, might',e:'Ej: You should eat less.'},{n:'Comparatives and superlatives',e:'Ej: more interesting · as tall as'},{n:'Vocabulary: health, media, environment',e:'Ej: symptoms, headline, carbon footprint'},{n:'Reading comprehension',e:'Ej: artículo y preguntas'},{n:'Writing: paragraphs and informal emails',e:'Ej: email a un amigo sobre vacaciones'}];
+
+TEMAS['3E'] = {};
+TEMAS['3E']['mates'] = [{n:'Números reales: racionales e irracionales',e:'Ej: π, √2 · representar √3 en recta'},{n:'Potencias: propiedades avanzadas',e:'Ej: (a²)³ = a⁶ · notación científica'},{n:'Álgebra: factorización de polinomios',e:'Ej: x² – 4 = (x+2)(x–2)'},{n:'Ecuaciones de 2º grado',e:'Ej: x² – 5x + 6 = 0 · fórmula general'},{n:'Inecuaciones',e:'Ej: 2x + 3 > 7 → x > 2'},{n:'Sistemas de ecuaciones',e:'Ej: {2x+y=5, x–y=1}'},{n:'Geometría analítica: recta y distancias',e:'Ej: ecuación de la recta y = mx + n'},{n:'Funciones: estudio y representación',e:'Ej: dominio, recorrido, máximos y mínimos'},{n:'Estadística: varianza y desviación típica',e:'Ej: calcular varianza de una lista'},{n:'Probabilidad: regla de Laplace',e:'Ej: probabilidad de sacar bola roja'},{n:'Trigonometría básica',e:'Ej: seno, coseno y tangente'},{n:'Problemas de geometría aplicada',e:'Ej: altura de árbol con trigonometría'}];
+TEMAS['3E']['valenciano'] = [{n:'Comprensió i anàlisi textos complexos',e:'Ej: editorial de premsa · identificar tesi'},{n:'Expressió escrita: text argumentatiu',e:'Ej: assaig amb introducció, cos i conclusió'},{n:'Ortografia avançada',e:'Ej: homòfones · dièresi · puntuació'},{n:'Morfologia: el verb — tots els temps',e:'Ej: futur, condicional, subjuntiu'},{n:'Morfologia: pronoms febles avançats',e:'Ej: «se li», «me\'l», «li\'n»'},{n:'Sintaxi: oració composta subordinada',e:'Ej: «Crec que vindràs» → subordinada'},{n:'Sintaxi: anàlisi oracional completa',e:'Ej: subjecte, predicat i complements'},{n:'Lèxic: formació de paraules i camp semàntic',e:'Ej: prefixos, sufixos · família lèxica'},{n:'Gèneres literaris: narrativa, poesia, teatre',e:'Ej: trets de cada gènere'},{n:'Registres lingüístics',e:'Ej: formal vs col·loquial'}];
+TEMAS['3E']['castellano'] = [{n:'Comprensión y análisis textos complejos',e:'Ej: editorial de prensa · identificar tesis'},{n:'Expresión escrita: texto argumentativo',e:'Ej: ensayo con introducción, cuerpo, conclusión'},{n:'Ortografía avanzada',e:'Ej: homófonas · tilde diacrítica · puntuación'},{n:'Morfología: el verbo — todos los tiempos',e:'Ej: futuro, condicional, subjuntivo'},{n:'Morfología: pronombres — tipos y uso',e:'Ej: personales, relativos, indefinidos'},{n:'Sintaxis: oración compuesta subordinada',e:'Ej: «Creo que vendrás» → subordinada'},{n:'Sintaxis: análisis oracional completo',e:'Ej: sujeto, predicado y complementos'},{n:'Léxico: formación de palabras y campo semántico',e:'Ej: prefijos, sufijos · familia léxica'},{n:'Géneros literarios: narrativa, poesía, teatro',e:'Ej: rasgos de cada género'},{n:'Registros lingüísticos',e:'Ej: formal vs coloquial'}];
+TEMAS['3E']['ingles'] = [{n:'Present simple and continuous',e:'Ej: She studies every day. / She is studying.'},{n:'Past simple and past continuous',e:'Ej: I was watching when she called.'},{n:'Present perfect',e:'Ej: I have never tried sushi. / since vs for'},{n:'Future: will, going to, present continuous',e:'Ej: It will rain. / I\'m going to study.'},{n:'Modal verbs (completo)',e:'Ej: must/have to · should · might · can/could'},{n:'Passive voice',e:'Ej: The letter was written by Ana.'},{n:'Conditionals: 0, 1st and 2nd',e:'Ej: If I study, I\'ll pass. / If I were rich…'},{n:'Relative clauses',e:'Ej: The girl who lives next door.'},{n:'Vocabulary: technology and global issues',e:'Ej: artificial intelligence, climate change'},{n:'Writing: opinion essays and emails',e:'Ej: essay con argumentos a favor y en contra'}];
+
+TEMAS['4E'] = {};
+TEMAS['4E']['mates'] = [{n:'Números reales y aproximación',e:'Ej: redondear 3,14159 · error absoluto'},{n:'Álgebra: ecuaciones de 2º grado',e:'Ej: x² – 5x + 6 = 0 · bicuadradas'},{n:'Álgebra: sistemas de ecuaciones',e:'Ej: {2x+y=7, x–y=2}'},{n:'Funciones: dominio y tendencias',e:'Ej: dominio de f(x) = 1/(x–2) · asíntotas'},{n:'Funciones polinómicas y racionales',e:'Ej: representar f(x) = x² – 3x + 2'},{n:'Función exponencial y logarítmica (básico)',e:'Ej: y = 2ˣ · gráfica básica'},{n:'Probabilidad y combinatoria básica',e:'Ej: ¿de cuántas formas ordenar 3 libros?'},{n:'Geometría: vectores en el plano',e:'Ej: sumar vectores · módulo'},{n:'Trigonometría: razones y triángulos',e:'Ej: sin, cos, tan · calcular lado desconocido'},{n:'Introducción al análisis: límites',e:'Ej: lím(x→2) de x² = 4'},{n:'Matemáticas financieras básicas',e:'Ej: interés simple y compuesto'},{n:'Problemas de optimización',e:'Ej: caja de máximo volumen'}];
+TEMAS['4E']['valenciano'] = [{n:'Comprensió textos periodístics i assagístics',e:'Ej: article d\'opinió · recursos retòrics'},{n:'Producció textos formals i acadèmics',e:'Ej: instància, currículum, informe'},{n:'Ortografia: normes avançades i puntuació',e:'Ej: guió, parèntesis, comes en oracions complexes'},{n:'Morfologia: verb — subjuntiu i condicional',e:'Ej: subjuntiu present i imperfet'},{n:'Morfologia: pronoms febles — tots els casos',e:'Ej: «se\'ls», «me\'n», «hi», «en»'},{n:'Sintaxi oracional: anàlisi completa',e:'Ej: oració composta amb subordinades'},{n:'Sintaxi: proposicions subordinades',e:'Ej: substantives, adjectives i adverbials'},{n:'Lèxic: tecnicismes i neologismes',e:'Ej: «selfie», «hacker» · tecnicismes mèdics'},{n:'Varietats i registres del valencià',e:'Ej: col·loquial vs formal'},{n:'La comunicació: funcions i factors',e:'Ej: emissor, receptor, canal, codi'}];
+TEMAS['4E']['castellano'] = [{n:'Comprensión textos periodísticos y ensayísticos',e:'Ej: artículo de opinión · recursos retóricos'},{n:'Producción textos formales y académicos',e:'Ej: instancia, currículum, informe'},{n:'Ortografía: normas avanzadas y puntuación',e:'Ej: guión, paréntesis, comas en oraciones complejas'},{n:'Morfología: verbo — subjuntivo y condicional',e:'Ej: subjuntivo presente e imperfecto'},{n:'Morfología: pronombres — todos los tipos',e:'Ej: relativos, indefinidos · leísmo y laísmo'},{n:'Sintaxis oracional: análisis completo',e:'Ej: oración compuesta con subordinadas'},{n:'Sintaxis: proposiciones subordinadas',e:'Ej: sustantivas, adjetivas y adverbiales'},{n:'Léxico: tecnicismos y neologismos',e:'Ej: «selfie», «hacker» · tecnicismos médicos'},{n:'Variedades y registros del español',e:'Ej: coloquial vs formal'},{n:'La comunicación: funciones y factores',e:'Ej: emisor, receptor, canal, código'}];
+TEMAS['4E']['ingles'] = [{n:'Present simple and continuous (repaso)',e:'Ej: state verbs: know, love, have…'},{n:'Past simple and past continuous (repaso)',e:'Ej: While vs when'},{n:'Present perfect simple and continuous',e:'Ej: I\'ve been studying for 2 hours.'},{n:'Past perfect',e:'Ej: When I arrived, she had already left.'},{n:'Future forms (will, going to, present cont.)',e:'Ej: planes, predicciones y decisiones'},{n:'Modal verbs (todos)',e:'Ej: must/can\'t · should have · would'},{n:'Conditionals: 1st, 2nd and 3rd',e:'Ej: If I had studied, I would have passed.'},{n:'Passive voice',e:'Ej: The film was directed by Spielberg.'},{n:'Relative clauses',e:'Ej: defining vs non-defining'},{n:'Vocabulary advanced (B1)',e:'Ej: society, environment, technology'},{n:'Writing: essays and formal emails (B1)',e:'Ej: essay argumentativo · email formal'},{n:'Reading and listening strategies (B1)',e:'Ej: skimming, scanning'}];
+
+TEMAS['1B'] = {};
+TEMAS['1B']['mates'] = [{n:'Números reales: propiedades',e:'Ej: intervalos · valor absoluto'},{n:'Polinomios: operaciones y factorización',e:'Ej: Ruffini · teorema del resto'},{n:'Ecuaciones y sistemas avanzados',e:'Ej: sistemas no lineales · bicuadradas'},{n:'Inecuaciones y sistemas',e:'Ej: resolver 2x² – x – 3 > 0'},{n:'Geometría analítica: recta y cónicas',e:'Ej: ecuación de la recta · parábola'},{n:'Funciones: dominio y estudio',e:'Ej: dominio de √(x–2) · asíntotas'},{n:'Funciones elementales y gráficas',e:'Ej: polinómica, racional, exponencial'},{n:'Límites y continuidad',e:'Ej: lím(x→∞) · indeterminaciones'},{n:'Derivadas: concepto y reglas',e:'Ej: derivada de x³ = 3x² · regla cadena'},{n:'Aplicaciones de la derivada',e:'Ej: máximos y mínimos · optimización'},{n:'Trigonometría avanzada',e:'Ej: sin²x + cos²x = 1 · radianes'},{n:'Estadística y probabilidad',e:'Ej: probabilidad condicionada · Bayes'}];
+TEMAS['1B']['valenciano'] = [{n:'Comprensió textos complexos i acadèmics',e:'Ej: analitzar assaig · resumir text periodístic'},{n:'Producció textos argumentatius',e:'Ej: comentari de text · assaig d\'opinió'},{n:'Ortografia: normativa avançada del valencià',e:'Ej: accentuació de diftongs · dièresi'},{n:'Morfologia: verb — tots els temps i modes',e:'Ej: subjuntiu imperfet · plusquamperfet'},{n:'Morfologia: pronoms febles — combinació completa',e:'Ej: «se\'ls», «me\'n dóna»'},{n:'Sintaxi: subordinades substantives',e:'Ej: «Vull que vingues»'},{n:'Sintaxi: subordinades adjectives i adverbials',e:'Ej: relatives · causals, finals, concessives'},{n:'Lèxic: etimologia i neologismes',e:'Ej: origen llatí i grec · préstecs actuals'},{n:'La comunicació i els mitjans',e:'Ej: funcions del llenguatge · gèneres periodístics'},{n:'Variació lingüística i sociolingüística',e:'Ej: diglòssia · política lingüística'}];
+TEMAS['1B']['castellano'] = [{n:'Comprensión textos complejos y académicos',e:'Ej: analizar ensayo · resumir texto periodístico'},{n:'Producción textos argumentativos',e:'Ej: comentario de texto · ensayo de opinión'},{n:'Ortografía: normativa avanzada',e:'Ej: acentuación de diptongos y hiatos'},{n:'Morfología: verbo — todos los tiempos',e:'Ej: subjuntivo imperfecto · pluscuamperfecto'},{n:'Morfología: pronombres — uso avanzado',e:'Ej: leísmo, laísmo, loísmo · dequeísmo'},{n:'Sintaxis: subordinadas sustantivas',e:'Ej: «Quiero que vengas»'},{n:'Sintaxis: subordinadas adjetivas y adverbiales',e:'Ej: relativas · causales, finales, concesivas'},{n:'Léxico: etimología y neologismos',e:'Ej: origen latino y griego · préstamos actuales'},{n:'La comunicación y los medios',e:'Ej: funciones del lenguaje · géneros periodísticos'},{n:'Variación lingüística y sociolingüística',e:'Ej: diglosia · política lingüística en España'}];
+TEMAS['1B']['ingles'] = [{n:'Present, past and perfect tenses (repaso)',e:'Ej: state verbs · all present/past forms'},{n:'Past simple, continuous and perfect',e:'Ej: I had left before she arrived.'},{n:'Future forms (todos)',e:'Ej: will / going to / future perfect'},{n:'Conditionals: 1st, 2nd, 3rd and mixed',e:'Ej: If I had studied, I would be a doctor now.'},{n:'Modal verbs: deduction and speculation',e:'Ej: must be, can\'t be, might be'},{n:'Passive voice (advanced)',e:'Ej: It is said that… / causative have'},{n:'Reported speech (completo)',e:'Ej: She said she was tired.'},{n:'Relative clauses and linking words',e:'Ej: however, nevertheless, in addition…'},{n:'Vocabulary: advanced topics (B2)',e:'Ej: society, ethics, technology, environment'},{n:'Writing: essays and reports (B2)',e:'Ej: essay argumentativo de 250+ palabras'},{n:'Listening and reading strategies (B2)',e:'Ej: entender textos auténticos'},{n:'Speaking: debates and presentations',e:'Ej: argumentar y rebatir'}];
+
+TEMAS['2B'] = {};
+TEMAS['2B']['mates'] = [{n:'Álgebra: matrices y determinantes',e:'Ej: multiplicar matrices · matriz inversa'},{n:'Sistemas de ecuaciones: Gauss y Cramer',e:'Ej: resolver sistema 3×3'},{n:'Geometría analítica en el espacio',e:'Ej: ecuación del plano · recta en espacio'},{n:'Funciones: límites y continuidad avanzados',e:'Ej: indeterminaciones · L\'Hôpital básico'},{n:'Derivadas: reglas y aplicaciones avanzadas',e:'Ej: optimización · representación completa'},{n:'Integrales: cálculo y técnicas',e:'Ej: por partes · por sustitución'},{n:'Aplicaciones de la integral',e:'Ej: área entre curvas · área bajo la curva'},{n:'Probabilidad: distribuciones binomial y normal',e:'Ej: P(X=3) en B(10,0.3) · tabla normal'},{n:'Estadística inferencial básica',e:'Ej: intervalo de confianza'},{n:'Trigonometría y números complejos',e:'Ej: forma trigonométrica · fórmula Euler'},{n:'Cónicas: elipse, hipérbola y parábola',e:'Ej: ecuación reducida · elementos'},{n:'Resolución problemas tipo EBAU',e:'Ej: problemas de las últimas convocatorias'}];
+TEMAS['2B']['valenciano'] = [{n:'Comprensió i comentari de text (EBAU)',e:'Ej: resumir, tema, estructura, comentari lingüístic'},{n:'Producció text argumentatiu (EBAU)',e:'Ej: text d\'opinió ben estructurat'},{n:'Ortografia: normativa completa del valencià',e:'Ej: tots els casos d\'accentuació · dièresi'},{n:'Morfologia: anàlisi morfològica completa',e:'Ej: qualsevol categoria gramatical'},{n:'Sintaxi: anàlisi oracional completa (EBAU)',e:'Ej: oracions compostes amb subordinades'},{n:'Lèxic: semàntica i recursos expressius',e:'Ej: polisèmia, homonímia · figures retòriques'},{n:'Variació lingüística: dialectes i registres',e:'Ej: trets dialectes valencians'},{n:'Sociolingüística: situació del valencià',e:'Ej: diglòssia · normalització lingüística'},{n:'Gèneres periodístics i textuals',e:'Ej: notícia, editorial, crònica'},{n:'Literatura valenciana contemporània',e:'Ej: autors s. XX · context i trets'}];
+TEMAS['2B']['castellano'] = [{n:'Comprensión y comentario de texto (EBAU)',e:'Ej: resumir, tema, estructura, comentario lingüístico'},{n:'Producción texto argumentativo (EBAU)',e:'Ej: texto de opinión estructurado'},{n:'Ortografía: normativa completa',e:'Ej: todos los casos de acentuación'},{n:'Morfología: análisis morfológico completo',e:'Ej: cualquier categoría gramatical'},{n:'Sintaxis: análisis oracional completo (EBAU)',e:'Ej: oraciones compuestas con subordinadas'},{n:'Léxico: semántica y recursos expresivos',e:'Ej: polisemia, homonimia · figuras retóricas'},{n:'Variación lingüística: dialectos y registros',e:'Ej: rasgos dialectos españoles'},{n:'Sociolingüística: situación del español',e:'Ej: diglosia · lenguas cooficiales'},{n:'Géneros periodísticos y textuales',e:'Ej: noticia, editorial, crónica'},{n:'Literatura española contemporánea',e:'Ej: autores s. XX · movimientos literarios'}];
+TEMAS['2B']['ingles'] = [{n:'Grammar review: all tenses (B2/C1)',e:'Ej: repaso completo de todos los tiempos'},{n:'Conditionals: all types and variations',e:'Ej: mixed conditionals · wish / if only'},{n:'Modal verbs: advanced uses',e:'Ej: deducción · arrepentimiento · probabilidad'},{n:'Passive voice and causative structures',e:'Ej: It is believed that… / have sth done'},{n:'Reported speech: all structures',e:'Ej: reporting verbs (admit, suggest, deny)'},{n:'Relative, adverbial and noun clauses',e:'Ej: whoever, whenever · embedded questions'},{n:'Inversion and emphasis structures',e:'Ej: Never have I seen… / Not only did she…'},{n:'Advanced vocabulary: idioms and collocations',e:'Ej: break the ice, carry out a task…'},{n:'Academic writing: essays and reports (B2/C1)',e:'Ej: essay de 300+ palabras'},{n:'Reading: complex authentic texts (B2/C1)',e:'Ej: artículos de prensa académicos'},{n:'Listening: advanced authentic material',e:'Ej: podcasts y noticias en inglés nativo'},{n:'Speaking: EBAU oral and debates',e:'Ej: presentación y defensa de opiniones'}];
+
+OBJETIVOS['mates'] = ['Aprobar en septiembre','Mejorar la nota','Repasar el curso','Ganar confianza con los números','Entender los problemas','Mejorar el cálculo mental','Preparar la EBAU'];
+OBJETIVOS['valenciano'] = ['Aprobar en septiembre','Millorar la nota','Millorar la comprensió lectora','Millorar l\'expressió escrita','Dominar l\'ortografia','Preparar la EBAU'];
+OBJETIVOS['castellano'] = ['Aprobar en septiembre','Mejorar la nota','Mejorar la comprensión lectora','Mejorar la expresión escrita','Dominar la ortografía','Preparar la EBAU'];
+OBJETIVOS['ingles'] = ['Aprobar en septiembre','Mejorar la nota','Mejorar el vocabulario','Mejorar la gramática','Ganar fluidez hablando','Preparar examen oficial (B1/B2)','Preparar la EBAU'];
+
+// ── ESTADO ──
+var state = {nombre:'',telefono:'',alumno:'',curso:'',asig:'',semaforo:{},objetivos:[],nivel:'',pack:'',precio:0,descuento:0,comentarios:'',generatedContent:null,precioFinal:0};
+var datoInterval = null;
+
+// ── PROGRESO ──
+function setProg(p){document.getElementById('progressBar').style.width = p + '%';}
+
+// ── NAVEGACIÓN ──
+function ir(de, a){
+  if(!validar(de)) return;
+  if(de === 1 && a === 2) renderTemas();
+  if(de === 2 && a === 3){ renderObjetivos(); renderPacks(); }
+  document.getElementById('screen' + de).classList.remove('active');
+  document.getElementById('screen' + a).classList.add('active');
+  setProg(Math.round((a-1)/3*70));
+  window.scrollTo(0,0);
+}
+
+// ── VALIDACIÓN ──
+function validar(step){
+  var ok = true;
+  if(step === 1){
+    ['nombre','telefono','alumno'].forEach(function(id){
+      var w = document.getElementById('wrap-' + id);
+      var v = document.getElementById(id).value.trim();
+      if(!v){ w.classList.add('field-error'); ok = false; }
+      else w.classList.remove('field-error');
+    });
+    var cur = document.querySelector('input[name="curso"]:checked');
+    var asi = document.querySelector('input[name="asig"]:checked');
+    var wc = document.getElementById('wrap-curso');
+    var wa = document.getElementById('wrap-asig');
+    if(!cur){ wc.classList.add('field-error'); ok = false; } else wc.classList.remove('field-error');
+    if(!asi){ wa.classList.add('field-error'); ok = false; } else wa.classList.remove('field-error');
+    if(ok){
+      state.nombre = document.getElementById('nombre').value.trim();
+      state.telefono = document.getElementById('telefono').value.trim();
+      state.alumno = document.getElementById('alumno').value.trim();
+      state.curso = cur.value;
+      state.asig = asi.value;
+    }
+  }
+  if(step === 2){
+    var has = Object.keys(state.semaforo).length > 0;
+    document.getElementById('sem-error').style.display = has ? 'none' : 'block';
+    if(!has) ok = false;
+  }
+  if(step === 3){
+    var niv = document.querySelector('input[name="nivel"]:checked');
+    state.nivel = niv ? niv.value : '';
+    state.comentarios = document.getElementById('comentarios').value.trim();
+    if(!state.pack){
+      document.getElementById('pack-error').style.display = 'block';
+      ok = false;
+    } else {
+      document.getElementById('pack-error').style.display = 'none';
+    }
+  }
+  return ok;
+}
+
+// ── TEMAS ──
+function renderTemas(){
+  var temas = (TEMAS[state.curso] && TEMAS[state.curso][state.asig]) ? TEMAS[state.curso][state.asig] : [];
+  document.getElementById('sem-title').textContent = '🚦 Semáforo — ' + (ASIG_N[state.asig]||'') + ' (' + (CURSO_N[state.curso]||'') + ')';
+  var list = document.getElementById('topicsList');
+  list.innerHTML = '';
+  state.semaforo = {};
+  temas.forEach(function(t, i){
+    var row = document.createElement('div');
+    row.className = 'topic-row';
+    row.id = 'row' + i;
+    row.setAttribute('data-tema', t.n);
+    var header = document.createElement('div');
+    header.className = 'topic-header';
+    var main = document.createElement('div');
+    main.className = 'topic-main';
+    var name = document.createElement('div');
+    name.className = 'topic-name';
+    name.textContent = t.n;
+    var ex = document.createElement('div');
+    ex.className = 'topic-ex';
+    var b = document.createElement('b');
+    b.textContent = 'Ej';
+    ex.appendChild(b);
+    ex.appendChild(document.createTextNode(' ' + t.e));
+    main.appendChild(name);
+    main.appendChild(ex);
+    var sem = document.createElement('div');
+    sem.className = 'semaforo';
+    ['red','yellow','green'].forEach(function(color){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'sem-btn';
+      btn.textContent = color === 'red' ? '🔴' : color === 'yellow' ? '🟡' : '🟢';
+      btn.setAttribute('data-idx', i);
+      btn.setAttribute('data-color', color);
+      btn.addEventListener('click', function(){
+        setSem(parseInt(this.getAttribute('data-idx')), this.getAttribute('data-color'));
+      });
+      sem.appendChild(btn);
+    });
+    header.appendChild(main);
+    header.appendChild(sem);
+    row.appendChild(header);
+    list.appendChild(row);
+  });
+}
+
+function setSem(idx, color){
+  var row = document.getElementById('row' + idx);
+  var tema = row.getAttribute('data-tema');
+  state.semaforo[tema] = color;
+  row.querySelectorAll('.sem-btn').forEach(function(b){ b.classList.remove('sel-red','sel-yellow','sel-green'); });
+  var btns = row.querySelectorAll('.sem-btn');
+  var bi = color === 'red' ? 0 : color === 'yellow' ? 1 : 2;
+  btns[bi].classList.add('sel-' + color);
+  row.className = 'topic-row st-' + color;
+  document.getElementById('sem-error').style.display = 'none';
+}
+
+// ── OBJETIVOS ──
+function renderObjetivos(){
+  state.objetivos = [];
+  var grid = document.getElementById('objGrid');
+  grid.innerHTML = '';
+  var opts = OBJETIVOS[state.asig] || [];
+  opts.forEach(function(o, i){
+    var wrap = document.createElement('div');
+    wrap.className = 'check-item';
+    var inp = document.createElement('input');
+    inp.type = 'checkbox';
+    inp.id = 'obj' + i;
+    var val = o;
+    inp.addEventListener('change', function(){
+      if(this.checked){ if(state.objetivos.indexOf(val) === -1) state.objetivos.push(val); }
+      else { state.objetivos = state.objetivos.filter(function(x){ return x !== val; }); }
+    });
+    var lbl = document.createElement('label');
+    lbl.htmlFor = 'obj' + i;
+    var box = document.createElement('div');
+    box.className = 'check-box';
+    box.textContent = '✓';
+    lbl.appendChild(box);
+    lbl.appendChild(document.createTextNode(' ' + o));
+    wrap.appendChild(inp);
+    wrap.appendChild(lbl);
+    grid.appendChild(wrap);
+  });
+}
+
+// ── PACKS ──
+function renderPacks(){
+  var p = PRECIOS[state.curso] || PRECIOS['1E'];
+  var grid = document.getElementById('packGrid');
+  grid.innerHTML = '';
+  var packs = [
+    {id:'pb', val:'basico', precio:p.basico, nombre:'BÁSICO', desc:'Cuadernillo PDF + soluciones'},
+    {id:'pp', val:'pro', precio:p.pro, nombre:'PRO', desc:'+ Soluciones paso a paso + Revisión mensual'},
+    {id:'pt', val:'tutorizado', precio:p.tutorizado, nombre:'TUTORIZADO', desc:'+ Vídeos en pizarra + Dudas directas'}
+  ];
+  packs.forEach(function(pk){
+    var wrap = document.createElement('div');
+    wrap.className = 'pack-opt';
+    var inp = document.createElement('input');
+    inp.type = 'radio';
+    inp.name = 'pack';
+    inp.id = pk.id;
+    inp.value = pk.val;
+    var pv = pk.val;
+    var pp = pk.precio;
+    inp.addEventListener('change', function(){
+      state.pack = pv;
+      state.precio = pp;
+      document.getElementById('pack-error').style.display = 'none';
+    });
+    var lbl = document.createElement('label');
+    lbl.htmlFor = pk.id;
+    lbl.innerHTML = '<div class="pack-name">' + pk.nombre + '</div><div class="pack-price">' + pk.precio + '€</div><div class="pack-per">1 asignatura</div><div class="pack-desc">' + pk.desc + '</div>';
+    wrap.appendChild(inp);
+    wrap.appendChild(lbl);
+    grid.appendChild(wrap);
+  });
+}
+
+// ── CÓDIGO DESCUENTO ──
+function aplicarCodigo(){
+  var input = document.getElementById('codigoDesc');
+  var ok = document.getElementById('descOk');
+  var err = document.getElementById('descErr');
+  var codigo = (input.value || '').trim().toUpperCase();
+  ok.style.display = 'none';
+  err.style.display = 'none';
+  if(!codigo) return;
+  var found = CODIGOS[codigo];
+  if(found){
+    state.descuento = found.euros;
+    ok.style.display = 'block';
+    ok.textContent = '✅ ' + found.desc + ' aplicado.';
+    input.disabled = true;
+  } else {
+    state.descuento = 0;
+    err.style.display = 'block';
+  }
+}
+
+// ── DATOS CURIOSOS ──
+function startDatos(){
+  var el = document.getElementById('datoText');
+  if(!el) return;
+  var idx = Math.floor(Math.random() * DATOS_CURIOSOS.length);
+  el.textContent = DATOS_CURIOSOS[idx];
+  datoInterval = setInterval(function(){
+    idx = (idx + 1) % DATOS_CURIOSOS.length;
+    el.textContent = DATOS_CURIOSOS[idx];
+  }, 5000);
+}
+function stopDatos(){
+  if(datoInterval) clearInterval(datoInterval);
+}
+
+// ── ANIMACIÓN GENERACIÓN ──
+function animarGeneracion(){
+  var steps = ['gs1','gs2','gs3','gs4'];
+  var icons = ['🔍','✏️','✅','📄'];
+  var bar = document.getElementById('genProgBar');
+  var genIcon = document.getElementById('genIcon');
+  var cur = 0;
+  steps.forEach(function(id){ document.getElementById(id).className = 'gen-step'; });
+  function next(){
+    if(cur > 0) document.getElementById(steps[cur-1]).className = 'gen-step done';
+    if(cur < steps.length){
+      document.getElementById(steps[cur]).className = 'gen-step active';
+      if(genIcon) genIcon.textContent = icons[cur];
+      if(bar) bar.style.width = ((cur+1)/steps.length*90) + '%';
+      cur++;
+      setTimeout(next, 1500);
+    }
+  }
+  next();
+}
+
+// ── GENERACIÓN CON IA ──
+function iniciarGeneracion(){
+  if(!validar(3)) return;
+  document.getElementById('screen3').classList.remove('active');
+  document.getElementById('screenGen').classList.add('active');
+  setProg(70);
+  window.scrollTo(0,0);
+  animarGeneracion();
+  startDatos();
+
+  var rojos = [];
+  var amarillos = [];
+  var verdes = [];
+  Object.keys(state.semaforo).forEach(function(k){
+    if(state.semaforo[k] === 'red') rojos.push(k);
+    else if(state.semaforo[k] === 'yellow') amarillos.push(k);
+    else verdes.push(k);
+  });
+
+  var instrObjetos = [];
+  state.objetivos.forEach(function(o){
+    var ol = o.toLowerCase();
+    if(ol.indexOf('septiembre') !== -1) instrObjetos.push('INCLUYE ejercicios tipo examen con formato pregunta breve');
+    if(ol.indexOf('escrit') !== -1 || ol.indexOf('expressi') !== -1) instrObjetos.push('AÑADE ejercicios de redacción y producción escrita');
+    if(ol.indexOf('lectur') !== -1 || ol.indexOf('comprens') !== -1) instrObjetos.push('INCLUYE textos con preguntas de comprensión');
+    if(ol.indexOf('vocabular') !== -1 || ol.indexOf('vocabulary') !== -1) instrObjetos.push('AÑADE ejercicios de vocabulario contextualizado');
+    if(ol.indexOf('confianz') !== -1 || ol.indexOf('números') !== -1) instrObjetos.push('EMPIEZA con ejercicios muy fáciles para ganar confianza');
+    if(ol.indexOf('ebau') !== -1) instrObjetos.push('USA formato y dificultad de EBAU/selectividad');
+    if(ol.indexOf('gramàtic') !== -1 || ol.indexOf('gramátic') !== -1 || ol.indexOf('grammar') !== -1) instrObjetos.push('PRIORIZA gramática con reglas claras y muchos ejemplos');
+    if(ol.indexOf('ortograf') !== -1) instrObjetos.push('AÑADE ejercicios de ortografía: dictados, completar palabras');
+  });
+
+  var promptParts = [];
+  promptParts.push('Eres Elena De Miguel, profesora de repaso especializada en Pedagogía Terapéutica.');
+  promptParts.push('Crea un cuadernillo de repaso de verano COMPLETO para un alumno de ' + (CURSO_N[state.curso]||'') + ' de ' + (ASIG_N[state.asig]||'') + '.');
+  promptParts.push('DATOS: Nombre: ' + state.alumno + ', Nivel: ' + (state.nivel||'Medio') + ', Objetivos: ' + (state.objetivos.join(', ')||'Repasar'));
+  if(state.comentarios) promptParts.push('Comentarios: ' + state.comentarios);
+  promptParts.push('SEMÁFORO - Temas flojos (PRIORIDAD ALTA, 6-8 ejercicios): ' + (rojos.join(', ')||'ninguno'));
+  promptParts.push('Temas regulares (PRIORIDAD MEDIA, 4-5 ejercicios): ' + (amarillos.join(', ')||'ninguno'));
+  promptParts.push('Temas bien (repaso rápido, 2-3 ejercicios): ' + (verdes.join(', ')||'ninguno'));
+  if(instrObjetos.length > 0) promptParts.push('AJUSTES POR OBJETIVOS: ' + instrObjetos.join('. '));
+  promptParts.push('INSTRUCCIONES: 1) Empieza por temas rojos. 2) Ejercicios REALES y CONCRETOS con números/palabras reales. 3) Incluye mini explicación del concepto antes de los ejercicios. 4) Añade truco mnemotécnico si aplica. 5) Incluye siempre la solución completa. 6) Lenguaje cercano y motivador.');
+  promptParts.push('RESPONDE ÚNICAMENTE con este JSON sin texto adicional: {"secciones":[{"tema":"nombre","nivel_semaforo":"rojo o amarillo o verde","mini_explicacion":"2-3 frases simples","truco":"opcional","ejercicios":[{"num":1,"enunciado":"enunciado concreto","solucion":"solución completa"}]}],"total_ejercicios":número,"mensaje_motivador":"mensaje para ' + state.alumno + '"}');
+  promptParts.push('Sé muy generoso con los ejercicios. Objetivo: 40-50 páginas de trabajo real.');
+
+  var prompt = promptParts.join('\n\n');
+
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 8000,
+      messages: [{role: 'user', content: prompt}]
+    })
+  }).then(function(res){ return res.json(); }).then(function(data){
+    var rawText = '';
+    if(data.content) data.content.forEach(function(c){ if(c.text) rawText += c.text; });
+    var cuad;
+    try {
+      var match = rawText.match(/\{[\s\S]*\}/);
+      cuad = JSON.parse(match ? match[0] : '{}');
+    } catch(e){
+      cuad = generarDemo(rojos, amarillos, verdes);
+    }
+    if(!cuad.secciones || cuad.secciones.length === 0) cuad = generarDemo(rojos, amarillos, verdes);
+    state.generatedContent = cuad;
+    stopDatos();
+    mostrarPago(cuad);
+  }).catch(function(){
+    var cuad = generarDemo(rojos, amarillos, verdes);
+    state.generatedContent = cuad;
+    stopDatos();
+    mostrarPago(cuad);
+  });
+}
+
+function generarDemo(rojos, amarillos, verdes){
+  var secciones = [];
+  rojos.forEach(function(t){ secciones.push({tema:t, nivel_semaforo:'rojo', mini_explicacion:'Repasa este tema con atención.', ejercicios:[{num:1,enunciado:'Ejercicio de práctica 1 sobre este tema.',solucion:'Solución incluida'},{num:2,enunciado:'Ejercicio de práctica 2, mayor dificultad.',solucion:'Solución paso a paso'}]}); });
+  amarillos.forEach(function(t){ secciones.push({tema:t, nivel_semaforo:'amarillo', mini_explicacion:'Buen nivel base, sigue practicando.', ejercicios:[{num:1,enunciado:'Ejercicio de refuerzo para consolidar.',solucion:'Solución incluida'}]}); });
+  verdes.forEach(function(t){ secciones.push({tema:t, nivel_semaforo:'verde', mini_explicacion:'Lo dominas bien.', ejercicios:[{num:1,enunciado:'Ejercicio de repaso rápido.',solucion:'Solución incluida'}]}); });
+  return {secciones:secciones, total_ejercicios:secciones.length*3, mensaje_motivador:'¡Hola ' + state.alumno + '! Con constancia lo conseguirás. ¡Ánimo! ☀️'};
+}
+
+// ── MOSTRAR PAGO ──
+function mostrarPago(cuad){
+  var totalPag = Math.max(40, Math.min(50, Math.round((cuad.total_ejercicios||30)*1.2)));
+  state.precioFinal = Math.max(0, state.precio - (state.descuento||0));
+  state._totalPag = totalPag;
+
+  document.getElementById('screenGen').classList.remove('active');
+  document.getElementById('screenPago').classList.add('active');
+  setProg(85);
+  window.scrollTo(0,0);
+
+  document.getElementById('pay-alumno').textContent = state.alumno;
+  document.getElementById('pay-asig').textContent = (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'');
+  document.getElementById('pay-pack').textContent = state.pack.charAt(0).toUpperCase() + state.pack.slice(1);
+  document.getElementById('pay-total').textContent = state.precioFinal + '€';
+  document.getElementById('pay-btn-amt').textContent = state.precioFinal + '€';
+
+  var descRow = document.getElementById('pay-desc-row');
+  if(state.descuento > 0 && descRow){
+    descRow.style.display = 'flex';
+    document.getElementById('pay-desc-val').textContent = '-' + state.descuento + '€';
+  }
+}
+
+// ── PROCESAR PAGO ──
+function procesarPago(){
+  var name = document.getElementById('card-name').value.trim();
+  var num = document.getElementById('card-num').value.replace(/\s/g,'');
+  var exp = document.getElementById('card-exp').value;
+  var cvc = document.getElementById('card-cvc').value;
+  if(!name || num.length < 16 || exp.length < 5 || cvc.length < 3){
+    alert('Por favor completa todos los datos de la tarjeta.');
+    return;
+  }
+  document.getElementById('payTxt').style.display = 'none';
+  document.getElementById('paySpinner').style.display = 'flex';
+  setTimeout(function(){ mostrarDescarga(); }, 2500);
+}
+
+function pagarBizum(){
+  var msg = 'PAGO CUADERNILLO DE VERANO\n' + state.alumno + '\n' + (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'') + '\nPack ' + state.pack + ' · ' + state.precioFinal + '€';
+  window.open('https://wa.me/34622011814?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+}
+
+// ── MOSTRAR DESCARGA ──
+function mostrarDescarga(){
+  var cuad = state.generatedContent;
+  var secciones = cuad.secciones || [];
+  var totalEj = cuad.total_ejercicios || secciones.reduce(function(a,s){ return a + (s.ejercicios ? s.ejercicios.length : 0); }, 0);
+  var totalPag = state._totalPag || 42;
+
+  document.getElementById('screenPago').classList.remove('active');
+  document.getElementById('screenDesc').classList.add('active');
+  setProg(100);
+  window.scrollTo(0,0);
+
+  document.getElementById('prev-sub').textContent = totalEj + ' ejercicios personalizados en ' + totalPag + ' páginas aprox.';
+  document.getElementById('stat-temas').textContent = secciones.length;
+  document.getElementById('stat-ej').textContent = totalEj;
+  document.getElementById('prev-alumno').textContent = state.alumno;
+  document.getElementById('prev-info').textContent = (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'');
+
+  // Preview primeras 2 secciones
+  var content = document.getElementById('cuadContent');
+  content.innerHTML = '';
+
+  if(cuad.mensaje_motivador){
+    var msgDiv = document.createElement('div');
+    msgDiv.style.cssText = 'background:var(--orange-l);border:1px solid var(--border2);border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--ink);font-style:italic';
+    msgDiv.textContent = '"' + cuad.mensaje_motivador + '"';
+    content.appendChild(msgDiv);
+  }
+
+  var preview = secciones.slice(0,2);
+  preview.forEach(function(sec){
+    var semLabel = sec.nivel_semaforo === 'rojo' ? '🔴' : sec.nivel_semaforo === 'amarillo' ? '🟡' : '🟢';
+    var secDiv = document.createElement('div');
+    secDiv.style.marginBottom = '16px';
+    var title = document.createElement('div');
+    title.className = 'cuad-sec-title';
+    title.textContent = semLabel + ' ' + sec.tema;
+    secDiv.appendChild(title);
+    if(sec.mini_explicacion){
+      var exp = document.createElement('div');
+      exp.style.cssText = 'background:var(--sky-l);border-radius:6px;padding:8px 12px;font-size:12px;color:#0C4A6E;margin-bottom:10px';
+      exp.textContent = '💡 ' + sec.mini_explicacion;
+      secDiv.appendChild(exp);
+    }
+    var ejList = (sec.ejercicios||[]).slice(0,2);
+    ejList.forEach(function(ej){
+      var box = document.createElement('div');
+      box.className = 'ej-box';
+      var num = document.createElement('div');
+      num.className = 'ej-num';
+      num.textContent = 'Ejercicio ' + ej.num;
+      var txt = document.createElement('div');
+      txt.className = 'ej-text';
+      txt.textContent = ej.enunciado;
+      var space = document.createElement('div');
+      space.className = 'ej-space';
+      box.appendChild(num);
+      box.appendChild(txt);
+      box.appendChild(space);
+      secDiv.appendChild(box);
+    });
+    content.appendChild(secDiv);
+  });
+
+  var more = secciones.length - 2;
+  var moreDiv = document.getElementById('morePages');
+  if(more > 0) moreDiv.textContent = '+ ' + more + ' temas más · ' + totalPag + ' páginas en total · Descarga el PDF completo';
+
+  // Notificar por WhatsApp después de 2 segundos
+  setTimeout(function(){
+    var msg = 'CUADERNILLO PAGADO Y LISTO\n' + state.alumno + '\n' + (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'') + '\nPack ' + state.pack + ' · ' + state.precioFinal + '€';
+    window.open('https://wa.me/34622011814?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+  }, 2000);
+}
+
+// ── DESCARGA PDF ──
+function descargar(){
+  var btn = document.getElementById('btnDl');
+  btn.disabled = true;
+  btn.textContent = '⏳ Generando PDF…';
+
+  var cuad = state.generatedContent;
+  var secciones = cuad.secciones || [];
+
+  // Construir HTML del cuadernillo
+  var ejHTML = '';
+  var solHTML = '';
+
+  secciones.forEach(function(sec){
+    var sem = sec.nivel_semaforo === 'rojo' ? '🔴' : sec.nivel_semaforo === 'amarillo' ? '🟡' : '🟢';
+    var semBg = sec.nivel_semaforo === 'rojo' ? '#FEE2E2' : sec.nivel_semaforo === 'amarillo' ? '#FEF9C3' : '#DCFCE7';
+    var semBd = sec.nivel_semaforo === 'rojo' ? '#FCA5A5' : sec.nivel_semaforo === 'amarillo' ? '#FCD34D' : '#86EFAC';
+
+    ejHTML += '<div style="margin-bottom:28px;page-break-inside:avoid">';
+    ejHTML += '<div style="background:' + semBg + ';border:2px solid ' + semBd + ';border-radius:8px 8px 0 0;padding:10px 14px;font-weight:800;font-size:15px">' + sem + ' ' + sec.tema + '</div>';
+    ejHTML += '<div style="border:2px solid ' + semBd + ';border-top:none;border-radius:0 0 8px 8px;padding:14px;background:white">';
+    if(sec.mini_explicacion) ejHTML += '<div style="background:#E0F2FE;border-radius:6px;padding:9px 13px;font-size:12px;color:#0C4A6E;margin-bottom:10px">💡 ' + sec.mini_explicacion + '</div>';
+    if(sec.truco) ejHTML += '<div style="background:#FEF3C7;border-radius:6px;padding:8px 12px;font-size:12px;color:#92400E;margin-bottom:10px">⭐ Truco: ' + sec.truco + '</div>';
+
+    (sec.ejercicios||[]).forEach(function(ej){
+      ejHTML += '<div style="margin-bottom:14px;border:1px solid #F0E4CC;border-radius:7px;padding:12px">';
+      ejHTML += '<div style="font-size:10px;font-weight:800;color:#F97316;text-transform:uppercase;margin-bottom:5px;background:#FEF0E4;display:inline-block;padding:2px 8px;border-radius:20px">Ejercicio ' + ej.num + '</div>';
+      ejHTML += '<div style="font-size:13px;margin:7px 0 10px;line-height:1.65">' + ej.enunciado + '</div>';
+      ejHTML += '<div style="height:50px;border:1px dashed #E2CCA8;border-radius:5px;background:#FFFBF4"></div>';
+      ejHTML += '</div>';
+
+      if(ej.solucion){
+        solHTML += '<div style="background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px;color:#15803D">';
+        solHTML += '<div style="font-weight:800;margin-bottom:3px">Ej. ' + ej.num + ' — ' + sec.tema + '</div>';
+        solHTML += ej.solucion + '</div>';
+      }
+    });
+    ejHTML += '</div></div>';
+  });
+
+  var nombre = (state.alumno||'alumno').replace(/\s+/g,'_');
+  var asig = (ASIG_N[state.asig]||'asig').replace(/\s+/g,'_');
+
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Cuadernillo ' + (state.alumno||'') + '</title><style>body{font-family:Georgia,serif;max-width:820px;margin:0 auto;padding:24px;color:#2C1810}h1{text-align:center;color:#F97316;font-size:24px;margin-bottom:4px}.sub{text-align:center;color:#92745C;font-size:13px;margin-bottom:20px}.msg{background:#FEF0E4;border-left:4px solid #F97316;padding:11px 15px;font-style:italic;margin-bottom:22px;font-size:13px;border-radius:0 7px 7px 0}.sol-title{background:#2C1810;color:white;padding:14px;text-align:center;border-radius:8px;margin:30px 0 14px;font-size:18px;font-weight:bold}.sol-note{font-size:12px;color:#92745C;margin-bottom:14px;font-style:italic}.footer{text-align:center;font-size:10px;color:#C4A882;margin-top:28px;border-top:1px solid #F0E4CC;padding-top:10px}@media print{body{padding:10px}}</style></head><body>';
+  html += '<h1>☀️ Cuadernillo de Verano</h1>';
+  html += '<div class="sub">' + (state.alumno||'') + ' · ' + (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'') + '<br>Revisado por Elena De Miguel · Verano 2026</div>';
+  if(cuad.mensaje_motivador) html += '<div class="msg">💬 ' + cuad.mensaje_motivador + '</div>';
+  html += ejHTML;
+  html += '<div class="sol-title">SOLUCIONES</div>';
+  html += '<p class="sol-note">Intenta resolver todos los ejercicios antes de consultar las soluciones.</p>';
+  html += solHTML;
+  html += '<div class="footer">Creado con cariño por Elena De Miguel · 622 011 814 · Guadassuar, Valencia</div>';
+  html += '</body></html>';
+
+  var blob = new Blob([html], {type:'text/html'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'Cuadernillo_' + nombre + '_' + asig + '_Verano2026.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  btn.disabled = false;
+  btn.textContent = '⬇️ Descargar PDF';
+  document.getElementById('dlOk').style.display = 'block';
+}
+</script>
+</body>
+</html>
