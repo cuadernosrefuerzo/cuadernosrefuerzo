@@ -360,6 +360,7 @@ textarea{resize:vertical;min-height:70px}
       <h3>✅ ¡Cuadernillo listo!</h3>
       <p>Revisado y personalizado por Elena. Descárgalo en PDF.</p>
       <button class="btn-dl" id="btnDl" onclick="descargar()">⬇️ Descargar PDF</button>
+      <button onclick="descargarRecibo()" style="display:block;width:100%;margin-top:10px;padding:11px;background:white;color:#1E3A5F;border:2px solid #1E3A5F;border-radius:100px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer">&#129534; Descargar recibo</button>
       <div class="dl-note">El PDF se abre en tu dispositivo · Puedes imprimirlo</div>
       <div class="dl-ok" id="dlOk">✅ PDF descargado correctamente.</div>
     </div>
@@ -979,6 +980,52 @@ function descargar(){
   btn.disabled = false;
   btn.textContent = '⬇️ Descargar PDF';
   document.getElementById('dlOk').style.display = 'block';
+}
+ 
+function descargarRecibo(){
+  var fecha = new Date().toLocaleDateString('es-ES',{year:'numeric',month:'long',day:'numeric'});
+  var n = new Date();
+  var numRec = 'REC-' + n.getFullYear() + String(n.getMonth()+1).padStart(2,'0') + String(n.getDate()).padStart(2,'0') + '-' + Math.floor(Math.random()*900+100);
+  var asigN = ASIG_N[state.asig] || state.asig;
+  var cursoN = CURSO_N[state.curso] || state.curso;
+  var packN = state.pack === 'basico' ? 'B\u00e1sico' : state.pack === 'pro' ? 'PRO' : 'Tutorizado';
+  var baseImponible = Math.max(0, state.precio - (state.descuento || 0));
+  var iva = Math.round(baseImponible * 0.04 * 100) / 100;
+  var total = Math.round((baseImponible + iva) * 100) / 100;
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Recibo ' + numRec + '</title>';
+  html += '<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;max-width:580px;margin:40px auto;padding:40px;border:1px solid #ddd;color:#1a1a1a}.hdr{border-bottom:3px solid #1E3A5F;padding-bottom:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:flex-start}.logo{font-size:17px;font-weight:bold;color:#1E3A5F}.sub{font-size:11px;color:#666;margin-top:3px}.rec{text-align:right;font-size:11px;color:#888}.rec b{font-size:13px;color:#1E3A5F;display:block}.sec{margin-bottom:18px}.sec-t{font-size:10px;font-weight:bold;text-transform:uppercase;letter-spacing:.08em;color:#999;border-bottom:1px solid #eee;padding-bottom:4px;margin-bottom:8px}.row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:13px}.row:last-child{border-bottom:none}.lbl{color:#555}.val{font-weight:600;text-align:right}.total{border-top:2px solid #1E3A5F;margin-top:6px;padding-top:10px;display:flex;justify-content:space-between;font-size:16px;font-weight:bold;color:#1E3A5F}.badge{background:#DCFCE7;border:1px solid #86EFAC;border-radius:6px;padding:10px 14px;font-size:12px;color:#15803D;margin-top:18px}.legal{font-size:10px;color:#aaa;margin-top:20px;padding-top:12px;border-top:1px solid #eee;line-height:1.5}@media print{body{margin:0;border:none}}</style>';
+  html += '</head><body>';
+  html += '<div class="hdr"><div><div class="logo">Elena De Miguel Palau</div><div class="sub">Profesora especializada en Pedagog\u00eda Terap\u00e9utica</div><div class="sub">NIF: 20867543B &nbsp;&middot;&nbsp; IAE: 476.9 / 659.4</div><div class="sub">Calle del Sol 30, Guadassuar (Valencia)</div></div><div class="rec"><b>' + numRec + '</b>' + fecha + '</div></div>';
+  html += '<div class="sec"><div class="sec-t">Emisor</div>';
+  html += '<div class="row"><span class="lbl">Email</span><span class="val">elenademp@gmail.com</span></div>';
+  html += '<div class="row"><span class="lbl">Tel\u00e9fono</span><span class="val">622 011 814</span></div></div>';
+  html += '<div class="sec"><div class="sec-t">Cliente</div>';
+  html += '<div class="row"><span class="lbl">Nombre</span><span class="val">' + state.nombre + '</span></div>';
+  html += '<div class="row"><span class="lbl">WhatsApp</span><span class="val">' + state.telefono + '</span></div>';
+  html += '<div class="row"><span class="lbl">Alumno/a</span><span class="val">' + state.alumno + '</span></div></div>';
+  html += '<div class="sec"><div class="sec-t">Servicio</div>';
+  html += '<div class="row"><span class="lbl">Descripci\u00f3n</span><span class="val">Cuadernillo de Repaso de Verano</span></div>';
+  html += '<div class="row"><span class="lbl">Asignatura</span><span class="val">' + asigN + '</span></div>';
+  html += '<div class="row"><span class="lbl">Curso</span><span class="val">' + cursoN + '</span></div>';
+  html += '<div class="row"><span class="lbl">Pack</span><span class="val">' + packN + '</span></div></div>';
+  html += '<div class="sec"><div class="sec-t">Importe</div>';
+  html += '<div class="row"><span class="lbl">Precio base</span><span class="val">' + state.precio + ',00 \u20ac</span></div>';
+  if(state.descuento > 0){ html += '<div class="row"><span class="lbl" style="color:#16A34A">Descuento</span><span class="val" style="color:#16A34A">\u2013' + state.descuento + ',00 \u20ac</span></div>'; }
+  html += '<div class="row"><span class="lbl">Base imponible</span><span class="val">' + baseImponible.toFixed(2).replace('.',',') + ' \u20ac</span></div>';
+  html += '<div class="row"><span class="lbl">IVA (4%)</span><span class="val">' + iva.toFixed(2).replace('.',',') + ' \u20ac</span></div>';
+  html += '<div class="total"><span>Total</span><span>' + total.toFixed(2).replace('.',',') + ' \u20ac</span></div></div>';
+  html += '<div class="badge">\u2705 Pago recibido &middot; Cuadernillo generado y revisado por Elena De Miguel</div>';
+  html += '<div class="legal">IVA al tipo reducido del 4% aplicado seg\u00fan art. 91.Dos.1.2\u00ba Ley 37/1992 (libros y publicaciones). Ep\u00edgrafes IAE 476.9 y 659.4. Elena De Miguel Palau &middot; NIF 20867543B &middot; Calle del Sol 30, Guadassuar (Valencia).</div>';
+  html += '</body></html>';
+  var blob = new Blob([html],{type:'text/html'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'Recibo_' + numRec + '_' + (state.alumno||'').replace(/\s+/g,'_') + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 </script>
 </body>
