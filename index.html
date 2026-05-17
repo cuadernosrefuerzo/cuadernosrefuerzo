@@ -217,6 +217,63 @@ footer p{font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px}
 @keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 .float-btn{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:white;padding:14px 32px;border-radius:100px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;text-decoration:none;box-shadow:0 8px 32px rgba(249,115,22,0.5);border:none;cursor:pointer;white-space:nowrap}
  
+ 
+/* ══ SECCIÓN MUESTRA CUADERNILLO ══ */
+.muestra-wrap{max-width:960px;margin:0 auto}
+.muestra-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.mtab{padding:8px 20px;border-radius:100px;border:1.5px solid var(--gray-l);background:white;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;color:var(--gray);transition:all 0.15s}
+.mtab.active{background:var(--blue);color:white;border-color:var(--blue)}
+.mtab:not(.active):hover{border-color:var(--blue);color:var(--blue)}
+.mpage{display:none;animation:fadeInUp 0.4s ease}
+.mpage.active{display:block}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.cuad-frame{border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.15);max-width:680px;margin:0 auto;border:1px solid var(--gray-l)}
+ 
+/* PORTADA */
+.cuad-portada{background:#1E3A5F;padding:52px 44px;display:flex;flex-direction:column;justify-content:space-between;min-height:480px;position:relative;overflow:hidden}
+.cuad-portada::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(249,115,22,0.12)}
+.cuad-portada::after{content:'';position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.cuad-top-label{font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);font-family:'Inter',sans-serif}
+.cuad-mid{position:relative;z-index:1;text-align:center;padding:28px 0}
+.cuad-sun{font-size:52px;margin-bottom:16px;display:block}
+.cuad-titulo{font-family:'Fraunces',serif;font-size:34px;font-weight:700;color:white;line-height:1.1;margin-bottom:6px}
+.cuad-titulo em{font-style:italic;color:#FCD34D;display:block}
+.cuad-alumno{font-size:24px;font-weight:700;color:white;margin:14px 0 4px}
+.cuad-info{font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;font-family:'Inter',sans-serif}
+.cuad-pills{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.cuad-pill{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:100px;padding:4px 12px;font-size:11px;font-weight:600;color:white;font-family:'Inter',sans-serif}
+.cuad-msg{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:16px 20px;max-width:420px;margin:0 auto;font-style:italic;font-size:13px;color:rgba(255,255,255,0.85);text-align:left;line-height:1.7}
+.cuad-msg-autor{font-size:11px;color:rgba(255,255,255,0.35);font-style:normal;display:block;margin-top:8px;font-family:'Inter',sans-serif;font-weight:700}
+.cuad-footer-band{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.3);font-family:'Inter',sans-serif;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;position:relative;z-index:1}
+ 
+/* ÍNDICE */
+.cuad-indice{background:white;padding:40px 44px}
+.cuad-indice-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:#0F172A;margin-bottom:6px}
+.cuad-indice-sub{font-size:13px;color:#64748B;margin-bottom:24px;font-family:'Inter',sans-serif}
+.idx-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F1F5F9}
+.idx-row:last-child{border-bottom:none}
+.idx-sem{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.idx-nombre{font-size:13px;font-weight:700;color:#0F172A;flex:1}
+.idx-badge{font-size:11px;color:#94A3B8;font-family:'Inter',sans-serif;font-weight:600;margin-left:auto}
+.idx-especial{background:#F8FAFC;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;color:#475569;font-family:'Inter',sans-serif}
+.idx-sep{height:1px;background:#F1F5F9;margin:6px 0}
+ 
+/* EJERCICIOS */
+.cuad-ejercicios{background:#FFFBF4;padding:40px 44px}
+.cuad-tema-hdr{background:#FEE2E2;border:2px solid #FCA5A5;border-radius:12px 12px 0 0;padding:13px 18px;display:flex;align-items:center;gap:8px}
+.cuad-tema-hdr h3{font-size:16px;font-weight:700;color:#0F172A}
+.cuad-tema-body{border:2px solid #FCA5A5;border-top:none;border-radius:0 0 12px 12px;padding:20px;background:white;margin-bottom:16px}
+.cuad-expl{background:#E0F2FE;border-left:4px solid #7DD3FC;border-radius:0 8px 8px 0;padding:11px 14px;margin-bottom:12px;font-size:13px;color:#0C4A6E;line-height:1.6;font-family:'Inter',sans-serif}
+.cuad-ej{border:1px solid #F0E4CC;border-radius:10px;padding:13px 16px;margin-bottom:10px;background:#FFFBF4}
+.cuad-ej-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.cuad-ej-num{background:#F97316;color:white;font-size:10px;font-weight:800;padding:3px 10px;border-radius:100px;font-family:'Inter',sans-serif}
+.cuad-ej-tipo{font-size:11px;color:#92745C;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-family:'Inter',sans-serif}
+.cuad-ej-text{font-size:13px;color:#2C1810;line-height:1.75}
+.cuad-espacio{border:1px dashed #E2CCA8;border-radius:6px;background:white;min-height:48px;margin-top:8px}
+.cuad-watermark{text-align:center;padding:16px;font-size:12px;color:#94A3B8;font-family:'Inter',sans-serif;font-style:italic}
+ 
+.muestra-cta{text-align:center;margin-top:28px}
+.muestra-cta p{font-size:15px;color:var(--gray);margin-bottom:16px}
 </style>
 </head>
 <body>
@@ -227,6 +284,7 @@ footer p{font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px}
   <ul class="nav-links">
     <li><a href="#como-funciona">Cómo funciona</a></li>
     <li><a href="#precios">Precios</a></li>
+    <li><a href="#muestra">Ver ejemplo</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
   <a href="https://cuadernosrefuerzo.github.io/cuadernosrefuerzo/sistema-cuadernillo.html" class="nav-cta">Empezar ahora →</a>
@@ -545,6 +603,111 @@ footer p{font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px}
   </div>
 </section>
  
+ 
+<!-- MUESTRA DEL CUADERNILLO -->
+<section id="muestra" style="background:var(--gray-ll)">
+  <div class="section-inner reveal">
+    <div style="text-align:center;margin-bottom:44px">
+      <div class="section-tag">Vista previa real</div>
+      <h2 class="section-title">Así es <em>por dentro</em></h2>
+      <p class="section-sub" style="margin:0 auto">Esto es lo que recibe tu hijo/a. No una plantilla genérica — un cuadernillo creado para él, con su nombre, sus temas y su nivel.</p>
+    </div>
+ 
+    <div class="muestra-wrap">
+      <div class="muestra-tabs">
+        <button class="mtab active" onclick="showPage('portada',this)">🎨 Portada</button>
+        <button class="mtab" onclick="showPage('indice',this)">📋 Índice</button>
+        <button class="mtab" onclick="showPage('ejercicios',this)">✏️ Ejercicios</button>
+      </div>
+ 
+      <!-- PORTADA -->
+      <div class="mpage active" id="mp-portada">
+        <div class="cuad-frame">
+          <div class="cuad-portada">
+            <div class="cuad-top-label">Material educativo personalizado &nbsp;·&nbsp; Elena De Miguel &nbsp;·&nbsp; Profesora especializada</div>
+            <div class="cuad-mid">
+              <span class="cuad-sun">☀️</span>
+              <div class="cuad-titulo">Cuadernillo de<br>Repaso de <em>Verano</em></div>
+              <div class="cuad-alumno">Sofía García</div>
+              <div class="cuad-info">3º ESO &nbsp;·&nbsp; Inglés &nbsp;·&nbsp; Pack PRO &nbsp;·&nbsp; Verano 2026</div>
+              <div class="cuad-pills">
+                <div class="cuad-pill">📚 8 temas</div>
+                <div class="cuad-pill">✏️ 58 ejercicios</div>
+                <div class="cuad-pill">🏆 2 retos</div>
+                <div class="cuad-pill">✅ Soluciones</div>
+              </div>
+              <div class="cuad-msg">
+                Sofía, este cuadernillo está hecho exactamente para ti. He analizado lo que más te cuesta y he preparado ejercicios graduados para que vayas mejorando paso a paso. 30 minutos al día son suficientes. ¡Tú puedes con esto! 💪
+                <span class="cuad-msg-autor">— Elena De Miguel, tu profesora</span>
+              </div>
+            </div>
+            <div class="cuad-footer-band">
+              <span>Revisado personalmente por Elena De Miguel &nbsp;·&nbsp; 622 011 814</span>
+              <span>Entrega garantizada en 24h &nbsp;·&nbsp; Verano 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- ÍNDICE -->
+      <div class="mpage" id="mp-indice">
+        <div class="cuad-frame">
+          <div class="cuad-indice">
+            <div class="cuad-indice-title">📋 Índice de temas</div>
+            <div class="cuad-indice-sub">Organizado de más difícil (🔴) a más dominado (🟢)</div>
+            <div class="idx-row"><div class="idx-sem" style="background:#DC2626"></div><div class="idx-nombre">Past Simple &amp; Past Continuous</div><span class="idx-badge">🔴 10 ejercicios + 🎮 divertido</span></div>
+            <div class="idx-row"><div class="idx-sem" style="background:#DC2626"></div><div class="idx-nombre">Present Perfect</div><span class="idx-badge">🔴 10 ejercicios + 🎮 divertido</span></div>
+            <div class="idx-row"><div class="idx-sem" style="background:#DC2626"></div><div class="idx-nombre">Conditionals: 0, 1st and 2nd</div><span class="idx-badge">🔴 10 ejercicios + 🎮 divertido</span></div>
+            <div class="idx-row"><div class="idx-sem" style="background:#DCFCE7;border:1.5px solid #86EFAC"></div><div class="idx-especial">📝 Autoevaluación 1 &nbsp;·&nbsp; 🏆 Reto de la Semana 1</div></div>
+            <div class="idx-row"><div class="idx-sem" style="background:#FBBF24"></div><div class="idx-nombre">Passive Voice</div><span class="idx-badge">🟡 8 ejercicios</span></div>
+            <div class="idx-row"><div class="idx-sem" style="background:#FBBF24"></div><div class="idx-nombre">Modal Verbs</div><span class="idx-badge">🟡 8 ejercicios</span></div>
+            <div class="idx-row"><div class="idx-sem" style="background:#FBBF24"></div><div class="idx-nombre">Relative Clauses</div><span class="idx-badge">🟡 8 ejercicios</span></div>
+            <div class="idx-row"><div class="idx-sem" style="background:#DCFCE7;border:1.5px solid #86EFAC"></div><div class="idx-especial">📝 Autoevaluación 2 &nbsp;·&nbsp; 🏆 Reto de la Semana 2</div></div>
+            <div class="idx-row"><div class="idx-sem" style="background:#16A34A"></div><div class="idx-nombre">Present Simple &amp; Continuous (repaso)</div><span class="idx-badge">🟢 5 ejercicios</span></div>
+            <div class="idx-row"><div class="idx-sem" style="background:#16A34A"></div><div class="idx-nombre">Vocabulary: Technology &amp; Global Issues</div><span class="idx-badge">🟢 5 ejercicios</span></div>
+            <div class="idx-row" style="border-top:2px solid #F0E4CC;margin-top:6px;padding-top:10px"><div class="idx-sem" style="background:#0F172A"></div><div class="idx-nombre" style="font-weight:800">Soluciones completas</div><span class="idx-badge">al final</span></div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- EJERCICIOS -->
+      <div class="mpage" id="mp-ejercicios">
+        <div class="cuad-frame">
+          <div class="cuad-ejercicios">
+            <div class="cuad-tema-hdr"><span style="font-size:20px">🔴</span><h3>Past Simple &amp; Past Continuous</h3></div>
+            <div class="cuad-tema-body">
+              <div class="cuad-expl"><strong>Past Simple</strong> → acción <strong>completada</strong>: <em>I watched TV last night.</em><br><strong>Past Continuous</strong> → acción <strong>en curso</strong>: <em>I was watching TV at 9pm.</em><br>Juntos: la continua se <strong>interrumpe</strong> con la puntual: <em>I was watching TV when she called.</em></div>
+              <div class="cuad-ej">
+                <div class="cuad-ej-hdr"><span class="cuad-ej-num">Ejercicio 1</span><span class="cuad-ej-tipo">Completa con la forma correcta</span></div>
+                <div class="cuad-ej-text">Elige Past Simple o Past Continuous:<br><br>
+                1. She _____________ (read) when the lights went out.<br>
+                2. We _____________ (visit) Barcelona last summer.<br>
+                3. They _____________ (play) football when it started to rain.<br>
+                4. What _____________ you _____________ (do) at 10pm?</div>
+                <div class="cuad-espacio"></div>
+              </div>
+              <div class="cuad-ej">
+                <div class="cuad-ej-hdr"><span class="cuad-ej-num">Ejercicio 2</span><span class="cuad-ej-tipo">WHILE o WHEN</span></div>
+                <div class="cuad-ej-text">Completa con la opción correcta:<br><br>
+                1. _____________ I arrived, everyone was already dancing.<br>
+                2. _____________ she was walking home, she saw an accident.<br>
+                3. He called _____________ I was in the middle of an exam.</div>
+                <div class="cuad-espacio"></div>
+              </div>
+            </div>
+            <div class="cuad-watermark">✨ Muestra del cuadernillo · El tuyo tendrá todos los temas adaptados exactamente a los fallos de tu hijo/a</div>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="muestra-cta">
+        <p>¿Te ha gustado lo que has visto? El cuadernillo de tu hijo/a tendrá el mismo nivel de detalle — pero con <strong>sus temas, su nombre y sus objetivos concretos</strong>.</p>
+        <a href="https://cuadernosrefuerzo.github.io/cuadernosrefuerzo/sistema-cuadernillo.html" class="btn-hero-primary" style="display:inline-flex">✨ Crear el cuadernillo de mi hijo/a →</a>
+      </div>
+    </div>
+  </div>
+</section>
+ 
 <!-- CTA CENTRAL -->
 <div class="cta-band">
   <h2>¿Empezamos el verano<br>con buen pie?</h2>
@@ -619,6 +782,14 @@ window.addEventListener('scroll', function(){
   if(window.scrollY > 600) floatCta.classList.add('show');
   else floatCta.classList.remove('show');
 }, {passive:true});
+ 
+function showPage(page, btn){
+  document.querySelectorAll('.mpage').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.mtab').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById('mp-' + page).classList.add('active');
+  btn.classList.add('active');
+}
+ 
 </script>
 </body>
 </html>
