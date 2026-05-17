@@ -30,7 +30,7 @@ header p{font-size:14px;color:var(--muted);max-width:500px;margin:0 auto}
 .card-title{font-size:17px;font-weight:800;color:var(--ink);margin-bottom:5px}
 .card-sub{font-size:13px;color:var(--muted);margin-bottom:16px}
 label.field-label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:7px}
-.req{color:var(--orange);font-weight:900;font-size:16px}
+.req{color:var(--orange)}
 input[type=text],textarea{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--ink);background:white;outline:none;transition:border-color 0.15s}
 input:focus,textarea:focus{border-color:var(--orange)}
 textarea{resize:vertical;min-height:70px}
@@ -233,7 +233,6 @@ textarea{resize:vertical;min-height:70px}
       <div class="errmsg">Selecciona la asignatura</div>
     </div>
   </div>
-  <div class="errmsg" id="paso1-error" style="margin-bottom:12px;font-size:13px;text-align:center">Por favor, rellena todos los campos obligatorios marcados con ✱</div>
   <div class="btn-row"><div></div><button class="btn btn-orange" onclick="ir(1,2)">Siguiente →</button></div>
 </div>
  
@@ -370,32 +369,19 @@ textarea{resize:vertical;min-height:70px}
 </div>
  
 <script>
+var _cursoSel = '';
+var _asigSel = '';
+document.addEventListener('DOMContentLoaded', function(){
+  var cr = document.querySelectorAll('input[name="curso"]');
+  for(var i=0;i<cr.length;i++){(function(r){r.addEventListener('change',function(){_cursoSel=this.value;})})(cr[i]);}
+  var ar = document.querySelectorAll('input[name="asig"]');
+  for(var j=0;j<ar.length;j++){(function(r){r.addEventListener('change',function(){_asigSel=this.value;})})(ar[j]);}
+});
 // ── DATOS ──
 var CODIGOS = {'VERANO5':{euros:5,desc:'5 € de descuento'},'AMIGA5':{euros:5,desc:'5 € de descuento especial'},'ELENA5':{euros:5,desc:'5 € de descuento'}};
 var CURSO_N = {'1P':'1º Primaria','2P':'2º Primaria','3P':'3º Primaria','4P':'4º Primaria','5P':'5º Primaria','6P':'6º Primaria','1E':'1º ESO','2E':'2º ESO','3E':'3º ESO','4E':'4º ESO','1B':'1º Bachillerato','2B':'2º Bachillerato'};
 var ASIG_N = {'mates':'Matemáticas','valenciano':'Valenciano','castellano':'Castellano','ingles':'Inglés'};
-var PRECIOS = {'1P':{basico:25,pro:38,tutorizado:60},'2P':{basico:25,pro:38,tutorizado:60},'3P':{basico:25,pro:38,tutorizado:60},'4P':{basico:25,pro:38,tutorizado:60},'5P':{basico:30,pro:45,tutorizado:75},'6P':{basico:30,pro:45,tutorizado:75},'1E':{basico:35,pro:55,tutorizado:90},'2E':{basico:35,pro:55,tutorizado:90},'3E':{basico:35,pro:55,tutorizado:90},'4E':{basico:35,pro:55,tutorizado:90},'1B':{basico:45,pro:70,tutorizado:120},'2B':{basico:45,pro:70,tutorizado:120}};
-var DATOS_CURIOSOS = ['El cerebro tiene 86.000 millones de neuronas. Cada vez que aprendes algo nuevo, se forman conexiones entre ellas.','Estudiar en sesiones de 25 minutos con descansos es hasta un 40% más efectivo que estudiar horas seguidas.','Dormir bien después de estudiar consolida la memoria. El cerebro archiva lo aprendido mientras duermes.','El ejercicio físico aumenta el flujo de sangre al cerebro y mejora la concentración.','Escribir a mano activa más zonas del cerebro que leer en pantalla o subrayar.','Enseñar lo que has aprendido a otra persona es la técnica más potente para fijar el conocimiento.','El cerebro aprende mejor cuando conecta conceptos nuevos con cosas que ya conoce.','Los errores son esenciales para aprender. Cada vez que te equivocas, el cerebro refuerza el camino correcto.','Beber agua mejora el rendimiento cognitivo hasta un 30%. El cerebro es un 75% agua.','Estudiar en el mismo lugar y a la misma hora crea una rutina que ayuda al cerebro a concentrarse.'];
- 
-var TEMAS = {};
-var OBJETIVOS = {};
- 
-// Temas por curso y asignatura (versión compacta)
- 
-var DATOS_CURIOSOS = ['El cerebro tiene 86.000 millones de neuronas. Cada vez que aprendes algo nuevo, se forman conexiones entre ellas.','Estudiar en sesiones de 25 minutos con descansos es hasta un 40% más efectivo que estudiar horas seguidas.','Dormir bien después de estudiar consolida la memoria. El cerebro archiva lo aprendido mientras duermes.','El ejercicio físico aumenta el flujo de sangre al cerebro y mejora la concentración.','Escribir a mano activa más zonas del cerebro que leer en pantalla o subrayar.','Enseñar lo que has aprendido a otra persona es la técnica más potente para fijar el conocimiento.','El cerebro aprende mejor cuando conecta conceptos nuevos con cosas que ya conoce.','Los errores son esenciales para aprender. Cada vez que te equivocas, el cerebro refuerza el camino correcto.','Beber agua mejora el rendimiento cognitivo hasta un 30%. El cerebro es un 75% agua.','Estudiar en el mismo lugar y a la misma hora crea una rutina que ayuda al cerebro a concentrarse.'];
- 
-var TEMAS = {};
-var OBJETIVOS = {};
- 
-// Temas por curso y asignatura (versión compacta)
- 
-var DATOS_CURIOSOS = ['El cerebro tiene 86.000 millones de neuronas. Cada vez que aprendes algo nuevo, se forman conexiones entre ellas.','Estudiar en sesiones de 25 minutos con descansos es hasta un 40% más efectivo que estudiar horas seguidas.','Dormir bien después de estudiar consolida la memoria. El cerebro archiva lo aprendido mientras duermes.','El ejercicio físico aumenta el flujo de sangre al cerebro y mejora la concentración.','Escribir a mano activa más zonas del cerebro que leer en pantalla o subrayar.','Enseñar lo que has aprendido a otra persona es la técnica más potente para fijar el conocimiento.','El cerebro aprende mejor cuando conecta conceptos nuevos con cosas que ya conoce.','Los errores son esenciales para aprender. Cada vez que te equivocas, el cerebro refuerza el camino correcto.','Beber agua mejora el rendimiento cognitivo hasta un 30%. El cerebro es un 75% agua.','Estudiar en el mismo lugar y a la misma hora crea una rutina que ayuda al cerebro a concentrarse.'];
- 
-var TEMAS = {};
-var OBJETIVOS = {};
- 
-// Temas por curso y asignatura (versión compacta)
- 
+var PRECIOS = {'1P':{basico:30,pro:45,tutorizado:75},'2P':{basico:30,pro:45,tutorizado:75},'3P':{basico:30,pro:45,tutorizado:75},'4P':{basico:30,pro:45,tutorizado:75},'5P':{basico:30,pro:45,tutorizado:75},'6P':{basico:30,pro:45,tutorizado:75},'1E':{basico:35,pro:55,tutorizado:90},'2E':{basico:35,pro:55,tutorizado:90},'3E':{basico:35,pro:55,tutorizado:90},'4E':{basico:35,pro:55,tutorizado:90},'1B':{basico:45,pro:70,tutorizado:120},'2B':{basico:45,pro:70,tutorizado:120}};
 var DATOS_CURIOSOS = ['El cerebro tiene 86.000 millones de neuronas. Cada vez que aprendes algo nuevo, se forman conexiones entre ellas.','Estudiar en sesiones de 25 minutos con descansos es hasta un 40% más efectivo que estudiar horas seguidas.','Dormir bien después de estudiar consolida la memoria. El cerebro archiva lo aprendido mientras duermes.','El ejercicio físico aumenta el flujo de sangre al cerebro y mejora la concentración.','Escribir a mano activa más zonas del cerebro que leer en pantalla o subrayar.','Enseñar lo que has aprendido a otra persona es la técnica más potente para fijar el conocimiento.','El cerebro aprende mejor cuando conecta conceptos nuevos con cosas que ya conoce.','Los errores son esenciales para aprender. Cada vez que te equivocas, el cerebro refuerza el camino correcto.','Beber agua mejora el rendimiento cognitivo hasta un 30%. El cerebro es un 75% agua.','Estudiar en el mismo lugar y a la misma hora crea una rutina que ayuda al cerebro a concentrarse.'];
  
 var TEMAS = {};
@@ -405,27 +391,27 @@ var OBJETIVOS = {};
  
 TEMAS['1P'] = {};
 TEMAS['1P']['mates'] = [{n:'Números del 1 al 100',e:'Ej: contar de 2 en 2 · ¿qué número va después del 47?'},{n:'Sumas sin llevar',e:'Ej: 23 + 14 = ? · ¿cuánto es 31 + 15?'},{n:'Restas sin llevar',e:'Ej: 35 – 12 = ? · ¿cuánto queda si tengo 28 y gasto 15?'},{n:'Sumas llevando',e:'Ej: 47 + 35 = ? · cuando la suma pasa de 10'},{n:'Figuras geométricas básicas',e:'Ej: círculo, cuadrado, triángulo, rectángulo · ¿cuántos lados tiene?'},{n:'Medidas: largo, corto, pesado, ligero',e:'Ej: ¿qué es más largo, un lápiz o una regla? · comparar objetos'},{n:'El dinero: monedas y billetes',e:'Ej: ¿cuánto cuestan 2 caramelos a 5 céntimos cada uno?'},{n:'Problemas sencillos de suma y resta',e:'Ej: tengo 8 manzanas y me dan 5 más, ¿cuántas tengo?'}];
-TEMAS['1P']['valenciano'] = [{n:'Lectura de sílabas i paraules senzilles',e:'Ej: llegir «ma-ma», «pa-pa», «ca-sa» sense errors'},{n:'Escriptura de paraules bàsiques',e:'Ej: escriure «sol», «mar», «gat» correctament'},{n:'Majúscules i minúscules',e:'Ej: saber quan s’usa majúscula: noms propis, inici de frase'},{n:'Oracions senzilles',e:'Ej: «El gat juga» · «La nina menja poma» · saber on va el punt'},{n:'Vocabulari del cos humà',e:'Ej: cap, braç, cama, mà, nas, boca, ulls…'},{n:'Vocabulari de la família i l’escola',e:'Ej: mare, pare, germà, mestre, pissarra, llapis…'},{n:'Rimes i cançons',e:'Ej: completar una rima senzilla · reconèixer sons iguals al final'}];
+TEMAS['1P']['valenciano'] = [{n:'Lectura de sílabas i paraules senzilles',e:'Ej: llegir «ma-ma», «pa-pa», «ca-sa» sense errors'},{n:'Escriptura de paraules bàsiques',e:'Ej: escriure «sol», «mar», «gat» correctament'},{n:'Majúscules i minúscules',e:'Ej: saber quan s\'usa majúscula: noms propis, inici de frase'},{n:'Oracions senzilles',e:'Ej: «El gat juga» · «La nina menja poma» · saber on va el punt'},{n:'Vocabulari del cos humà',e:'Ej: cap, braç, cama, mà, nas, boca, ulls…'},{n:'Vocabulari de la família i l\'escola',e:'Ej: mare, pare, germà, mestre, pissarra, llapis…'},{n:'Rimes i cançons',e:'Ej: completar una rima senzilla · reconèixer sons iguals al final'}];
 TEMAS['1P']['castellano'] = [{n:'Lectura de sílabas y palabras sencillas',e:'Ej: leer «ma-má», «pa-pá», «ca-sa» sin errores'},{n:'Escritura de palabras básicas',e:'Ej: escribir «sol», «mar», «gato» correctamente'},{n:'Mayúsculas y minúsculas',e:'Ej: saber cuándo usar mayúscula: nombres propios, inicio de frase'},{n:'Oraciones sencillas',e:'Ej: «El gato juega» · «La niña come manzana» · saber dónde va el punto'},{n:'Vocabulario del cuerpo humano',e:'Ej: cabeza, brazo, pierna, mano, nariz, boca, ojos…'},{n:'Vocabulario de la familia y el colegio',e:'Ej: madre, padre, hermano, maestro, pizarra, lápiz…'},{n:'Rimas y canciones',e:'Ej: completar una rima sencilla · reconocer sonidos iguales al final'}];
-TEMAS['1P']['ingles'] = [{n:'Numbers 1-20',e:'Ej: count from 1 to 20 · What number is this? · one, two, three…'},{n:'Colours',e:'Ej: red, blue, green, yellow, pink, orange, purple, black, white'},{n:'Animals',e:'Ej: cat, dog, bird, fish, rabbit, horse, cow, elephant…'},{n:'Greetings and farewells',e:'Ej: Hello! / Goodbye! / Good morning! / How are you? / I’m fine.'},{n:'Family members',e:'Ej: mum, dad, brother, sister, grandma, grandpa…'},{n:'Classroom objects',e:'Ej: book, pencil, ruler, bag, chair, table, board…'},{n:'Simple commands',e:'Ej: Stand up! / Sit down! / Open your book! / Listen!'}];
+TEMAS['1P']['ingles'] = [{n:'Numbers 1-20',e:'Ej: count from 1 to 20 · What number is this? · one, two, three…'},{n:'Colours',e:'Ej: red, blue, green, yellow, pink, orange, purple, black, white'},{n:'Animals',e:'Ej: cat, dog, bird, fish, rabbit, horse, cow, elephant…'},{n:'Greetings and farewells',e:'Ej: Hello! / Goodbye! / Good morning! / How are you? / I\'m fine.'},{n:'Family members',e:'Ej: mum, dad, brother, sister, grandma, grandpa…'},{n:'Classroom objects',e:'Ej: book, pencil, ruler, bag, chair, table, board…'},{n:'Simple commands',e:'Ej: Stand up! / Sit down! / Open your book! / Listen!'}];
  
 TEMAS['2P'] = {};
 TEMAS['2P']['mates'] = [{n:'Números hasta el 999',e:'Ej: leer y escribir 347 · ¿cuál es mayor, 528 o 582?'},{n:'Sumas y restas con llevadas',e:'Ej: 456 + 238 = ? · 521 – 167 = ?'},{n:'La multiplicación: las tablas del 1 al 5',e:'Ej: 3 × 4 = ? · ¿cuántas patas tienen 6 perros?'},{n:'División sencilla',e:'Ej: repartir 12 caramelos entre 3 amigos · 12 ÷ 3 = ?'},{n:'Medida del tiempo: horas y minutos',e:'Ej: ¿qué hora marca el reloj? · ¿cuánto falta para las 3?'},{n:'Longitud: metro y centímetro',e:'Ej: medir con la regla · ¿cuántos cm tiene un metro?'},{n:'Figuras planas: lados y vértices',e:'Ej: ¿cuántos lados tiene un hexágono? · dibujar un triángulo'},{n:'Problemas de 1 y 2 operaciones',e:'Ej: en una tienda hay 24 manzanas y venden 9, ¿cuántas quedan?'}];
-TEMAS['2P']['valenciano'] = [{n:'Lectura fluida de textos curts',e:'Ej: llegir un text de 5-6 línies sense parar-se molt'},{n:'Comprensió lectora bàsica',e:'Ej: respondre «qui», «on» i «quan» sobre un conte senzill'},{n:'Escriptura de frases amb sentit',e:'Ej: escriure 3 frases sobre el que has fet al matí'},{n:'L’accent i els signes de puntuació bàsics',e:'Ej: posar el punt i la coma correctament · paraules amb accent'},{n:'El nom i l’adjectiu',e:'Ej: «gat gris» → «gat» és el nom, «gris» és l’adjectiu'},{n:'El verb: present i passat',e:'Ej: «juge» (ara) vs «jugava» (ahir) · conjugar «anar» i «fer»'},{n:'Sinònims senzills',e:'Ej: gran = enorme · content = alegre · xicotet = menut'},{n:'Descripció d’una imatge o personatge',e:'Ej: escriure 4-5 frases descrivint un dibuix o un animal'}];
+TEMAS['2P']['valenciano'] = [{n:'Lectura fluida de textos curts',e:'Ej: llegir un text de 5-6 línies sense parar-se molt'},{n:'Comprensió lectora bàsica',e:'Ej: respondre «qui», «on» i «quan» sobre un conte senzill'},{n:'Escriptura de frases amb sentit',e:'Ej: escriure 3 frases sobre el que has fet al matí'},{n:'L\'accent i els signes de puntuació bàsics',e:'Ej: posar el punt i la coma correctament · paraules amb accent'},{n:'El nom i l\'adjectiu',e:'Ej: «gat gris» → «gat» és el nom, «gris» és l\'adjectiu'},{n:'El verb: present i passat',e:'Ej: «juge» (ara) vs «jugava» (ahir) · conjugar «anar» i «fer»'},{n:'Sinònims senzills',e:'Ej: gran = enorme · content = alegre · xicotet = menut'},{n:'Descripció d\'una imatge o personatge',e:'Ej: escriure 4-5 frases descrivint un dibuix o un animal'}];
 TEMAS['2P']['castellano'] = [{n:'Lectura fluida de textos cortos',e:'Ej: leer un texto de 5-6 líneas sin parar mucho'},{n:'Comprensión lectora básica',e:'Ej: responder «quién», «dónde» y «cuándo» sobre un cuento sencillo'},{n:'Escritura de frases con sentido',e:'Ej: escribir 3 frases sobre lo que has hecho esta mañana'},{n:'El acento y los signos de puntuación básicos',e:'Ej: poner el punto y la coma correctamente · palabras con tilde'},{n:'El nombre y el adjetivo',e:'Ej: «gato gris» → «gato» es el nombre, «gris» es el adjetivo'},{n:'El verbo: presente y pasado',e:'Ej: «juego» (ahora) vs «jugaba» (ayer) · conjugar «ir» y «hacer»'},{n:'Sinónimos sencillos',e:'Ej: grande = enorme · contento = alegre · pequeño = diminuto'},{n:'Descripción de una imagen o personaje',e:'Ej: escribir 4-5 frases describiendo un dibujo o un animal'}];
-TEMAS['2P']['ingles'] = [{n:'Numbers 1-100',e:'Ej: count to 100 · twenty-three, forty-five, seventy… '},{n:'Colours and shapes',e:'Ej: a red circle · a blue square · a yellow triangle'},{n:'Food and drinks',e:'Ej: apple, banana, milk, water, bread, pizza, sandwich…'},{n:'Days of the week',e:'Ej: Monday, Tuesday… Sunday · What day is today?'},{n:'Weather',e:'Ej: It’s sunny / rainy / cloudy / windy / cold / hot today.'},{n:'My body',e:'Ej: head, shoulders, knees and toes · I have two eyes.'},{n:'Simple sentences',e:'Ej: I like cats. / She has a dog. / We play football.'}];
+TEMAS['2P']['ingles'] = [{n:'Numbers 1-100',e:'Ej: count to 100 · twenty-three, forty-five, seventy… '},{n:'Colours and shapes',e:'Ej: a red circle · a blue square · a yellow triangle'},{n:'Food and drinks',e:'Ej: apple, banana, milk, water, bread, pizza, sandwich…'},{n:'Days of the week',e:'Ej: Monday, Tuesday… Sunday · What day is today?'},{n:'Weather',e:'Ej: It\'s sunny / rainy / cloudy / windy / cold / hot today.'},{n:'My body',e:'Ej: head, shoulders, knees and toes · I have two eyes.'},{n:'Simple sentences',e:'Ej: I like cats. / She has a dog. / We play football.'}];
  
 TEMAS['3P'] = {};
 TEMAS['3P']['mates'] = [{n:'Números hasta el 9.999',e:'Ej: leer y escribir 4.762 · ordenar de mayor a menor'},{n:'Sumas y restas de varios dígitos',e:'Ej: 3.456 + 1.278 = ? · 5.000 – 2.347 = ?'},{n:'Tablas de multiplicar del 1 al 10',e:'Ej: 7 × 8 = ? · 9 × 6 = ? · repasar todas las tablas'},{n:'División con una cifra',e:'Ej: 84 ÷ 4 = ? · ¿cuántos grupos de 6 hay en 48?'},{n:'Fracciones básicas',e:'Ej: ¿qué es 1/2? · colorear 3/4 de una figura · ¿cuál es mayor?'},{n:'Medidas de longitud: km, m, cm, mm',e:'Ej: 2 km = 2.000 m · ¿cuántos cm hay en 3 metros?'},{n:'Medidas de peso: kg y g',e:'Ej: 1 kg = 1.000 g · ¿cuántos gramos son 2,5 kg?'},{n:'Perímetro de figuras',e:'Ej: perímetro de un rectángulo de 5×3 cm · sumar todos los lados'},{n:'Problemas de varias operaciones',e:'Ej: si compro 3 libros a 4€ cada uno y pago con 20€, ¿qué cambio me dan?'}];
-TEMAS['3P']['valenciano'] = [{n:'Comprensió de textos narratius',e:'Ej: llegir un conte i identificar personatges, lloc i temps'},{n:'Escriptura creativa: inventar un conte',e:'Ej: escriure un conte curt amb inici, nus i desenllaç'},{n:'L’accent: paraules agudes, planes i esdrúixoles',e:'Ej: «camió» és aguda · «taula» és plana · «màquina» és esdrúixola'},{n:'Categories gramaticals: nom, adjectiu, verb, article',e:'Ej: «la gossa negra corre» → identificar cada categoria'},{n:'El plural i el femení',e:'Ej: «el gat» → «els gats» · «el nen» → «la nena»'},{n:'Els signes de puntuació',e:'Ej: punt, coma, punt i coma, interrogació, exclamació'},{n:'Vocabulari: sinònims i antònims',e:'Ej: sinònim de «content» · antònim de «ràpid»'},{n:'Textos informatius senzills',e:'Ej: llegir un text sobre un animal i respondre preguntes'}];
+TEMAS['3P']['valenciano'] = [{n:'Comprensió de textos narratius',e:'Ej: llegir un conte i identificar personatges, lloc i temps'},{n:'Escriptura creativa: inventar un conte',e:'Ej: escriure un conte curt amb inici, nus i desenllaç'},{n:'L\'accent: paraules agudes, planes i esdrúixoles',e:'Ej: «camió» és aguda · «taula» és plana · «màquina» és esdrúixola'},{n:'Categories gramaticals: nom, adjectiu, verb, article',e:'Ej: «la gossa negra corre» → identificar cada categoria'},{n:'El plural i el femení',e:'Ej: «el gat» → «els gats» · «el nen» → «la nena»'},{n:'Els signes de puntuació',e:'Ej: punt, coma, punt i coma, interrogació, exclamació'},{n:'Vocabulari: sinònims i antònims',e:'Ej: sinònim de «content» · antònim de «ràpid»'},{n:'Textos informatius senzills',e:'Ej: llegir un text sobre un animal i respondre preguntes'}];
 TEMAS['3P']['castellano'] = [{n:'Comprensión de textos narrativos',e:'Ej: leer un cuento e identificar personajes, lugar y tiempo'},{n:'Escritura creativa: inventar un cuento',e:'Ej: escribir un cuento corto con inicio, nudo y desenlace'},{n:'El acento: palabras agudas, llanas y esdrújulas',e:'Ej: «camión» es aguda · «mesa» es llana · «máquina» es esdrújula'},{n:'Categorías gramaticales: nombre, adjetivo, verbo, artículo',e:'Ej: «la perra negra corre» → identificar cada categoría'},{n:'El plural y el femenino',e:'Ej: «el gato» → «los gatos» · «el niño» → «la niña»'},{n:'Los signos de puntuación',e:'Ej: punto, coma, punto y coma, interrogación, exclamación'},{n:'Vocabulario: sinónimos y antónimos',e:'Ej: sinónimo de «contento» · antónimo de «rápido»'},{n:'Textos informativos sencillos',e:'Ej: leer un texto sobre un animal y responder preguntas'}];
-TEMAS['3P']['ingles'] = [{n:'Numbers up to 1000',e:'Ej: one hundred and fifty · five hundred and twenty-three'},{n:'Describing people and things',e:'Ej: She has long brown hair. / The house is big and white.'},{n:'Present simple',e:'Ej: I eat breakfast at 7. / She likes cats. / Do you play football?'},{n:'Present continuous',e:'Ej: I am reading. / They are playing in the park.'},{n:'Months and seasons',e:'Ej: January, February… / In spring it is warm. / My birthday is in July.'},{n:'Places in town',e:'Ej: school, park, supermarket, library, hospital, swimming pool…'},{n:'Asking for and giving directions',e:'Ej: Turn left / right. / Go straight on. / It’s next to the bank.'},{n:'Vocabulary: clothes and accessories',e:'Ej: shirt, trousers, dress, hat, shoes, jacket, scarf…'}];
+TEMAS['3P']['ingles'] = [{n:'Numbers up to 1000',e:'Ej: one hundred and fifty · five hundred and twenty-three'},{n:'Describing people and things',e:'Ej: She has long brown hair. / The house is big and white.'},{n:'Present simple',e:'Ej: I eat breakfast at 7. / She likes cats. / Do you play football?'},{n:'Present continuous',e:'Ej: I am reading. / They are playing in the park.'},{n:'Months and seasons',e:'Ej: January, February… / In spring it is warm. / My birthday is in July.'},{n:'Places in town',e:'Ej: school, park, supermarket, library, hospital, swimming pool…'},{n:'Asking for and giving directions',e:'Ej: Turn left / right. / Go straight on. / It\'s next to the bank.'},{n:'Vocabulary: clothes and accessories',e:'Ej: shirt, trousers, dress, hat, shoes, jacket, scarf…'}];
  
 TEMAS['4P'] = {};
 TEMAS['4P']['mates'] = [{n:'Números hasta el 99.999',e:'Ej: leer 74.382 · ordenar y comparar números de 5 cifras'},{n:'Operaciones con números grandes',e:'Ej: 23.456 + 41.307 = ? · 80.000 – 34.568 = ?'},{n:'Multiplicación de 2 cifras',e:'Ej: 34 × 12 = ? · 56 × 23 = ? · algoritmo de la multiplicación'},{n:'División con 2 cifras',e:'Ej: 144 ÷ 12 = ? · 256 ÷ 16 = ? · dividendo, divisor, cociente y resto'},{n:'Fracciones: equivalencia y comparación',e:'Ej: 1/2 = 2/4 · ¿cuál es mayor, 3/5 o 4/5?'},{n:'Números decimales: décimas y centésimas',e:'Ej: 3,5 · 2,47 · ¿qué significa cada cifra decimal?'},{n:'Ángulos y tipos',e:'Ej: ángulo recto (90°), agudo (menos de 90°), obtuso (más de 90°)'},{n:'Área y perímetro',e:'Ej: área de un rectángulo de 6×4 cm = 24 cm² · perímetro = 20 cm'},{n:'Estadística: tablas y gráficos de barras',e:'Ej: hacer una tabla con las notas de la clase · dibujar el gráfico'},{n:'Problemas complejos',e:'Ej: problemas con varias operaciones y datos innecesarios'}];
-TEMAS['4P']['valenciano'] = [{n:'Comprensió de textos variats',e:'Ej: llegir un text i distingir fets d’opinions · idea principal'},{n:'Escriptura: descripció i narració',e:'Ej: descriure un paisatge · continuar una història donada'},{n:'Ortografia: paraules amb b/v, c/s/z, g/j',e:'Ej: «beure» o «veure» · «cercle» · «gira» o «jira»'},{n:'L’oració: subjecte i predicat',e:'Ej: «La mare compra pa» → subjecte: la mare, predicat: compra pa'},{n:'Tipus d’oracions',e:'Ej: enunciativa, interrogativa, exclamativa, imperativa · exemples'},{n:'El verb: persona, nombre i temps',e:'Ej: jo cante (1a persona, singular, present) · ells cantaven (passat)'},{n:'Família lèxica i camp semàntic',e:'Ej: família de «mar»: marina, mariner, marítim… · camp de colors'},{n:'Textos periodístics: la notícia',e:'Ej: parts d’una notícia: titular, cos, qui, on, quan, com, per què'}];
+TEMAS['4P']['valenciano'] = [{n:'Comprensió de textos variats',e:'Ej: llegir un text i distingir fets d\'opinions · idea principal'},{n:'Escriptura: descripció i narració',e:'Ej: descriure un paisatge · continuar una història donada'},{n:'Ortografia: paraules amb b/v, c/s/z, g/j',e:'Ej: «beure» o «veure» · «cercle» · «gira» o «jira»'},{n:'L\'oració: subjecte i predicat',e:'Ej: «La mare compra pa» → subjecte: la mare, predicat: compra pa'},{n:'Tipus d\'oracions',e:'Ej: enunciativa, interrogativa, exclamativa, imperativa · exemples'},{n:'El verb: persona, nombre i temps',e:'Ej: jo cante (1a persona, singular, present) · ells cantaven (passat)'},{n:'Família lèxica i camp semàntic',e:'Ej: família de «mar»: marina, mariner, marítim… · camp de colors'},{n:'Textos periodístics: la notícia',e:'Ej: parts d\'una notícia: titular, cos, qui, on, quan, com, per què'}];
 TEMAS['4P']['castellano'] = [{n:'Comprensión de textos variados',e:'Ej: leer un texto y distinguir hechos de opiniones · idea principal'},{n:'Escritura: descripción y narración',e:'Ej: describir un paisaje · continuar una historia dada'},{n:'Ortografía: palabras con b/v, c/s/z, g/j',e:'Ej: «beber» o «ver» · «circo» · «girar» o «jirar»'},{n:'La oración: sujeto y predicado',e:'Ej: «La madre compra pan» → sujeto: la madre, predicado: compra pan'},{n:'Tipos de oraciones',e:'Ej: enunciativa, interrogativa, exclamativa, imperativa · ejemplos'},{n:'El verbo: persona, número y tiempo',e:'Ej: yo canto (1ª persona, singular, presente) · ellos cantaban (pasado)'},{n:'Familia léxica y campo semántico',e:'Ej: familia de «mar»: marino, marinero, marítimo… · campo de colores'},{n:'Textos periodísticos: la noticia',e:'Ej: partes de una noticia: titular, cuerpo, quién, dónde, cuándo, cómo'}];
-TEMAS['4P']['ingles'] = [{n:'Present simple and present continuous',e:'Ej: She reads every day. / She is reading now. · ¿cuándo usar cada uno?'},{n:'Past simple: regular verbs',e:'Ej: I walked, I played, I watched · añadir -ed al verbo'},{n:'Past simple: irregular verbs',e:'Ej: go → went · eat → ate · see → saw · have → had'},{n:'There is / there are',e:'Ej: There is a cat. / There are three dogs. / Is there a park near here?'},{n:'Can and can’t',e:'Ej: I can swim. / She can’t fly. / Can you play the piano?'},{n:'Vocabulary: sports and hobbies',e:'Ej: swimming, cycling, painting, reading, cooking, dancing…'},{n:'Prepositions of place',e:'Ej: in, on, under, next to, between, in front of, behind…'},{n:'Writing: a short paragraph about my weekend',e:'Ej: Last weekend I went to the park. I played football with my friends.'}];
+TEMAS['4P']['ingles'] = [{n:'Present simple and present continuous',e:'Ej: She reads every day. / She is reading now. · ¿cuándo usar cada uno?'},{n:'Past simple: regular verbs',e:'Ej: I walked, I played, I watched · añadir -ed al verbo'},{n:'Past simple: irregular verbs',e:'Ej: go → went · eat → ate · see → saw · have → had'},{n:'There is / there are',e:'Ej: There is a cat. / There are three dogs. / Is there a park near here?'},{n:'Can and can\'t',e:'Ej: I can swim. / She can\'t fly. / Can you play the piano?'},{n:'Vocabulary: sports and hobbies',e:'Ej: swimming, cycling, painting, reading, cooking, dancing…'},{n:'Prepositions of place',e:'Ej: in, on, under, next to, between, in front of, behind…'},{n:'Writing: a short paragraph about my weekend',e:'Ej: Last weekend I went to the park. I played football with my friends.'}];
  
 TEMAS['5P'] = {};
 TEMAS['5P']['mates'] = [{n:'Números naturales hasta millones',e:'Ej: leer 4.305.720 · ordenar números grandes'},{n:'Fracciones: concepto y comparación',e:'Ej: ¿Cuál es mayor, 3/4 o 2/3?'},{n:'Operaciones con fracciones',e:'Ej: 1/2 + 1/3 = ?'},{n:'Números decimales',e:'Ej: ordenar 2,4 / 2,04 / 2,40'},{n:'Operaciones con decimales',e:'Ej: 4,5 × 1,2 = ?'},{n:'Múltiplos y divisores',e:'Ej: múltiplos de 6 · ¿4 es divisor de 20?'},{n:'Potencias y raíces cuadradas',e:'Ej: 3² = 9 · √49 = ?'},{n:'Geometría: ángulos y polígonos',e:'Ej: ángulo recto · lados de un hexágono'},{n:'Perímetros y áreas',e:'Ej: perímetro de rectángulo 5×3'},{n:'Unidades de medida',e:'Ej: 3 km a metros · 500 g a kg'},{n:'Estadística: tablas y gráficas',e:'Ej: leer diagrama de barras · calcular media'},{n:'Problemas de varias operaciones',e:'Ej: problemas de 2-3 pasos'}];
@@ -489,7 +475,7 @@ function setProg(p){document.getElementById('progressBar').style.width = p + '%'
  
 // ── NAVEGACIÓN ──
 function ir(de, a){
-  if(!validar(de)) return;
+  if(a > de && !validar(de)) return;
   if(de === 1 && a === 2) renderTemas();
   if(de === 2 && a === 3){ renderObjetivos(); renderPacks(); }
   document.getElementById('screen' + de).classList.remove('active');
@@ -508,21 +494,18 @@ function validar(step){
       if(!v){ w.classList.add('field-error'); ok = false; }
       else w.classList.remove('field-error');
     });
-    var cur = document.querySelector('input[name="curso"]:checked');
-    var asi = document.querySelector('input[name="asig"]:checked');
+    var curVal = _cursoSel || (function(){var r=document.querySelector('input[name="curso"]:checked');return r?r.value:'';}());
+    var asiVal = _asigSel || (function(){var r=document.querySelector('input[name="asig"]:checked');return r?r.value:'';}());
     var wc = document.getElementById('wrap-curso');
     var wa = document.getElementById('wrap-asig');
-    if(!cur){ wc.classList.add('field-error'); ok = false; } else wc.classList.remove('field-error');
-    if(!asi){ wa.classList.add('field-error'); ok = false; } else wa.classList.remove('field-error');
-    var err1 = document.getElementById('paso1-error');
-    if(!ok && err1) err1.style.display = 'block';
-    else if(err1) err1.style.display = 'none';
+    if(!curVal){ wc.classList.add('field-error'); ok = false; } else wc.classList.remove('field-error');
+    if(!asiVal){ wa.classList.add('field-error'); ok = false; } else wa.classList.remove('field-error');
     if(ok){
       state.nombre = document.getElementById('nombre').value.trim();
       state.telefono = document.getElementById('telefono').value.trim();
       state.alumno = document.getElementById('alumno').value.trim();
-      state.curso = cur.value;
-      state.asig = asi.value;
+      state.curso = curVal;
+      state.asig = asiVal;
     }
   }
   if(step === 2){
@@ -641,8 +624,8 @@ function renderPacks(){
   grid.innerHTML = '';
   var packs = [
     {id:'pb', val:'basico', precio:p.basico, nombre:'BÁSICO', desc:'Cuadernillo PDF + soluciones'},
-    {id:'pp', val:'pro', precio:p.pro, nombre:'PRO', desc:'+ Ejercicios extra de los temas fallados + Revisión a mitad del verano'},
-    {id:'pt', val:'tutorizado', precio:p.tutorizado, nombre:'TUTORIZADO', desc:'+ Vídeos en pizarra de tus errores + Canal directo de dudas'}
+    {id:'pp', val:'pro', precio:p.pro, nombre:'PRO', desc:'+ Soluciones paso a paso + Revisión mensual'},
+    {id:'pt', val:'tutorizado', precio:p.tutorizado, nombre:'TUTORIZADO', desc:'+ Vídeos en pizarra + Dudas directas'}
   ];
   packs.forEach(function(pk){
     var wrap = document.createElement('div');
@@ -758,19 +741,17 @@ function iniciarGeneracion(){
   });
  
   var promptParts = [];
-  promptParts.push('Eres Elena De Miguel, profesora de repaso especializada en Pedagogía Terapéutica. Crea un cuadernillo de repaso de verano COMPLETO, extenso y detallado para un alumno de ' + (CURSO_N[state.curso]||'') + ' de ' + (ASIG_N[state.asig]||'') + '.');
- 
-  promptParts.push('DATOS DEL ALUMNO: Nombre: ' + state.alumno + ', Nivel: ' + (state.nivel||'Medio') + ', Objetivos: ' + (state.objetivos.join(', ')||'Repasar y mejorar') + (state.comentarios ? ', Comentarios: ' + state.comentarios : ''));
- 
-  promptParts.push('SEMÁFORO — número EXACTO de ejercicios por tema:\n🔴 TEMAS FLOJOS (10 ejercicios cada uno): ' + (rojos.join(', ')||'ninguno') + '\n🟡 TEMAS REGULARES (8 ejercicios cada uno): ' + (amarillos.join(', ')||'ninguno') + '\n🟢 TEMAS BIEN (5 ejercicios cada uno): ' + (verdes.join(', ')||'ninguno'));
- 
+  promptParts.push('Eres Elena De Miguel, profesora de repaso especializada en Pedagogía Terapéutica.');
+  promptParts.push('Crea un cuadernillo de repaso de verano COMPLETO para un alumno de ' + (CURSO_N[state.curso]||'') + ' de ' + (ASIG_N[state.asig]||'') + '.');
+  promptParts.push('DATOS: Nombre: ' + state.alumno + ', Nivel: ' + (state.nivel||'Medio') + ', Objetivos: ' + (state.objetivos.join(', ')||'Repasar'));
+  if(state.comentarios) promptParts.push('Comentarios: ' + state.comentarios);
+  promptParts.push('SEMÁFORO - Temas flojos (PRIORIDAD ALTA, 6-8 ejercicios): ' + (rojos.join(', ')||'ninguno'));
+  promptParts.push('Temas regulares (PRIORIDAD MEDIA, 4-5 ejercicios): ' + (amarillos.join(', ')||'ninguno'));
+  promptParts.push('Temas bien (repaso rápido, 2-3 ejercicios): ' + (verdes.join(', ')||'ninguno'));
   if(instrObjetos.length > 0) promptParts.push('AJUSTES POR OBJETIVOS: ' + instrObjetos.join('. '));
- 
-  promptParts.push('INSTRUCCIONES GENERALES:\n1. Empieza siempre por los temas rojos.\n2. Cada bloque incluye: mini explicación (2-3 frases simples) + truco mnemotécnico si aplica + ejercicios graduados de fácil a difícil.\n3. Los ejercicios deben ser REALES y CONCRETOS — con palabras, números y frases reales. NUNCA genéricos.\n4. Incluye siempre la solución completa al final (campo solucion de cada ejercicio).\n5. Usa lenguaje cercano y motivador.\n6. Varía el tipo de ejercicio: completar huecos, corregir errores, escribir frases propias, traducir, relacionar, responder preguntas, unir frases, clasificar, crear textos cortos...\n7. Los últimos 1-2 ejercicios de cada tema rojo deben ser un desafío (más difíciles o creativos).\n8. Para nivel Bajo: incluye un ejemplo resuelto antes de los ejercicios difíciles.\n9. Para nivel Alto: añade ejercicios de extensión o análisis.');
- 
-  promptParts.push('SECCIONES ESPECIALES — incluye estas tres secciones adicionales intercaladas:\n\nA) RETO DE LA SEMANA (incluir 2 retos a lo largo del cuadernillo, después del 3er y 6o tema):\n- Un ejercicio largo, divertido y creativo que mezcle varios temas ya vistos.\n- Ejemplos: escribir un diálogo usando 3 tiempos verbales, crear una historia con errores para corregir, diseñar un juego de preguntas, escribir una carta o email creativo, resolver un misterio gramatical...\n- Campo tipo: "reto"\n\nB) AUTOEVALUACIÓN (incluir 2 autoevaluaciones, después del 3er y 6o tema, ANTES del reto):\n- 6-8 preguntas tipo test o verdadero/falso que repasan los temas vistos hasta ese momento.\n- Al final de la autoevaluación incluir: "¿Cuántas has acertado? 6-8: Excelente 🌟 / 4-5: Bien, repasa los fallos 📖 / 0-3: Vuelve a repasar esos temas 💪"\n- Campo tipo: "autoevaluacion"\n\nC) EJERCICIO DIVERTIDO (1 por tema rojo, al final del bloque):\n- Algo más lúdico: sopa de letras con vocabulario del tema, crucigrama, trabalenguas, adivinanza gramatical, código secreto, bingo de palabras...\n- Campo tipo: "divertido"');
- 
-  promptParts.push('FORMATO — responde ÚNICAMENTE con este JSON sin texto adicional:\n{"secciones":[{"tema":"nombre exacto","nivel_semaforo":"rojo o amarillo o verde","tipo":"normal","mini_explicacion":"explicación en 2-3 frases","truco":"truco opcional","ejercicios":[{"num":1,"enunciado":"enunciado concreto","tipo_ej":"completar/corregir/escribir/traducir/relacionar/test/divertido","solucion":"solución completa"}]},{"tema":"Reto de la Semana 1","nivel_semaforo":"reto","tipo":"reto","mini_explicacion":"","truco":"","ejercicios":[{"num":1,"enunciado":"ejercicio creativo largo","tipo_ej":"reto","solucion":"orientación de solución"}]},{"tema":"Autoevaluación 1","nivel_semaforo":"auto","tipo":"autoevaluacion","mini_explicacion":"","truco":"","ejercicios":[{"num":1,"enunciado":"pregunta de repaso","tipo_ej":"test","solucion":"respuesta correcta"}]}],"total_ejercicios":número,"mensaje_motivador":"mensaje para ' + state.alumno + '"}\n\nSé MUY generoso con los ejercicios. El objetivo es 45-55 páginas de trabajo real.');
+  promptParts.push('INSTRUCCIONES: 1) Empieza por temas rojos. 2) Ejercicios REALES y CONCRETOS con números/palabras reales. 3) Incluye mini explicación del concepto antes de los ejercicios. 4) Añade truco mnemotécnico si aplica. 5) Incluye siempre la solución completa. 6) Lenguaje cercano y motivador.');
+  promptParts.push('RESPONDE ÚNICAMENTE con este JSON sin texto adicional: {"secciones":[{"tema":"nombre","nivel_semaforo":"rojo o amarillo o verde","mini_explicacion":"2-3 frases simples","truco":"opcional","ejercicios":[{"num":1,"enunciado":"enunciado concreto","solucion":"solución completa"}]}],"total_ejercicios":número,"mensaje_motivador":"mensaje para ' + state.alumno + '"}');
+  promptParts.push('Sé muy generoso con los ejercicios. Objetivo: 40-50 páginas de trabajo real.');
  
   var prompt = promptParts.join('\n\n');
  
@@ -852,18 +833,7 @@ function procesarPago(){
 }
  
 function pagarBizum(){
-  var fecha = new Date().toLocaleDateString('es-ES');
-  var msg = '💳 SOLICITUD DE PAGO POR BIZUM\n';
-  msg += '━━━━━━━━━━━━━━━━━━━━\n';
-  msg += '👤 Nombre: ' + state.nombre + '\n';
-  msg += '📱 Teléfono: ' + state.telefono + '\n';
-  msg += '👦 Alumno/a: ' + state.alumno + '\n';
-  msg += '📚 ' + (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'') + '\n';
-  msg += '📦 Pack ' + state.pack.charAt(0).toUpperCase() + state.pack.slice(1) + '\n';
-  msg += '💰 Total: ' + state.precioFinal + '€\n';
-  msg += '📅 Fecha: ' + fecha + '\n';
-  msg += '━━━━━━━━━━━━━━━━━━━━\n';
-  msg += 'Realizo el pago por Bizum ahora mismo.';
+  var msg = 'PAGO CUADERNILLO DE VERANO\n' + state.alumno + '\n' + (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'') + '\nPack ' + state.pack + ' · ' + state.precioFinal + '€';
   window.open('https://wa.me/34622011814?text=' + encodeURIComponent(msg), '_blank', 'noopener');
 }
  
@@ -937,28 +907,7 @@ function mostrarDescarga(){
  
   // Notificar por WhatsApp después de 2 segundos
   setTimeout(function(){
-    var fecha = new Date().toLocaleDateString('es-ES');
-    var d = new Date(); var numRecibo = d.getFullYear() + '-' + (d.getMonth()+1).toString().padStart(2,'0') + '-' + d.getTime().toString().slice(-4);
-    var msg = '🧾 RECIBO DE COMPRA\n';
-    msg += '━━━━━━━━━━━━━━━━━━━━\n';
-    msg += 'Nº Recibo: ' + numRecibo + '\n';
-    msg += '📅 Fecha: ' + fecha + '\n';
-    msg += '━━━━━━━━━━━━━━━━━━━━\n';
-    msg += '👤 Cliente: ' + state.nombre + '\n';
-    msg += '📱 Teléfono: ' + state.telefono + '\n';
-    msg += '👦 Alumno/a: ' + state.alumno + '\n';
-    msg += '━━━━━━━━━━━━━━━━━━━━\n';
-    msg += '📚 Servicio: Cuadernillo de repaso personalizado\n';
-    msg += '📖 Asignatura: ' + (ASIG_N[state.asig]||'') + '\n';
-    msg += '🎓 Curso: ' + (CURSO_N[state.curso]||'') + '\n';
-    msg += '📦 Pack: ' + state.pack.charAt(0).toUpperCase() + state.pack.slice(1) + '\n';
-    msg += '━━━━━━━━━━━━━━━━━━━━\n';
-    msg += '💰 TOTAL PAGADO: ' + state.precioFinal + '€\n';
-    msg += '✅ Pago confirmado\n';
-    msg += '━━━━━━━━━━━━━━━━━━━━\n';
-    msg += 'Elena De Miguel · 622 011 814\n';
-    msg += 'Profesora especializada en Pedagogía Terapéutica\n';
-    msg += 'Guadassuar, Valencia';
+    var msg = 'CUADERNILLO PAGADO Y LISTO\n' + state.alumno + '\n' + (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'') + '\nPack ' + state.pack + ' · ' + state.precioFinal + '€';
     window.open('https://wa.me/34622011814?text=' + encodeURIComponent(msg), '_blank', 'noopener');
   }, 2000);
 }
@@ -981,14 +930,14 @@ function descargar(){
     var semBg = sec.nivel_semaforo === 'rojo' ? '#FEE2E2' : sec.nivel_semaforo === 'amarillo' ? '#FEF9C3' : '#DCFCE7';
     var semBd = sec.nivel_semaforo === 'rojo' ? '#FCA5A5' : sec.nivel_semaforo === 'amarillo' ? '#FCD34D' : '#86EFAC';
  
-    ejHTML += '<div class="section-block" style="margin-bottom:28px;page-break-before:always;break-before:always;page-break-inside:avoid">';
+    ejHTML += '<div style="margin-bottom:28px;page-break-inside:avoid">';
     ejHTML += '<div style="background:' + semBg + ';border:2px solid ' + semBd + ';border-radius:8px 8px 0 0;padding:10px 14px;font-weight:800;font-size:15px">' + sem + ' ' + sec.tema + '</div>';
     ejHTML += '<div style="border:2px solid ' + semBd + ';border-top:none;border-radius:0 0 8px 8px;padding:14px;background:white">';
     if(sec.mini_explicacion) ejHTML += '<div style="background:#E0F2FE;border-radius:6px;padding:9px 13px;font-size:12px;color:#0C4A6E;margin-bottom:10px">💡 ' + sec.mini_explicacion + '</div>';
     if(sec.truco) ejHTML += '<div style="background:#FEF3C7;border-radius:6px;padding:8px 12px;font-size:12px;color:#92400E;margin-bottom:10px">⭐ Truco: ' + sec.truco + '</div>';
  
     (sec.ejercicios||[]).forEach(function(ej){
-      ejHTML += '<div class="ej-box" style="margin-bottom:14px;border:1px solid #F0E4CC;border-radius:7px;padding:12px;break-inside:avoid;page-break-inside:avoid;display:block">';
+      ejHTML += '<div style="margin-bottom:14px;border:1px solid #F0E4CC;border-radius:7px;padding:12px">';
       ejHTML += '<div style="font-size:10px;font-weight:800;color:#F97316;text-transform:uppercase;margin-bottom:5px;background:#FEF0E4;display:inline-block;padding:2px 8px;border-radius:20px">Ejercicio ' + ej.num + '</div>';
       ejHTML += '<div style="font-size:13px;margin:7px 0 10px;line-height:1.65">' + ej.enunciado + '</div>';
       ejHTML += '<div style="height:50px;border:1px dashed #E2CCA8;border-radius:5px;background:#FFFBF4"></div>';
@@ -1006,34 +955,7 @@ function descargar(){
   var nombre = (state.alumno||'alumno').replace(/\s+/g,'_');
   var asig = (ASIG_N[state.asig]||'asig').replace(/\s+/g,'_');
  
-  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Cuadernillo ' + (state.alumno||'') + '</title><style>body{font-family:Georgia,serif;max-width:820px;margin:0 auto;padding:24px;color:#2C1810}h1{text-align:center;color:#F97316;font-size:24px;margin-bottom:4px}.sub{text-align:center;color:#92745C;font-size:13px;margin-bottom:20px}.msg{background:#FEF0E4;border-left:4px solid #F97316;padding:11px 15px;font-style:italic;margin-bottom:22px;font-size:13px;border-radius:0 7px 7px 0}.sol-title{background:#2C1810;color:white;padding:14px;text-align:center;border-radius:8px;margin:30px 0 14px;font-size:18px;font-weight:bold}.sol-note{font-size:12px;color:#92745C;margin-bottom:14px;font-style:italic}.footer{text-align:center;font-size:10px;color:#C4A882;margin-top:28px;border-top:1px solid #F0E4CC;padding-top:10px}.reto-block{background:linear-gradient(135deg,#1E3A5F,#2D5480);border-radius:12px;padding:24px;margin-bottom:20px;color:white}.reto-block h3{font-size:18px;font-weight:700;color:#FCD34D;margin-bottom:8px}.reto-espacio{min-height:120px;border:2px dashed rgba(255,255,255,0.3);border-radius:8px;margin-top:12px;background:rgba(255,255,255,0.05)}.auto-block{background:#F0FDF4;border:2px solid #86EFAC;border-radius:12px;padding:24px;margin-bottom:20px}.auto-block h3{font-size:18px;font-weight:700;color:#15803D;margin-bottom:6px}.auto-item{font-size:13px;color:#1E293B;padding:8px 0;border-bottom:1px solid #BBF7D0;line-height:1.5}.auto-score{background:#15803D;color:white;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:12px;line-height:1.7}.div-block{background:#FFF7ED;border:2px solid #FED7AA;border-radius:12px;padding:20px;margin-bottom:14px}@media print{@page{size:A4;margin:16mm 14mm 16mm 14mm}@page:first{margin:0}html,body{width:210mm;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{padding:0;font-size:12.5px}.cover-page{height:297mm;width:210mm;margin:0;padding:60px 52px;page-break-after:always!important;break-after:always!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;background:#1E3A5F!important;color:white!important}.section-block{page-break-before:always!important;break-before:always!important;page-break-inside:avoid!important;break-inside:avoid!important}.ej-box{break-inside:avoid!important;page-break-inside:avoid!important;display:block;overflow:hidden}.sol-item{break-inside:avoid!important;page-break-inside:avoid!important;display:block}.explicacion-box{break-inside:avoid!important;page-break-inside:avoid!important;display:block}.truco-box{break-inside:avoid!important;page-break-inside:avoid!important;display:block}table{break-inside:avoid!important;page-break-inside:avoid!important}h2,h3{break-after:avoid!important;page-break-after:avoid!important}}</style></head><body>';
-  html += '<div class="cover-page" style="height:297mm;width:210mm;margin:-24px -24px 40px -24px;display:flex;flex-direction:column;justify-content:space-between;background:#1E3A5F;padding:60px 52px;page-break-after:always;break-after:always;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact">';
-  html += '<div style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);font-family:Arial,sans-serif">Material educativo personalizado</div>';
-  html += '<div style="text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 0">';
-  html += '<div style="font-size:56px;margin-bottom:16px">☀️</div>';
-  html += '<h1 style="font-size:42px;font-weight:700;color:white;line-height:1.1;margin-bottom:8px;font-family:Georgia,serif">Cuadernillo de<br>Repaso de <em style="font-style:italic;color:#FCD34D">Verano</em></h1>';
-  html += '<div style="font-size:28px;font-weight:700;color:white;margin:20px 0 6px">' + (state.alumno||'') + '</div>';
-  html += '<div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:24px;font-family:Arial,sans-serif">' + (ASIG_N[state.asig]||'') + ' &nbsp;·&nbsp; ' + (CURSO_N[state.curso]||'') + ' &nbsp;·&nbsp; Pack ' + (state.pack||'').charAt(0).toUpperCase() + (state.pack||'').slice(1) + ' &nbsp;·&nbsp; Verano 2026</div>';
-  html += '<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:32px">';
-  var numTemas = (cuad.secciones||[]).length;
-  var numEj = cuad.total_ejercicios || 0;
-  html += '<span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:100px;padding:5px 16px;font-size:12px;font-weight:700;color:white;font-family:Arial,sans-serif">📚 ' + numTemas + ' temas</span>';
-  html += '<span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:100px;padding:5px 16px;font-size:12px;font-weight:700;color:white;font-family:Arial,sans-serif">✏️ ' + numEj + ' ejercicios</span>';
-  html += '<span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:100px;padding:5px 16px;font-size:12px;font-weight:700;color:white;font-family:Arial,sans-serif">✅ Soluciones al final</span>';
-  html += '</div>';
-  if(cuad.mensaje_motivador){
-    html += '<div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:20px 24px;max-width:520px;margin:0 auto;font-style:italic;font-size:14px;color:rgba(255,255,255,0.88);text-align:left;line-height:1.75;position:relative">';
-    html += cuad.mensaje_motivador;
-    html += '<span style="font-size:11px;color:rgba(255,255,255,0.45);font-style:normal;display:block;margin-top:10px;font-family:Arial,sans-serif;font-weight:700">— Elena De Miguel, tu profesora</span>';
-    html += '</div>';
-  }
-  html += '</div>';
-  html += '<div style="border-top:1px solid rgba(255,255,255,0.15);padding-top:20px;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.4);font-family:Arial,sans-serif">';
-  html += '<span>Revisado personalmente por Elena De Miguel<br>Guadassuar, Valencia · 622 011 814</span>';
-  html += '<span style="text-align:right">Entrega garantizada en 24h<br>Verano 2026</span>';
-  html += '</div>';
-  html += '</div>';
-  html += '<div style="padding:32px 0">';
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Cuadernillo ' + (state.alumno||'') + '</title><style>body{font-family:Georgia,serif;max-width:820px;margin:0 auto;padding:24px;color:#2C1810}h1{text-align:center;color:#F97316;font-size:24px;margin-bottom:4px}.sub{text-align:center;color:#92745C;font-size:13px;margin-bottom:20px}.msg{background:#FEF0E4;border-left:4px solid #F97316;padding:11px 15px;font-style:italic;margin-bottom:22px;font-size:13px;border-radius:0 7px 7px 0}.sol-title{background:#2C1810;color:white;padding:14px;text-align:center;border-radius:8px;margin:30px 0 14px;font-size:18px;font-weight:bold}.sol-note{font-size:12px;color:#92745C;margin-bottom:14px;font-style:italic}.footer{text-align:center;font-size:10px;color:#C4A882;margin-top:28px;border-top:1px solid #F0E4CC;padding-top:10px}@media print{body{padding:10px}}</style></head><body>';
   html += '<h1>☀️ Cuadernillo de Verano</h1>';
   html += '<div class="sub">' + (state.alumno||'') + ' · ' + (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'') + '<br>Revisado por Elena De Miguel · Verano 2026</div>';
   if(cuad.mensaje_motivador) html += '<div class="msg">💬 ' + cuad.mensaje_motivador + '</div>';
@@ -1041,8 +963,7 @@ function descargar(){
   html += '<div class="sol-title">SOLUCIONES</div>';
   html += '<p class="sol-note">Intenta resolver todos los ejercicios antes de consultar las soluciones.</p>';
   html += solHTML;
-  html += '<div class="footer">Elena De Miguel · 622 011 814 · Guadassuar, Valencia · Verano 2026</div>';
-  html += '</div>';
+  html += '<div class="footer">Creado con cariño por Elena De Miguel · 622 011 814 · Guadassuar, Valencia</div>';
   html += '</body></html>';
  
   var blob = new Blob([html], {type:'text/html'});
@@ -1055,98 +976,10 @@ function descargar(){
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
  
-  // Generar recibo en PDF automáticamente
-  setTimeout(function(){ descargarRecibo(); }, 1500);
- 
   btn.disabled = false;
   btn.textContent = '⬇️ Descargar PDF';
   document.getElementById('dlOk').style.display = 'block';
 }
- 
-function descargarRecibo(){
-  var d = new Date();
-  var mes = (d.getMonth()+1).toString();
-  if(mes.length<2) mes='0'+mes;
-  var numRecibo = d.getFullYear() + '-' + mes + '-' + d.getTime().toString().slice(-4);
-  var fecha = d.toLocaleDateString('es-ES');
-  var alumnoNombre = (state.alumno||'alumno').split(' ').join('_');
- 
-  var base = (state.precioFinal / 1.21).toFixed(2);
-  var iva = (state.precioFinal - state.precioFinal/1.21).toFixed(2);
- 
-  var parts = [];
-  parts.push('<!DOCTYPE html>');
-  parts.push('<html><head><meta charset="UTF-8">');
-  parts.push('<title>Recibo ' + numRecibo + '</title>');
-  parts.push('<style>');
-  parts.push('body{font-family:Arial,sans-serif;max-width:520px;margin:40px auto;padding:32px;color:#1E293B;border:1px solid #E2E8F0;border-radius:12px}');
-  parts.push('.logo{font-size:20px;font-weight:700;color:#1E3A5F;text-align:center;margin-bottom:4px}');
-  parts.push('.logo-sub{font-size:12px;color:#64748B;text-align:center;margin-bottom:4px}');
-  parts.push('.recibo-num{font-size:11px;color:#64748B;text-align:center;margin-bottom:20px}');
-  parts.push('.sep{height:1px;background:#E2E8F0;margin:16px 0}');
-  parts.push('.sec-title{font-size:11px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px}');
-  parts.push('.row{display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #F1F5F9}');
-  parts.push('.row:last-child{border-bottom:none}');
-  parts.push('.lbl{color:#64748B;font-weight:500}');
-  parts.push('.val{color:#1E293B;font-weight:600;text-align:right;max-width:260px}');
-  parts.push('.total-box{display:flex;justify-content:space-between;padding:12px 14px;background:#F8FAFC;border-radius:8px;margin-top:14px}');
-  parts.push('.total-lbl{font-size:14px;font-weight:700;color:#1E293B}');
-  parts.push('.total-val{font-size:20px;font-weight:700;color:#F97316}');
-  parts.push('.paid{text-align:center;margin-top:16px;background:#D1FAE5;border-radius:8px;padding:10px;font-size:14px;font-weight:700;color:#065F46}');
-  parts.push('.nota{font-size:11px;color:#94A3B8;margin-top:16px;text-align:center;font-style:italic;line-height:1.5}');
-  parts.push('.footer{text-align:center;margin-top:16px;font-size:11px;color:#94A3B8;line-height:1.6}');
-  parts.push('@media print{body{border:none;margin:20px}}');
-  parts.push('</style></head><body>');
- 
-  parts.push('<div class="logo">Elena De Miguel</div>');
-  parts.push('<div class="logo-sub">Profesora · Pedagogia Terapeutica · Guadassuar, Valencia</div>');
-  parts.push('<div class="recibo-num">N Recibo: ' + numRecibo + ' &nbsp;·&nbsp; Fecha: ' + fecha + '</div>');
- 
-  parts.push('<div class="sep"></div>');
-  parts.push('<div class="sec-title">Datos del cliente</div>');
-  parts.push('<div class="row"><span class="lbl">Nombre</span><span class="val">' + (state.nombre||'') + '</span></div>');
-  parts.push('<div class="row"><span class="lbl">Telefono</span><span class="val">' + (state.telefono||'') + '</span></div>');
-  parts.push('<div class="row"><span class="lbl">Alumno/a</span><span class="val">' + (state.alumno||'') + '</span></div>');
- 
-  parts.push('<div class="sep"></div>');
-  parts.push('<div class="sec-title">Detalle del servicio</div>');
-  parts.push('<div class="row"><span class="lbl">Servicio</span><span class="val">Cuadernillo de repaso personalizado</span></div>');
-  parts.push('<div class="row"><span class="lbl">Asignatura</span><span class="val">' + (ASIG_N[state.asig]||'') + '</span></div>');
-  parts.push('<div class="row"><span class="lbl">Curso</span><span class="val">' + (CURSO_N[state.curso]||'') + '</span></div>');
-  parts.push('<div class="row"><span class="lbl">Pack</span><span class="val">' + (state.pack||'').charAt(0).toUpperCase() + (state.pack||'').slice(1) + '</span></div>');
- 
-  if(state.descuento > 0){
-    parts.push('<div class="row"><span class="lbl">Precio base</span><span class="val">' + state.precio + ' EUR</span></div>');
-    parts.push('<div class="row"><span class="lbl" style="color:#10B981">Descuento</span><span class="val" style="color:#10B981">-' + state.descuento + ' EUR</span></div>');
-  }
- 
-  parts.push('<div class="sep"></div>');
-  parts.push('<div class="sec-title">Desglose fiscal (IVA incluido)</div>');
-  parts.push('<div class="row"><span class="lbl">Base imponible</span><span class="val">' + base + ' EUR</span></div>');
-  parts.push('<div class="row"><span class="lbl">IVA 21% (incluido)</span><span class="val">' + iva + ' EUR</span></div>');
-  parts.push('<div class="total-box"><span class="total-lbl">TOTAL (IVA incluido)</span><span class="total-val">' + state.precioFinal + ' EUR</span></div>');
-  parts.push('<div class="paid">PAGO CONFIRMADO</div>');
- 
-  parts.push('<div class="sep"></div>');
-  parts.push('<div class="sec-title">Datos del emisor</div>');
-  parts.push('<div class="row"><span class="lbl">Nombre</span><span class="val">Elena De Miguel Palau</span></div>');
-  parts.push('<div class="row"><span class="lbl">Actividad</span><span class="val">Profesora · Epigrafe IAE 826</span></div>');
-  parts.push('<div class="row"><span class="lbl">Localidad</span><span class="val">Guadassuar, Valencia</span></div>');
-  parts.push('<div class="row"><span class="lbl">Telefono</span><span class="val">622 011 814</span></div>');
- 
-  parts.push('<div class="footer">Elena De Miguel Palau · 622 011 814<br>Guadassuar, Valencia · Verano 2026</div>');
-  parts.push('<div class="nota">Este documento acredita la prestacion del servicio indicado. Conserve este justificante.</div>');
-  parts.push('</body></html>');
- 
-  var html = parts.join('');
-  var blob = new Blob([html], {type:'text/html'});
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = 'Recibo_' + numRecibo + '_' + alumnoNombre + '.html';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
- 
+</script>
+</body>
+</html>
