@@ -369,7 +369,7 @@ textarea{resize:vertical;min-height:70px}
 <script>
 var stripe = null;
 var stripeCardElement = null;
-var STRIPE_PK = 'pk_live_51TYLZ0EAGmtDorcVnKBUS5PI8cUNhJf6YNrN4f33Gdf8TjQtBK5ZKut7T0bQvsLh4uflaw2EID5ZFXOFXEvAIthy00mAdpgO7h';
+var STRIPE_PK = 'PEGA_AQUI_TU_CLAVE_pk_live';
 document.addEventListener('DOMContentLoaded', function(){
   if(typeof Stripe === 'undefined') return;
   stripe = Stripe(STRIPE_PK);
@@ -758,23 +758,20 @@ function iniciarGeneracion(){
   });
  
   var promptParts = [];
-  promptParts.push('Eres Elena De Miguel, profesora de repaso especializada en Pedagogía Terapéutica.');
-  promptParts.push('Crea un cuadernillo de repaso de verano COMPLETO para un alumno de ' + (CURSO_N[state.curso]||'') + ' de ' + (ASIG_N[state.asig]||'') + '.');
-  promptParts.push('DATOS: Nombre: ' + state.alumno + ', Nivel: ' + (state.nivel||'Medio') + ', Objetivos: ' + (state.objetivos.join(', ')||'Repasar'));
-  if(state.comentarios) promptParts.push('Comentarios: ' + state.comentarios);
-  promptParts.push('SEMÁFORO - Temas flojos (PRIORIDAD ALTA, 6-8 ejercicios): ' + (rojos.join(', ')||'ninguno'));
-  promptParts.push('Temas regulares (PRIORIDAD MEDIA, 4-5 ejercicios): ' + (amarillos.join(', ')||'ninguno'));
-  promptParts.push('Temas bien (repaso rápido, 2-3 ejercicios): ' + (verdes.join(', ')||'ninguno'));
-  if(instrObjetos.length > 0) promptParts.push('AJUSTES POR OBJETIVOS: ' + instrObjetos.join('. '));
-  promptParts.push('INSTRUCCIONES: 1) Empieza por temas rojos. 2) Ejercicios REALES y CONCRETOS con números/palabras reales. 3) Incluye mini explicación del concepto antes de los ejercicios. 4) Añade truco mnemotécnico si aplica. 5) Incluye siempre la solución completa. 6) Lenguaje cercano y motivador.');
-  promptParts.push('RESPONDE ÚNICAMENTE con este JSON sin texto adicional: {"secciones":[{"tema":"nombre","nivel_semaforo":"rojo o amarillo o verde","mini_explicacion":"2-3 frases simples","truco":"opcional","ejercicios":[{"num":1,"enunciado":"enunciado concreto","solucion":"solución completa"}]}],"total_ejercicios":número,"mensaje_motivador":"mensaje para ' + state.alumno + '"}');
-  promptParts.push('Sé muy generoso con los ejercicios. Objetivo: 40-50 páginas de trabajo real.');
+  promptParts.push('Eres Elena De Miguel, profesora especializada en Pedagogia Terapeutica con 7 anos de experiencia. Creas cuadernillos de verano personalizados, dinamicos y motivadores.');
+  promptParts.push('Crea un cuadernillo de repaso de verano COMPLETO, VARIADO Y DETALLADO para:\n- Alumno/a: ' + state.alumno + '\n- Curso: ' + (CURSO_N[state.curso]||'') + '\n- Asignatura: ' + (ASIG_N[state.asig]||'') + '\n- Nivel: ' + (state.nivel||'Medio') + '\n- Objetivos: ' + (state.objetivos.join(', ')||'Repasar y mejorar'));
+  if(state.comentarios) promptParts.push('Informacion adicional de la familia: ' + state.comentarios);
+  promptParts.push('SEMAFORO DE TEMAS:\n- TEMAS ROJOS (domina mal - PON EXACTAMENTE 10 ejercicios por tema): ' + (rojos.join(', ')||'ninguno') + '\n- TEMAS AMARILLOS (nivel regular - PON EXACTAMENTE 8 ejercicios por tema): ' + (amarillos.join(', ')||'ninguno') + '\n- TEMAS VERDES (buen nivel - PON EXACTAMENTE 5 ejercicios por tema): ' + (verdes.join(', ')||'ninguno'));
+  if(instrObjetos.length > 0) promptParts.push('AJUSTES ESPECIALES POR OBJETIVOS: ' + instrObjetos.join('. '));
+  promptParts.push('INSTRUCCIONES CRITICAS:\n1. Ordena siempre: primero rojos, luego amarillos, luego verdes.\n2. Los ejercicios deben ser REALES y CONCRETOS con numeros, palabras y datos reales (nunca vacios ni genericos).\n3. Cada tema debe tener mini_explicacion de 2-3 frases claras y cercanas.\n4. Si aplica, incluye un truco mnemonico o regla facil.\n5. Usa TIPOS VARIADOS de ejercicio: tipo_ejercicio puede ser "desarrollo" (pregunta abierta con espacio), "completar" (rellenar huecos con ___), "relacionar" (conectar columnas A y B), "verdadero_falso" (lista de afirmaciones V/F), "multiple_choice" (4 opciones A B C D), "ordenar" (ordenar elementos), "calculo" (operacion numerica con pasos), "redaccion" (produccion escrita).\n6. Incluye una seccion de AUTOEVALUACION al final de cada tema: 3 preguntas tipo test para que el alumno se evalue a si mismo.\n7. Las soluciones deben ser COMPLETAS con el desarrollo paso a paso.\n8. Usa lenguaje cercano, animado y adaptado al nivel del alumno.\n9. Se MUY GENEROSO: el objetivo MINIMO son 60 paginas de trabajo real. Cada ejercicio debe tener enunciado detallado y espacio suficiente para responder. Los ejercicios de desarrollo, redaccion y calculo deben ser especialmente extensos.\n10. Incluye emojis y frases de animo dentro de los ejercicios.');
+  promptParts.push('RESPONDE UNICAMENTE con este JSON exacto (sin texto antes ni despues, sin backticks markdown):\n{"secciones":[{"tema":"nombre del tema","nivel_semaforo":"rojo o amarillo o verde","mini_explicacion":"2-3 frases simples y claras","truco":"truco mnemonico o string vacio","ejercicios":[{"num":1,"tipo":"desarrollo o completar o relacionar o verdadero_falso o multiple_choice o ordenar o calculo o redaccion","enunciado":"enunciado concreto con datos reales","opciones":["A) opcion1","B) opcion2","C) opcion3","D) opcion4"],"columna_a":["item1","item2"],"columna_b":["match1","match2"],"solucion":"solucion completa paso a paso"}],"autoevaluacion":[{"pregunta":"pregunta test","opciones":["A) ...","B) ...","C) ...","D) ..."],"correcta":"A"}]}],"total_ejercicios":numero,"mensaje_motivador":"mensaje animador personalizado para ' + state.alumno + '"}');
+  promptParts.push('IMPORTANTE: usa los campos opcionales segun el tipo: "opciones" solo en multiple_choice y autoevaluacion, "columna_a" y "columna_b" solo en relacionar. Para el resto solo "enunciado" y "solucion".');
  
-  var prompt = promptParts.join('\n\n');
+var prompt = promptParts.join('\n\n');
  
   fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: {'Content-Type': 'application/json', 'anthropic-dangerous-allow-browser': 'true'},
     body: JSON.stringify({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 8000,
@@ -941,68 +938,166 @@ function mostrarDescarga(){
 function descargar(){
   var btn = document.getElementById('btnDl');
   btn.disabled = true;
-  btn.textContent = '⏳ Generando PDF…';
+  btn.textContent = '\u23F3 Generando...';
  
   var cuad = state.generatedContent;
   var secciones = cuad.secciones || [];
- 
-  // Construir HTML del cuadernillo
   var ejHTML = '';
   var solHTML = '';
+  var numEjGlobal = 0;
  
   secciones.forEach(function(sec){
-    var sem = sec.nivel_semaforo === 'rojo' ? '🔴' : sec.nivel_semaforo === 'amarillo' ? '🟡' : '🟢';
+    var semEmoji = sec.nivel_semaforo === 'rojo' ? '\uD83D\uDD34' : sec.nivel_semaforo === 'amarillo' ? '\uD83D\uDFE1' : '\uD83D\uDFE2';
     var semBg = sec.nivel_semaforo === 'rojo' ? '#FEE2E2' : sec.nivel_semaforo === 'amarillo' ? '#FEF9C3' : '#DCFCE7';
     var semBd = sec.nivel_semaforo === 'rojo' ? '#FCA5A5' : sec.nivel_semaforo === 'amarillo' ? '#FCD34D' : '#86EFAC';
  
-    ejHTML += '<div style="margin-bottom:28px;page-break-inside:avoid">';
-    ejHTML += '<div style="background:' + semBg + ';border:2px solid ' + semBd + ';border-radius:8px 8px 0 0;padding:10px 14px;font-weight:800;font-size:15px">' + sem + ' ' + sec.tema + '</div>';
-    ejHTML += '<div style="border:2px solid ' + semBd + ';border-top:none;border-radius:0 0 8px 8px;padding:14px;background:white">';
-    if(sec.mini_explicacion) ejHTML += '<div style="background:#E0F2FE;border-radius:6px;padding:9px 13px;font-size:12px;color:#0C4A6E;margin-bottom:10px">💡 ' + sec.mini_explicacion + '</div>';
-    if(sec.truco) ejHTML += '<div style="background:#FEF3C7;border-radius:6px;padding:8px 12px;font-size:12px;color:#92400E;margin-bottom:10px">⭐ Truco: ' + sec.truco + '</div>';
+    ejHTML += '<div style="page-break-before:always;margin-bottom:32px">';
+    ejHTML += '<div style="background:#1E3A5F;color:white;border-radius:10px 10px 0 0;padding:14px 20px;font-size:17px;font-weight:bold;display:flex;align-items:center;gap:10px">';
+    ejHTML += '<span>' + semEmoji + '</span><span>' + sec.tema + '</span></div>';
+    ejHTML += '<div style="border:2px solid #1E3A5F;border-top:none;border-radius:0 0 10px 10px;padding:18px;background:white">';
+ 
+    if(sec.mini_explicacion){
+      ejHTML += '<div style="background:#E0F2FE;border-left:4px solid #0284C7;border-radius:0 8px 8px 0;padding:12px 16px;font-size:13px;color:#0C4A6E;margin-bottom:14px;line-height:1.7">';
+      ejHTML += '\uD83D\uDCA1 <strong>Recuerda:</strong> ' + sec.mini_explicacion + '</div>';
+    }
+    if(sec.truco && sec.truco.length > 2){
+      ejHTML += '<div style="background:#FEF3C7;border-left:4px solid #F59E0B;border-radius:0 8px 8px 0;padding:10px 16px;font-size:12px;color:#92400E;margin-bottom:14px">';
+      ejHTML += '\u2B50 <strong>Truco:</strong> ' + sec.truco + '</div>';
+    }
  
     (sec.ejercicios||[]).forEach(function(ej){
-      ejHTML += '<div style="margin-bottom:14px;border:1px solid #F0E4CC;border-radius:7px;padding:12px">';
-      ejHTML += '<div style="font-size:10px;font-weight:800;color:#F97316;text-transform:uppercase;margin-bottom:5px;background:#FEF0E4;display:inline-block;padding:2px 8px;border-radius:20px">Ejercicio ' + ej.num + '</div>';
-      ejHTML += '<div style="font-size:13px;margin:7px 0 10px;line-height:1.65">' + ej.enunciado + '</div>';
-      ejHTML += '<div style="height:50px;border:1px dashed #E2CCA8;border-radius:5px;background:#FFFBF4"></div>';
+      numEjGlobal++;
+      var tipo = ej.tipo || 'desarrollo';
+      var tipoBadgeColor = tipo === 'calculo' ? '#DBEAFE' : tipo === 'completar' ? '#FCE7F3' : tipo === 'relacionar' ? '#D1FAE5' : tipo === 'verdadero_falso' ? '#FEF3C7' : tipo === 'multiple_choice' ? '#EDE9FE' : tipo === 'redaccion' ? '#FEE2E2' : '#F3F4F6';
+      var tipoBadgeTxt = tipo === 'calculo' ? 'C\u00e1lculo' : tipo === 'completar' ? 'Completa' : tipo === 'relacionar' ? 'Relaciona' : tipo === 'verdadero_falso' ? 'V / F' : tipo === 'multiple_choice' ? 'Elige' : tipo === 'redaccion' ? 'Redacci\u00f3n' : tipo === 'ordenar' ? 'Ordena' : 'Desarrolla';
+ 
+      ejHTML += '<div style="margin-bottom:20px;border:1px solid #E2CCA8;border-radius:10px;padding:16px;background:#FFFBF4">';
+      ejHTML += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">';
+      ejHTML += '<span style="font-size:10px;font-weight:800;color:#F97316;text-transform:uppercase;background:#FEF0E4;padding:3px 10px;border-radius:20px">Ejercicio ' + numEjGlobal + '</span>';
+      ejHTML += '<span style="font-size:10px;font-weight:700;background:' + tipoBadgeColor + ';padding:3px 10px;border-radius:20px;color:#374151">' + tipoBadgeTxt + '</span>';
+      ejHTML += '</div>';
+      ejHTML += '<div style="font-size:14px;margin:8px 0 14px;line-height:1.75;color:#2C1810">' + ej.enunciado + '</div>';
+ 
+      // Renderizar segun tipo
+      if(tipo === 'multiple_choice' && ej.opciones && ej.opciones.length){
+        ejHTML += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">';
+        ej.opciones.forEach(function(op){
+          ejHTML += '<div style="border:1.5px solid #E2CCA8;border-radius:7px;padding:9px 12px;font-size:13px;background:white;display:flex;align-items:center;gap:8px"><span style="width:20px;height:20px;border-radius:50%;border:2px solid #C4A882;flex-shrink:0;display:inline-block"></span>' + op + '</div>';
+        });
+        ejHTML += '</div>';
+      } else if(tipo === 'verdadero_falso'){
+        ejHTML += '<div style="display:flex;gap:12px;margin-bottom:12px"><div style="border:1.5px solid #86EFAC;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:700;color:#15803D;background:#F0FDF4">V Verdadero</div><div style="border:1.5px solid #FCA5A5;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:700;color:#DC2626;background:#FEF2F2">F Falso</div></div>';
+        ejHTML += '<div style="min-height:40px;border:1.5px dashed #C4A882;border-radius:6px;background:white;padding:8px"></div>';
+      } else if(tipo === 'relacionar' && ej.columna_a && ej.columna_b){
+        ejHTML += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">';
+        ejHTML += '<div><div style="font-size:11px;font-weight:800;color:#1E3A5F;margin-bottom:6px;text-transform:uppercase">Columna A</div>';
+        ej.columna_a.forEach(function(item, i){
+          ejHTML += '<div style="border:1.5px solid #BAE6FD;border-radius:7px;padding:8px 12px;font-size:13px;background:#E0F2FE;margin-bottom:6px">' + (i+1) + '. ' + item + '</div>';
+        });
+        ejHTML += '</div><div><div style="font-size:11px;font-weight:800;color:#1E3A5F;margin-bottom:6px;text-transform:uppercase">Columna B</div>';
+        ej.columna_b.forEach(function(item, i){
+          ejHTML += '<div style="border:1.5px solid #FED7AA;border-radius:7px;padding:8px 12px;font-size:13px;background:#FEF0E4;margin-bottom:6px">' + String.fromCharCode(65+i) + '. ' + item + '</div>';
+        });
+        ejHTML += '</div></div>';
+        ejHTML += '<div style="min-height:35px;border:1.5px dashed #C4A882;border-radius:6px;background:white;padding:8px;font-size:12px;color:#C4A882">Escribe aqui las parejas: 1-B, 2-A...</div>';
+      } else if(tipo === 'redaccion'){
+        ejHTML += '<div style="min-height:120px;border:1.5px dashed #C4A882;border-radius:6px;background:white;padding:10px"></div>';
+      } else {
+        // desarrollo, completar, calculo, ordenar
+        ejHTML += '<div style="min-height:65px;border:1.5px dashed #C4A882;border-radius:6px;background:white;padding:10px"></div>';
+      }
       ejHTML += '</div>';
  
+      // Solución
       if(ej.solucion){
-        solHTML += '<div style="background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px;color:#15803D">';
-        solHTML += '<div style="font-weight:800;margin-bottom:3px">Ej. ' + ej.num + ' — ' + sec.tema + '</div>';
-        solHTML += ej.solucion + '</div>';
+        solHTML += '<div style="border:1px solid #86EFAC;border-radius:10px;padding:12px 16px;margin-bottom:12px;background:#F0FDF4">';
+        solHTML += '<div style="font-weight:800;font-size:13px;color:#15803D;margin-bottom:5px">Ej. ' + numEjGlobal + ' \u2014 ' + sec.tema + ' <span style=\"background:#D1FAE5;padding:2px 8px;border-radius:10px;font-size:11px\">' + tipoBadgeTxt + '</span></div>';
+        solHTML += '<div style="font-size:13px;color:#166534;line-height:1.7">' + ej.solucion + '</div>';
+        solHTML += '</div>';
       }
     });
+ 
+    // AUTOEVALUACIÓN del tema
+    if(sec.autoevaluacion && sec.autoevaluacion.length > 0){
+      ejHTML += '<div style="background:linear-gradient(135deg,#EDE9FE,#DDD6FE);border:2px solid #8B5CF6;border-radius:10px;padding:16px;margin-top:8px">';
+      ejHTML += '<div style="font-size:13px;font-weight:800;color:#5B21B6;margin-bottom:12px">\uD83C\uDFAF Autoeval\u00FAate: \u00BFCu\u00E1nto has aprendido?</div>';
+      sec.autoevaluacion.forEach(function(q, qi){
+        ejHTML += '<div style="margin-bottom:10px"><div style="font-size:13px;font-weight:600;color:#3730A3;margin-bottom:6px">' + (qi+1) + '. ' + q.pregunta + '</div>';
+        if(q.opciones && q.opciones.length){
+          ejHTML += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">';
+          q.opciones.forEach(function(op){
+            ejHTML += '<div style="border:1px solid #C4B5FD;border-radius:6px;padding:6px 10px;font-size:12px;background:white">' + op + '</div>';
+          });
+          ejHTML += '</div>';
+        }
+        ejHTML += '</div>';
+      });
+      ejHTML += '</div>';
+ 
+      // Respuestas autoevaluación en solucionario
+      solHTML += '<div style="background:#EDE9FE;border:1px solid #8B5CF6;border-radius:10px;padding:12px 16px;margin-bottom:12px">';
+      solHTML += '<div style="font-weight:800;font-size:13px;color:#5B21B6;margin-bottom:6px">\uD83C\uDFAF Autoevaluaci\u00f3n \u2014 ' + sec.tema + '</div>';
+      sec.autoevaluacion.forEach(function(q, qi){
+        solHTML += '<div style="font-size:12px;color:#3730A3;margin-bottom:3px">' + (qi+1) + '. ' + q.pregunta + ' \u2192 <strong>' + (q.correcta||'') + '</strong></div>';
+      });
+      solHTML += '</div>';
+    }
+ 
     ejHTML += '</div></div>';
   });
  
   var nombre = (state.alumno||'alumno').replace(/\s+/g,'_');
   var asig = (ASIG_N[state.asig]||'asig').replace(/\s+/g,'_');
+  var packN = state.pack === 'basico' ? 'B\u00e1sico' : state.pack === 'pro' ? 'PRO' : 'Tutorizado';
  
-  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Cuadernillo ' + (state.alumno||'') + '</title><style>body{font-family:Georgia,serif;max-width:820px;margin:0 auto;padding:24px;color:#2C1810}h1{text-align:center;color:#F97316;font-size:24px;margin-bottom:4px}.sub{text-align:center;color:#92745C;font-size:13px;margin-bottom:20px}.msg{background:#FEF0E4;border-left:4px solid #F97316;padding:11px 15px;font-style:italic;margin-bottom:22px;font-size:13px;border-radius:0 7px 7px 0}.sol-title{background:#2C1810;color:white;padding:14px;text-align:center;border-radius:8px;margin:30px 0 14px;font-size:18px;font-weight:bold}.sol-note{font-size:12px;color:#92745C;margin-bottom:14px;font-style:italic}.footer{text-align:center;font-size:10px;color:#C4A882;margin-top:28px;border-top:1px solid #F0E4CC;padding-top:10px}@media print{body{padding:10px}}</style></head><body>';
-  html += '<h1>☀️ Cuadernillo de Verano</h1>';
-  html += '<div class="sub">' + (state.alumno||'') + ' · ' + (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'') + '<br>Revisado por Elena De Miguel · Verano 2026</div>';
-  if(cuad.mensaje_motivador) html += '<div class="msg">💬 ' + cuad.mensaje_motivador + '</div>';
-  html += ejHTML;
-  html += '<div class="sol-title">SOLUCIONES</div>';
-  html += '<p class="sol-note">Intenta resolver todos los ejercicios antes de consultar las soluciones.</p>';
-  html += solHTML;
-  html += '<div class="footer">Creado con cariño por Elena De Miguel · 622 011 814 · Guadassuar, Valencia</div>';
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Cuadernillo ' + (state.alumno||'') + '</title>';
+  html += '<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Georgia,serif;max-width:820px;margin:0 auto;color:#2C1810}';
+  html += '.cover{background:#1E3A5F;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 40px;page-break-after:always}';
+  html += '.cover h1{font-size:36px;font-weight:bold;color:#FCD34D;margin-bottom:8px;line-height:1.2}';
+  html += '.cover h2{font-size:20px;font-weight:normal;color:rgba(255,255,255,0.8);margin-bottom:28px}';
+  html += '.cover-alumno{font-size:28px;font-weight:bold;color:white;background:rgba(252,211,77,0.2);border:2px solid #FCD34D;border-radius:12px;padding:14px 32px;margin-bottom:16px}';
+  html += '.cover-info{font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:6px}';
+  html += '.cover-msg{background:rgba(252,211,77,0.15);border:1.5px solid #FCD34D;border-radius:10px;padding:14px 22px;max-width:480px;margin:18px auto 0;font-size:14px;color:rgba(255,255,255,0.85);font-style:italic;line-height:1.6}';
+  html += '.cover-firma{margin-top:36px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.2);font-size:12px;color:rgba(255,255,255,0.45)}';
+  html += '.indice{padding:48px 40px;page-break-after:always}.indice h2{font-size:24px;color:#1E3A5F;margin-bottom:20px;border-bottom:3px solid #1E3A5F;padding-bottom:10px}';
+  html += '.indice-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F0E4CC;font-size:14px}';
+  html += '.main{padding:0 40px}.sol-portada{background:#1E3A5F;color:white;padding:20px 40px;text-align:center;font-size:22px;font-weight:bold;margin:0;page-break-before:always}';
+  html += '.sol-note{padding:12px 40px;font-size:13px;color:#92745C;font-style:italic}.sol-content{padding:0 40px 40px}';
+  html += '.footer-pag{text-align:center;font-size:10px;color:#C4A882;padding:20px;border-top:1px solid #F0E4CC}';
+  html += '@media print{body{padding:0}.cover{min-height:100vh}}</style></head><body>';
+ 
+  html += '<div class="cover"><div style="font-size:72px;margin-bottom:24px">\u2600\uFE0F</div>';
+  html += '<h1>Cuadernillo de Repaso<br>de Verano 2026</h1>';
+  html += '<h2>' + (ASIG_N[state.asig]||'') + ' \u00B7 ' + (CURSO_N[state.curso]||'') + '</h2>';
+  html += '<div class="cover-alumno">' + (state.alumno||'') + '</div>';
+  html += '<div class="cover-info">Pack ' + packN + ' \u00B7 ' + numEjGlobal + ' ejercicios</div>';
+  if(cuad.mensaje_motivador) html += '<div class="cover-msg">\u201C' + cuad.mensaje_motivador + '\u201D</div>';
+  html += '<div class="cover-firma">Revisado por Elena De Miguel \u00B7 Profesora PT \u00B7 Guadassuar, Valencia</div></div>';
+ 
+  html += '<div class="indice"><h2>\uD83D\uDCCB \u00CDndice de temas</h2>';
+  secciones.forEach(function(sec){
+    var semEmoji = sec.nivel_semaforo === 'rojo' ? '\uD83D\uDD34' : sec.nivel_semaforo === 'amarillo' ? '\uD83D\uDFE1' : '\uD83D\uDFE2';
+    html += '<div class="indice-item"><span>' + semEmoji + '</span><span style="flex:1">' + sec.tema + '</span><span style="color:#92745C;font-size:12px">' + (sec.ejercicios?sec.ejercicios.length:0) + ' ejerc.</span></div>';
+  });
+  html += '</div>';
+ 
+  html += '<div class="main">' + ejHTML + '</div>';
+  html += '<div class="sol-portada">\u2705 SOLUCIONES Y AUTOEVALUACI\u00d3N</div>';
+  html += '<div class="sol-note">Intenta resolver todos los ejercicios antes de consultar las soluciones.</div>';
+  html += '<div class="sol-content">' + solHTML + '</div>';
+  html += '<div class="footer-pag">Elena De Miguel Palau \u00B7 NIF: 20867543B \u00B7 Calle del Sol 30, Guadassuar, Valencia \u00B7 Tel: 622 011 814</div>';
   html += '</body></html>';
  
-  var blob = new Blob([html], {type:'text/html'});
+  var blob = new Blob([html],{type:'text/html;charset=utf-8'});
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
   a.href = url;
   a.download = 'Cuadernillo_' + nombre + '_' + asig + '_Verano2026.html';
-  document.body.appendChild(a);
-  a.click();
+  document.body.appendChild(a); a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
- 
   btn.disabled = false;
-  btn.textContent = '⬇️ Descargar PDF';
+  btn.textContent = '\u2B07\uFE0F Descargar cuadernillo';
   document.getElementById('dlOk').style.display = 'block';
 }
  
