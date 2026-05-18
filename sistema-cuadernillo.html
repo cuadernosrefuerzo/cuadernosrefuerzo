@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cuadernillo de Verano · Elena De Miguel</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lora:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -370,6 +371,9 @@ textarea{resize:vertical;min-height:70px}
 </div>
  
 <script>
+emailjs.init('vxJciCaPPc8jb94q1');
+var ANT_KEY = 'PEGA_AQUI_TU_CLAVE_ANTHROPIC_sk-ant-api03-...';
+ 
 var STRIPE_LINKS = {
   primaria: {
     basico:     'https://buy.stripe.com/fZu14naWHdx048LgxR1VK00',
@@ -531,6 +535,7 @@ function validar(step){
     if(ok){
       state.nombre = document.getElementById('nombre').value.trim();
       state.telefono = document.getElementById('telefono').value.trim();
+      state.email = document.getElementById('email') ? document.getElementById('email').value.trim() : '';
       state.alumno = document.getElementById('alumno').value.trim();
       state.curso = curVal;
       state.asig = asiVal;
@@ -769,29 +774,29 @@ function iniciarGeneracion(){
   });
  
   var promptParts = [];
-  promptParts.push('Eres Elena De Miguel, profesora de repaso especializada en Pedagogía Terapéutica.');
-  promptParts.push('Crea un cuadernillo de repaso de verano COMPLETO para un alumno de ' + (CURSO_N[state.curso]||'') + ' de ' + (ASIG_N[state.asig]||'') + '.');
-  promptParts.push('DATOS: Nombre: ' + state.alumno + ', Nivel: ' + (state.nivel||'Medio') + ', Objetivos: ' + (state.objetivos.join(', ')||'Repasar'));
-  if(state.comentarios) promptParts.push('Comentarios: ' + state.comentarios);
-  promptParts.push('SEMÁFORO - Temas flojos (PRIORIDAD ALTA, 6-8 ejercicios): ' + (rojos.join(', ')||'ninguno'));
-  promptParts.push('Temas regulares (PRIORIDAD MEDIA, 4-5 ejercicios): ' + (amarillos.join(', ')||'ninguno'));
-  promptParts.push('Temas bien (repaso rápido, 2-3 ejercicios): ' + (verdes.join(', ')||'ninguno'));
-  if(instrObjetos.length > 0) promptParts.push('AJUSTES POR OBJETIVOS: ' + instrObjetos.join('. '));
-  promptParts.push("SEMAFORO DE TEMAS:\n- TEMAS ROJOS (domina mal - PON EXACTAMENTE 10 ejercicios por tema): " + (rojos.join(', ')||'ninguno') + "\n- TEMAS AMARILLOS (nivel regular - PON EXACTAMENTE 8 ejercicios por tema): " + (amarillos.join(', ')||'ninguno') + "\n- TEMAS VERDES (buen nivel - PON EXACTAMENTE 5 ejercicios por tema): " + (verdes.join(', ')||'ninguno'));
-  promptParts.push('RESPONDE ÚNICAMENTE con este JSON sin texto adicional: {"secciones":[{"tema":"nombre","nivel_semaforo":"rojo o amarillo o verde","mini_explicacion":"2-3 frases simples","truco":"opcional","ejercicios":[{"num":1,"enunciado":"enunciado concreto","solucion":"solución completa"}]}],"total_ejercicios":número,"mensaje_motivador":"mensaje para ' + state.alumno + '"}');
-  promptParts.push('Sé muy generoso con los ejercicios. Objetivo MINIMO 60 páginas de trabajo real. Ejercicios extensos y detallados.');
+  promptParts.push('Eres Elena De Miguel, profesora especializada en Pedagogia Terapeutica con 7 anos de experiencia. Creas cuadernillos de verano personalizados, dinamicos y motivadores para alumnos de primaria, ESO y bachillerato.');
+  promptParts.push('Crea un cuadernillo de repaso de verano COMPLETO, VARIADO Y EXTENSO para:\n- Alumno/a: ' + state.alumno + '\n- Curso: ' + (CURSO_N[state.curso]||'') + '\n- Asignatura: ' + (ASIG_N[state.asig]||'') + '\n- Nivel: ' + (state.nivel||'Medio') + '\n- Objetivos: ' + (state.objetivos.join(', ')||'Repasar y mejorar'));
+  if(state.comentarios) promptParts.push('Informacion adicional de la familia: ' + state.comentarios);
+  if(instrObjetos.length > 0) promptParts.push('AJUSTES ESPECIALES: ' + instrObjetos.join('. '));
+  promptParts.push('SEMAFORO - numero EXACTO de ejercicios por tema:\n- TEMAS ROJOS (domina mal): ' + (rojos.join(', ')||'ninguno') + ' --> 10 ejercicios cada uno\n- TEMAS AMARILLOS (nivel regular): ' + (amarillos.join(', ')||'ninguno') + ' --> 8 ejercicios cada uno\n- TEMAS VERDES (buen nivel): ' + (verdes.join(', ')||'ninguno') + ' --> 5 ejercicios cada uno\nOrden: primero todos los rojos, luego amarillos, luego verdes.');
+  promptParts.push('INSTRUCCIONES OBLIGATORIAS:\n1. Ejercicios REALES y CONCRETOS con datos, palabras y numeros reales. Nunca vacios ni genericos.\n2. mini_explicacion de 2-3 frases claras y cercanas por tema.\n3. Truco mnemonico cuando sea util.\n4. TIPOS VARIADOS obligatorios: desarrollo, completar, relacionar, verdadero_falso, multiple_choice, ordenar, calculo, redaccion. Mezcla los tipos dentro de cada tema.\n5. AUTOEVALUACION al final de cada tema: exactamente 3 preguntas tipo test con 4 opciones A B C D.\n6. Soluciones COMPLETAS con desarrollo paso a paso.\n7. Lenguaje cercano, animado y adaptado al nivel del alumno. Usa emojis y frases de animo.\n8. MINIMO 60 PAGINAS de trabajo real. Para llegar, los enunciados deben ser largos y detallados, los ejercicios de desarrollo con espacio generoso, la redaccion con instrucciones completas.\n9. mensaje_motivador personalizado para ' + state.alumno + ': 3-4 frases de animo referidas a su asignatura y situacion.');
+  promptParts.push('RESPONDE UNICAMENTE con este JSON (sin texto extra, sin backticks, sin explicaciones):\n{"secciones":[{"tema":"nombre del tema","nivel_semaforo":"rojo|amarillo|verde","mini_explicacion":"2-3 frases","truco":"truco o cadena vacia","ejercicios":[{"num":1,"tipo":"desarrollo|completar|relacionar|verdadero_falso|multiple_choice|ordenar|calculo|redaccion","enunciado":"enunciado completo y detallado","opciones":["A) ...","B) ...","C) ...","D) ..."],"columna_a":["item1","item2"],"columna_b":["match1","match2"],"solucion":"solucion completa paso a paso"}],"autoevaluacion":[{"pregunta":"pregunta","opciones":["A) ...","B) ...","C) ...","D) ..."],"correcta":"A"}]}],"total_ejercicios":0,"mensaje_motivador":"mensaje"}');
  
   var prompt = promptParts.join('\n\n');
  
-  fetch('https://api.anthropic.com/v1/messages', {
+  
+fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json', 'anthropic-dangerous-allow-browser': 'true'},
+    headers: {'Content-Type': 'application/json', 'x-api-key': ANT_KEY, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-allow-browser': 'true'},
     body: JSON.stringify({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 8000,
       messages: [{role: 'user', content: prompt}]
     })
-  }).then(function(res){ return res.json(); }).then(function(data){
+  }).then(function(res){
+    if(!res.ok){ throw new Error('API error ' + res.status); }
+    return res.json();
+  }).then(function(data){
     var rawText = '';
     if(data.content) data.content.forEach(function(c){ if(c.text) rawText += c.text; });
     var cuad;
@@ -849,20 +854,98 @@ function mostrarPago(cuad){
 function procesarPago(){
   var link = getStripeLink();
   if(!link){ alert('Error: enlace de pago no encontrado.'); return; }
-  window.open(link, '_blank');
+ 
   var precio = PRECIOS[state.curso] ? PRECIOS[state.curso][state.pack] : 0;
   var desc = state.descuento || 0;
   var final = precio - desc;
+ 
+  // Notificar a Elena por WhatsApp
   var msg = encodeURIComponent(
     '\uD83D\uDCDA NUEVO PEDIDO\n' +
     'Alumno/a: ' + (state.alumno||'') + '\n' +
     'Curso: ' + (CURSO_N[state.curso]||state.curso) + '\n' +
     'Asignatura: ' + (ASIG_N[state.asig]||state.asig) + '\n' +
     'Pack: ' + state.pack.toUpperCase() + '\n' +
-    'Precio: ' + final + '\u20AC' + (desc > 0 ? ' (dto ' + desc + '\u20AC)' : '') + '\n' +
-    'Pago: Stripe'
+    'Precio: ' + final + '\u20AC' + (desc > 0 ? ' (dto ' + desc + '\u20AC aplicado)' : '')
   );
-  setTimeout(function(){ window.open('https://wa.me/34622011814?text=' + msg, '_blank'); }, 1500);
+  setTimeout(function(){ window.open('https://wa.me/34622011814?text=' + msg, '_blank'); }, 2000);
+ 
+  // Abrir Stripe en nueva pestana
+  window.open(link, '_blank');
+ 
+  // Mostrar pantalla de espera - el cliente confirma manualmente
+  mostrarEsperaPago(final);
+}
+ 
+function mostrarEsperaPago(importe){
+  // Ocultar todos los pasos
+  var pasos = document.querySelectorAll('[id^="paso"]');
+  pasos.forEach(function(p){ p.style.display = 'none'; });
+ 
+  var d = document.getElementById('paso-espera-pago');
+  if(!d){
+    d = document.createElement('div');
+    d.id = 'paso-espera-pago';
+    d.style.cssText = 'max-width:520px;margin:40px auto;padding:40px 24px;text-align:center;font-family:inherit';
+    d.innerHTML =
+      '<div style="font-size:64px;margin-bottom:20px">\uD83D\uDD12</div>' +
+      '<h2 style="color:#1E3A5F;font-size:22px;margin-bottom:10px">Completa el pago en Stripe</h2>' +
+      '<p style="color:#92745C;font-size:14px;margin-bottom:24px;line-height:1.7">Se ha abierto la p\u00e1gina de pago de Stripe en otra pesta\u00f1a.<br>' +
+      'Cuando termines de pagar, vuelve aqu\u00ed y pulsa el bot\u00f3n.</p>' +
+      '<div style="background:#F0FDF4;border:2px solid #86EFAC;border-radius:12px;padding:14px 20px;margin-bottom:28px;display:inline-block">' +
+      '<div style="font-size:15px;color:#15803D;font-weight:800">Total pagado: ' + importe + ' \u20AC</div>' +
+      '</div><br>' +
+      '<button onclick="confirmarPago()" style="background:#1E3A5F;color:white;border:none;border-radius:10px;padding:16px 36px;font-size:16px;font-weight:700;cursor:pointer;width:100%;margin-bottom:12px">' +
+      '\u2705 Ya he completado el pago → Descargar cuadernillo</button>' +
+      '<br><button onclick="window.open(getStripeLink(),\'_blank\')" style="background:none;border:none;color:#3B82F6;font-size:13px;cursor:pointer;text-decoration:underline">' +
+      '\uD83D\uDD17 Volver a abrir Stripe</button>';
+    document.body.appendChild(d);
+  }
+  d.style.display = 'block';
+}
+ 
+function enviarEmailElena(){
+  var rojosTxt = [];
+  var amarillosTxt = [];
+  var verdesTxt = [];
+  var temas = TEMAS[state.curso] && TEMAS[state.curso][state.asig] ? TEMAS[state.curso][state.asig] : [];
+  temas.forEach(function(t){
+    var v = state.semaforo && state.semaforo[t];
+    if(v==='rojo') rojosTxt.push(t);
+    else if(v==='amarillo') amarillosTxt.push(t);
+    else if(v==='verde') verdesTxt.push(t);
+  });
+ 
+  var precio = PRECIOS[state.curso] ? PRECIOS[state.curso][state.pack] : 0;
+  var desc = state.descuento || 0;
+  var final = precio - desc;
+ 
+  var params = {
+    nombre:          state.nombre || '',
+    telefono:        state.telefono || '',
+    email_cliente:   state.email || '',
+    alumno:          state.alumno || '',
+    curso:           CURSO_N[state.curso] || state.curso || '',
+    asignatura:      ASIG_N[state.asig] || state.asig || '',
+    nivel:           state.nivel || 'Medio',
+    pack:            state.pack ? state.pack.toUpperCase() : '',
+    precio:          final + '€' + (desc > 0 ? ' (dto ' + desc + '€)' : ''),
+    temas_rojos:     rojosTxt.join(', ') || 'ninguno',
+    temas_amarillos: amarillosTxt.join(', ') || 'ninguno',
+    temas_verdes:    verdesTxt.join(', ') || 'ninguno',
+    objetivos:       state.objetivos ? state.objetivos.join(', ') : '',
+    comentarios:     state.comentarios || ''
+  };
+ 
+  emailjs.send('service_znpg0r3', 'template_th47y9c', params)
+    .then(function(){ console.log('Email enviado a Elena OK'); })
+    .catch(function(err){ console.log('Error email:', JSON.stringify(err)); });
+}
+ 
+function confirmarPago(){
+  var d = document.getElementById('paso-espera-pago');
+  if(d) d.style.display = 'none';
+  enviarEmailElena();
   mostrarDescarga();
 }
 function pagarBizum(){
@@ -948,7 +1031,8 @@ function mostrarDescarga(){
 // ── DESCARGA PDF ──
 function descargar(){
   var btn = document.getElementById('btnDl');
-  if(btn){ btn.disabled = true; btn.textContent = '\u23F3 Generando...'; }
+  if(btn){ btn.disabled=true; btn.textContent='\u23F3 Generando...'; }
+ 
   var cuad = state.generatedContent;
   var secciones = cuad.secciones || [];
   var ejHTML = '';
@@ -1019,44 +1103,85 @@ function descargar(){
   });
  
   var nombre=(state.alumno||'alumno').replace(/\s+/g,'_');
-  var asigN=(ASIG_N[state.asig]||state.asig||'asig').replace(/\s+/g,'_');
+  var asigN=(ASIG_N[state.asig]||state.asig||'').replace(/\s+/g,'_');
   var packN=state.pack==='basico'?'B\u00e1sico':state.pack==='pro'?'PRO':'Tutorizado';
+  var cursoN=CURSO_N[state.curso]||state.curso||'';
+  var asigLabel=ASIG_N[state.asig]||state.asig||'';
+  var totalTemas=secciones.length;
  
-  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Cuadernillo '+( state.alumno||'')+'</title>';
-  html+='<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Georgia,serif;max-width:820px;margin:0 auto;color:#2C1810}';
-  html+='.cover{background:#1E3A5F;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 40px;page-break-after:always}';
-  html+='.cover h1{font-size:36px;font-weight:bold;color:#FCD34D;margin-bottom:8px;line-height:1.2}.cover h2{font-size:20px;font-weight:normal;color:rgba(255,255,255,0.8);margin-bottom:28px}';
-  html+='.cover-alumno{font-size:28px;font-weight:bold;color:white;background:rgba(252,211,77,0.2);border:2px solid #FCD34D;border-radius:12px;padding:14px 32px;margin-bottom:16px}';
-  html+='.cover-info{font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:6px}';
-  html+='.cover-msg{background:rgba(252,211,77,0.15);border:1.5px solid #FCD34D;border-radius:10px;padding:14px 22px;max-width:480px;margin:18px auto 0;font-size:14px;color:rgba(255,255,255,0.85);font-style:italic;line-height:1.6}';
-  html+='.cover-firma{margin-top:36px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.2);font-size:12px;color:rgba(255,255,255,0.45)}';
-  html+='.indice{padding:48px 40px;page-break-after:always}.indice h2{font-size:24px;color:#1E3A5F;margin-bottom:20px;border-bottom:3px solid #1E3A5F;padding-bottom:10px}';
-  html+='.indice-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F0E4CC;font-size:14px}';
-  html+='.main{padding:0 40px}.sol-portada{background:#1E3A5F;color:white;padding:20px 40px;text-align:center;font-size:22px;font-weight:bold;page-break-before:always}';
-  html+='.sol-note{padding:12px 40px;font-size:13px;color:#92745C;font-style:italic}.sol-content{padding:0 40px 40px}';
+  // ── PORTADA IGUAL AL EJEMPLO DE LA WEB ──
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Cuadernillo '+(state.alumno||'')+'</title>';
+  html+='<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">';
+  html+='<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Inter",Georgia,serif;max-width:820px;margin:0 auto;color:#2C1810}';
+  // PORTADA
+  html+='.cover{background:#1E3A5F;min-height:100vh;padding:52px 44px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;page-break-after:always}';
+  html+='.cover::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(249,115,22,0.12)}';
+  html+='.cover::after{content:"";position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.04)}';
+  html+='.cover-label{font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);font-family:"Inter",sans-serif}';
+  html+='.cover-mid{position:relative;z-index:1;text-align:center;padding:28px 0}';
+  html+='.cover-sun{font-size:52px;margin-bottom:16px;display:block}';
+  html+='.cover-titulo{font-family:"Fraunces",serif;font-size:38px;font-weight:700;color:white;line-height:1.1;margin-bottom:6px}';
+  html+='.cover-titulo em{font-style:italic;color:#FCD34D;display:block}';
+  html+='.cover-alumno{font-size:26px;font-weight:700;color:white;margin:16px 0 4px}';
+  html+='.cover-info{font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;font-family:"Inter",sans-serif}';
+  html+='.cover-pills{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:24px}';
+  html+='.cover-pill{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:100px;padding:4px 14px;font-size:11px;font-weight:600;color:white;font-family:"Inter",sans-serif}';
+  html+='.cover-msg{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:18px 22px;font-size:13px;color:rgba(255,255,255,0.8);font-style:italic;line-height:1.7;text-align:left}';
+  html+='.cover-msg-autor{display:block;margin-top:10px;font-size:11px;color:rgba(255,255,255,0.4);font-style:normal;font-weight:600}';
+  html+='.cover-footer{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.3);font-family:"Inter",sans-serif;position:relative;z-index:1}';
+  // INDICE
+  html+='.indice{padding:48px 44px;page-break-after:always}';
+  html+='.indice h2{font-family:"Fraunces",serif;font-size:26px;color:#1E3A5F;margin-bottom:6px}';
+  html+='.indice-sub{font-size:13px;color:#92745C;margin-bottom:24px}';
+  html+='.indice-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #F0E4CC;font-size:14px}';
+  html+='.indice-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}';
+  // EJERCICIOS
+  html+='.main{padding:0 44px}';
+  // SOLUCIONES
+  html+='.sol-portada{background:#1E3A5F;color:white;padding:20px 44px;font-family:"Fraunces",serif;font-size:24px;font-weight:700;page-break-before:always}';
+  html+='.sol-note{padding:12px 44px;font-size:13px;color:#92745C;font-style:italic}';
+  html+='.sol-content{padding:0 44px 44px}';
   html+='.footer-pag{text-align:center;font-size:10px;color:#C4A882;padding:20px;border-top:1px solid #F0E4CC}';
   html+='@media print{body{padding:0}.cover{min-height:100vh}}</style></head><body>';
  
-  html+='<div class="cover"><div style="font-size:72px;margin-bottom:24px">\u2600\uFE0F</div>';
-  html+='<h1>Cuadernillo de Repaso<br>de Verano 2026</h1>';
-  html+='<h2>'+(ASIG_N[state.asig]||'')+' \u00B7 '+(CURSO_N[state.curso]||'')+'</h2>';
+  // PORTADA HTML
+  html+='<div class="cover">';
+  html+='<div class="cover-label">Material educativo personalizado &nbsp;\u00B7&nbsp; Elena De Miguel &nbsp;\u00B7&nbsp; Profesora especializada</div>';
+  html+='<div class="cover-mid">';
+  html+='<span class="cover-sun">\u2600\uFE0F</span>';
+  html+='<div class="cover-titulo">Cuadernillo de<br>Repaso de <em>Verano</em></div>';
   html+='<div class="cover-alumno">'+(state.alumno||'')+'</div>';
-  html+='<div class="cover-info">Pack '+packN+' \u00B7 '+numEjGlobal+' ejercicios</div>';
-  if(cuad.mensaje_motivador) html+='<div class="cover-msg">\u201C'+cuad.mensaje_motivador+'\u201D</div>';
-  html+='<div class="cover-firma">Revisado por Elena De Miguel \u00B7 Profesora PT \u00B7 Guadassuar, Valencia</div></div>';
+  html+='<div class="cover-info">'+cursoN+' &nbsp;\u00B7&nbsp; '+asigLabel+' &nbsp;\u00B7&nbsp; Pack '+packN+' &nbsp;\u00B7&nbsp; Verano 2026</div>';
+  html+='<div class="cover-pills">';
+  html+='<div class="cover-pill">\uD83D\uDCDA '+totalTemas+' temas</div>';
+  html+='<div class="cover-pill">\u270F\uFE0F '+numEjGlobal+' ejercicios</div>';
+  html+='<div class="cover-pill">\u2705 Soluciones</div>';
+  if(state.pack==='pro'||state.pack==='tutorizado') html+='<div class="cover-pill">\uD83D\uDD04 2 revisiones</div>';
+  if(state.pack==='tutorizado') html+='<div class="cover-pill">\uD83D\uDCF1 Canal dudas</div>';
+  html+='</div>';
+  if(cuad.mensaje_motivador){
+    html+='<div class="cover-msg">'+cuad.mensaje_motivador+'<span class="cover-msg-autor">\u2014 Elena De Miguel, tu profesora</span></div>';
+  }
+  html+='</div>';
+  html+='<div class="cover-footer"><span>Revisado personalmente por Elena De Miguel &nbsp;\u00B7&nbsp; 622 011 814</span><span>Verano 2026</span></div>';
+  html+='</div>';
  
+  // ÍNDICE
   html+='<div class="indice"><h2>\uD83D\uDCCB \u00CDndice de temas</h2>';
+  html+='<div class="indice-sub">Organizado de m\u00e1s dif\u00edcil (\uD83D\uDD34) a m\u00e1s dominado (\uD83D\uDFE2)</div>';
   secciones.forEach(function(sec){
     var semEmoji=sec.nivel_semaforo==='rojo'?'\uD83D\uDD34':sec.nivel_semaforo==='amarillo'?'\uD83D\uDFE1':'\uD83D\uDFE2';
-    html+='<div class="indice-item"><span>'+semEmoji+'</span><span style="flex:1">'+sec.tema+'</span><span style="color:#92745C;font-size:12px">'+(sec.ejercicios?sec.ejercicios.length:0)+' ejerc.</span></div>';
+    var dotColor=sec.nivel_semaforo==='rojo'?'#DC2626':sec.nivel_semaforo==='amarillo'?'#F59E0B':'#16A34A';
+    var ejN=sec.ejercicios?sec.ejercicios.length:0;
+    html+='<div class="indice-item"><div class="indice-dot" style="background:'+dotColor+'"></div><span style="flex:1">'+sec.tema+'</span><span style="color:#92745C;font-size:12px">'+semEmoji+' '+ejN+' ejercicios</span></div>';
   });
   html+='</div>';
  
   html+='<div class="main">'+ejHTML+'</div>';
-  html+='<div class="sol-portada">\u2705 SOLUCIONES Y AUTOEVALUACI\u00d3N</div>';
+  html+='<div class="sol-portada">\u2705 Soluciones y Autoevaluaci\u00f3n</div>';
   html+='<div class="sol-note">Intenta resolver todos los ejercicios antes de consultar las soluciones.</div>';
   html+='<div class="sol-content">'+solHTML+'</div>';
-  html+='<div class="footer-pag">Elena De Miguel Palau \u00B7 NIF: 20867543B \u00B7 Calle del Sol 30, Guadassuar, Valencia \u00B7 Tel: 622 011 814</div>';
+  html+='<div class="footer-pag">Elena De Miguel Palau &nbsp;\u00B7&nbsp; NIF: 20867543B &nbsp;\u00B7&nbsp; Calle del Sol 30, Guadassuar, Valencia &nbsp;\u00B7&nbsp; Tel: 622 011 814</div>';
   html+='</body></html>';
  
   var blob=new Blob([html],{type:'text/html;charset=utf-8'});
