@@ -200,7 +200,7 @@ textarea{resize:vertical;min-height:70px}
     <div class="card-sub">Para enviarte el cuadernillo y mantenernos en contacto.</div>
     <div class="fw" id="wrap-nombre"><label class="field-label">Nombre del padre/madre <span class="req">*</span></label><input type="text" id="nombre" placeholder="Tu nombre completo"><div class="errmsg">Campo obligatorio</div></div>
     <div class="fw" id="wrap-telefono"><label class="field-label">WhatsApp <span class="req">*</span></label><input type="text" id="telefono" placeholder="6XX XXX XXX"><div class="errmsg">Campo obligatorio</div></div>
-    <div class="fw" id="wrap-email"><label class="field-label">Correo electrónico <span class="req">*</span></label><input type="email" id="email" placeholder="ejemplo@gmail.com"><div class="errmsg">Campo obligatorio</div></div>
+    <div class="fw" id="wrap-email"><label class="field-label">Correo electrónico <span class="req">*</span></label><input type="text" id="email" placeholder="ejemplo@gmail.com"><div class="errmsg">Campo obligatorio</div></div>
     <div class="fw" id="wrap-alumno"><label class="field-label">Nombre del alumno/a <span class="req">*</span></label><input type="text" id="alumno" placeholder="Nombre de tu hijo/a"><div class="errmsg">Campo obligatorio</div></div>
   </div>
   <div class="card">
@@ -326,9 +326,9 @@ textarea{resize:vertical;min-height:70px}
     </div>
     <div class="stripe-form">
       <div style="background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center">
-        <div style="font-size:13px;color:#1E40AF;line-height:1.7">?? Al pulsar el botón se abrirá la página de pago oficial de <strong>Stripe</strong>.<br>Introduce tu tarjeta allí de forma segura.</div>
+        <div style="font-size:13px;color:#1E40AF;line-height:1.7">✅ Al pulsar el botón se abrirá la página de pago oficial de <strong>Stripe</strong>.<br>Introduce tu tarjeta allí de forma segura.</div>
       </div>
-      <button class="btn-stripe" id="payBtn" onclick="procesarPago()"><span id="payTxt">?? Pagar con Stripe <span id="pay-btn-amt"></span></span><span id="paySpinner" style="display:none"><div class="spinner"></div></span></button>
+      <button class="btn-stripe" id="payBtn" onclick="procesarPago()"><span id="payTxt">Pagar con Stripe <span id="pay-btn-amt"></span></span><span id="paySpinner" style="display:none"><div class="spinner"></div></span></button>
       <div class="stripe-badge">🔒 Pago seguro con Stripe · SSL cifrado</div>
     </div>
     <div class="bizum-alt">
@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function(){
   // Detectar vuelta de Stripe con ?pagado=1
   if(window.location.search.indexOf('pagado=1') > -1){
     var pedidoStr = '';
-    try{ pedidoStr = sessionStorage.getItem('pedido_elena') || ''; }catch(e){}
+    try{ pedidoStr = localStorage.getItem('pedido_elena') || ''; }catch(e){}
     var pedido = {};
     try{ pedido = JSON.parse(pedidoStr); }catch(e){}
     if(pedido.alumno){
@@ -874,7 +874,6 @@ function procesarPago(){
   var desc = state.descuento || 0;
   var final = precio - desc;
  
-  // Guardar datos en sessionStorage para recuperarlos al volver de Stripe
   var rojosTxt=[], amarillosTxt=[], verdesTxt=[];
   var temas = TEMAS[state.curso] && TEMAS[state.curso][state.asig] ? TEMAS[state.curso][state.asig] : [];
   temas.forEach(function(t){
@@ -885,19 +884,26 @@ function procesarPago(){
   });
  
   var pedido = {
-    nombre: state.nombre||'', telefono: state.telefono||'', email: state.email||'',
-    alumno: state.alumno||'', curso: CURSO_N[state.curso]||'', asig: ASIG_N[state.asig]||'',
-    nivel: state.nivel||'Medio', pack: (state.pack||'').toUpperCase(),
-    precio: final + '€' + (desc>0?' (dto '+desc+'€)':''),
-    rojos: rojosTxt.join(', ')||'ninguno',
+    nombre:    state.nombre||'',
+    telefono:  state.telefono||'',
+    email:     state.email||'',
+    alumno:    state.alumno||'',
+    curso:     CURSO_N[state.curso]||'',
+    asig:      ASIG_N[state.asig]||'',
+    nivel:     state.nivel||'Medio',
+    pack:      (state.pack||'').toUpperCase(),
+    precio:    final + '€' + (desc>0?' (dto '+desc+'€)':''),
+    rojos:     rojosTxt.join(', ')||'ninguno',
     amarillos: amarillosTxt.join(', ')||'ninguno',
-    verdes: verdesTxt.join(', ')||'ninguno',
+    verdes:    verdesTxt.join(', ')||'ninguno',
     objetivos: state.objetivos ? state.objetivos.join(', ') : '',
     comentarios: state.comentarios||''
   };
-  try{ sessionStorage.setItem('pedido_elena', JSON.stringify(pedido)); }catch(e){}
  
-  // Redirigir a Stripe (Stripe redirigirá de vuelta con ?pagado=1)
+  // Guardar en localStorage (persiste entre navegaciones del mismo dominio)
+  try{ localStorage.setItem('pedido_elena', JSON.stringify(pedido)); }catch(e){}
+ 
+  // Redirigir a Stripe
   window.location.href = link;
 }
 function mostrarEsperaPago(importe){
@@ -913,7 +919,7 @@ function mostrarEsperaPago(importe){
     d.id = 'screenEspera';
     d.style.cssText = 'max-width:520px;margin:40px auto;padding:40px 24px;text-align:center;font-family:inherit';
     d.innerHTML =
-      '<div style="font-size:64px;margin-bottom:20px">??</div>' +
+      '<div style="font-size:64px;margin-bottom:20px"></div>' +
       '<h2 style="color:#1E3A5F;font-size:22px;margin-bottom:10px">Completa el pago en Stripe</h2>' +
       '<p style="color:#92745C;font-size:14px;margin-bottom:24px;line-height:1.7">Se ha abierto la página de pago de Stripe en otra pestaña.<br>Cuando termines de pagar, vuelve aquí y pulsa el botón.</p>' +
       '<div style="background:#F0FDF4;border:2px solid #86EFAC;border-radius:12px;padding:14px 20px;margin-bottom:28px;display:inline-block">' +
@@ -922,7 +928,7 @@ function mostrarEsperaPago(importe){
       '<button onclick="confirmarPago()" style="background:#1E3A5F;color:white;border:none;border-radius:10px;padding:16px 36px;font-size:16px;font-weight:700;cursor:pointer;width:100%;margin-bottom:14px">' +
       '✅ Ya he completado el pago → Ver confirmación</button>' +
       '<br><button onclick="var sl=getStripeLink();if(sl)window.open(sl)" style="background:none;border:none;color:#3B82F6;font-size:13px;cursor:pointer;text-decoration:underline">' +
-      '?? Volver a abrir Stripe</button>';
+      'Volver a abrir Stripe</button>';
     document.querySelector('.container') ? document.querySelector('.container').appendChild(d) : document.body.appendChild(d);
   }
   d.style.display = 'block';
@@ -957,7 +963,7 @@ function mostrarDescarga(){
     d.id = 'screenConfirmacion';
     d.style.cssText = 'max-width:540px;margin:40px auto;padding:40px 28px;text-align:center;font-family:inherit';
     d.innerHTML =
-      '<div style="font-size:72px;margin-bottom:20px">??</div>' +
+      '<div style="font-size:72px;margin-bottom:20px"></div>' +
       '<h2 style="color:#1E3A5F;font-family:Georgia,serif;font-size:26px;margin-bottom:12px">Pedido confirmado</h2>' +
       '<p style="color:#92745C;font-size:15px;line-height:1.8;margin-bottom:28px">' +
       'Hemos recibido tu pedido. Elena preparará el cuadernillo de <strong>' + (state.alumno||'tu hijo/a') + '</strong> ' +
@@ -965,18 +971,18 @@ function mostrarDescarga(){
       '<div style="background:#F0FDF4;border:2px solid #86EFAC;border-radius:14px;padding:20px 24px;margin-bottom:24px;text-align:left">' +
       '<div style="font-size:13px;font-weight:800;color:#15803D;margin-bottom:12px">✅ Resumen de tu pedido</div>' +
       '<div style="font-size:14px;color:#166534;line-height:2">' +
-      '?? Alumno/a: <strong>' + (state.alumno||'') + '</strong><br>' +
-      '?? Curso: <strong>' + (CURSO_N[state.curso]||'') + '</strong><br>' +
-      '?? Asignatura: <strong>' + (ASIG_N[state.asig]||'') + '</strong><br>' +
+      'Alumno/a: <strong>' + (state.alumno||'') + '</strong><br>' +
+      'Curso: <strong>' + (CURSO_N[state.curso]||'') + '</strong><br>' +
+      'Asignatura: <strong>' + (ASIG_N[state.asig]||'') + '</strong><br>' +
       '⭐ Pack: <strong>' + (state.pack||'').toUpperCase() + '</strong><br>' +
-      '?? WhatsApp: <strong>' + (state.telefono||'') + '</strong><br>' +
-      '?? Email: <strong>' + (state.email||'') + '</strong>' +
+      'WhatsApp: <strong>' + (state.telefono||'') + '</strong><br>' +
+      'Email: <strong>' + (state.email||'') + '</strong>' +
       '</div></div>' +
       '<div style="background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:12px;padding:16px 20px;font-size:13px;color:#1E40AF;line-height:1.7;margin-bottom:20px">' +
-      '?? Si tienes alguna duda escribe a Elena:<br>' +
+      'Si tienes alguna duda escribe a Elena:<br>' +
       '<strong>WhatsApp: 622 011 814</strong> &nbsp;·&nbsp; <strong>elenademp@gmail.com</strong>' +
       '</div>' +
-      '<div style="font-size:12px;color:#C4A882">¡Gracias por confiar en Elena! ??</div>';
+      '<div style="font-size:12px;color:#C4A882">¡Gracias por confiar en Elena! </div>';
     document.querySelector('.container') ? document.querySelector('.container').appendChild(d) : document.body.appendChild(d);
   }
   d.style.display = 'block';
@@ -1196,7 +1202,6 @@ function descargarRecibo(){
 }
  
 function mostrarConfirmacionFinal(pedido){
-  // Ocultar todo
   ['screen1','screen2','screen3','screenGen','screenPago','screenDesc'].forEach(function(id){
     var el = document.getElementById(id);
     if(el){ el.classList.remove('active'); el.style.display='none'; }
@@ -1210,40 +1215,43 @@ function mostrarConfirmacionFinal(pedido){
     document.querySelector('.container') ? document.querySelector('.container').appendChild(d) : document.body.appendChild(d);
   }
  
-  var alumno = pedido.alumno || 'tu hijo/a';
+  var alumno = (pedido && pedido.alumno) ? pedido.alumno : '';
+  var pack = (pedido && pedido.pack) ? pedido.pack : '';
+  var esPro = pack==='PRO' || pack==='TUTORIZADO';
+  var esTutor = pack==='TUTORIZADO';
+ 
   d.innerHTML =
-    '<div style="text-align:center;margin-bottom:32px">' +
-    '<div style="font-size:72px;margin-bottom:16px">??</div>' +
-    '<h2 style="color:#1E3A5F;font-family:Georgia,serif;font-size:28px;margin-bottom:10px">Pago completado</h2>' +
-    '<p style="color:#92745C;font-size:15px;line-height:1.8">El cuadernillo de <strong>' + alumno + '</strong> estará listo en menos de <strong>24 horas</strong>.</p>' +
+    '<div style="text-align:center;margin-bottom:28px">' +
+    '<div style="font-size:64px;margin-bottom:12px">&#127881;</div>' +
+    '<h2 style="color:#1E3A5F;font-family:Georgia,serif;font-size:26px;margin-bottom:8px">Pago completado</h2>' +
+    '<p style="color:#92745C;font-size:14px;line-height:1.8">El cuadernillo de <strong>' + (alumno||'tu hijo/a') + '</strong> estar&aacute; listo en menos de <strong>24 horas</strong>.</p>' +
     '</div>' +
-    '<div style="background:#F0FDF4;border:2px solid #86EFAC;border-radius:14px;padding:20px 24px;margin-bottom:20px">' +
-    '<div style="font-size:13px;font-weight:800;color:#15803D;margin-bottom:14px">✅ Resumen del pedido</div>' +
+    '<div style="background:#F0FDF4;border:2px solid #86EFAC;border-radius:14px;padding:18px 22px;margin-bottom:16px">' +
+    '<div style="font-size:13px;font-weight:800;color:#15803D;margin-bottom:12px">&#10003; Resumen del pedido</div>' +
     '<div style="font-size:14px;color:#166534;line-height:2.2">' +
-    '?? Alumno/a: <strong>' + (pedido.alumno||'') + '</strong><br>' +
-    '?? Curso: <strong>' + (pedido.curso||'') + '</strong><br>' +
-    '?? Asignatura: <strong>' + (pedido.asig||'') + '</strong><br>' +
-    '⭐ Pack: <strong>' + (pedido.pack||'') + '</strong><br>' +
-    '?? Precio: <strong>' + (pedido.precio||'') + '</strong>' +
+    'Alumno/a: <strong>' + (pedido.alumno||'-') + '</strong><br>' +
+    'Curso: <strong>' + (pedido.curso||'-') + '</strong><br>' +
+    'Asignatura: <strong>' + (pedido.asig||'-') + '</strong><br>' +
+    'Pack: <strong>' + (pedido.pack||'-') + '</strong><br>' +
+    'Precio: <strong>' + (pedido.precio||'-') + '</strong>' +
     '</div></div>' +
-    '<div style="background:#1E3A5F;border-radius:14px;padding:20px 24px;margin-bottom:20px;color:white">' +
-    '<div style="font-size:13px;font-weight:800;margin-bottom:14px">?? Próximos pasos</div>' +
-    '<div style="font-size:13px;line-height:2.2;color:rgba(255,255,255,0.85)">' +
-    '1️⃣ Elena recibe tu pedido y empieza a preparar el cuadernillo<br>' +
-    '2️⃣ En menos de <strong>24 horas</strong> te lo enviamos por WhatsApp y email<br>' +
-    '3️⃣ Lo imprimes o lo usas en pantalla — ¡a tu ritmo!<br>' +
-    (pedido.pack==='PRO'||pedido.pack==='TUTORIZADO' ? '4️⃣ Elena contactará para coordinar las revisiones de julio y agosto<br>' : '') +
-    (pedido.pack==='TUTORIZADO' ? '5️⃣ Se activará el canal de dudas y las videollamadas de seguimiento<br>' : '') +
+    '<div style="background:#1E3A5F;border-radius:14px;padding:18px 22px;margin-bottom:16px;color:white">' +
+    '<div style="font-size:13px;font-weight:800;margin-bottom:12px;color:#FCD34D">Pr&oacute;ximos pasos</div>' +
+    '<div style="font-size:13px;line-height:2.2;color:rgba(255,255,255,0.88)">' +
+    '1. Elena recibe tu pedido y prepara el cuadernillo personalizado<br>' +
+    '2. En menos de <strong>24 horas</strong> te lo enviamos por WhatsApp y email<br>' +
+    '3. Lo imprimes o lo usas en pantalla &mdash; &iexcl;a tu ritmo!<br>' +
+    (esPro ? '4. Elena contactar&aacute; para las revisiones de julio y agosto<br>' : '') +
+    (esTutor ? '5. Se activar&aacute; el canal de dudas y las videollamadas de seguimiento<br>' : '') +
     '</div></div>' +
-    '<div style="background:#FEF3C7;border:1.5px solid #FCD34D;border-radius:12px;padding:16px 20px;text-align:center;font-size:13px;color:#92400E;line-height:1.7">' +
-    '?? ¿Tienes alguna duda? Escribe a Elena directamente:<br>' +
-    '<strong>WhatsApp: 622 011 814</strong> &nbsp;·&nbsp; <strong>elenademp@gmail.com</strong>' +
+    '<div style="background:#FEF3C7;border:1.5px solid #FCD34D;border-radius:12px;padding:14px 18px;text-align:center;font-size:13px;color:#92400E;line-height:1.7">' +
+    '&iquest;Tienes alguna duda? Escribe a Elena directamente:<br>' +
+    '<strong>WhatsApp: 622 011 814</strong> &nbsp;&middot;&nbsp; <strong>elenademp@gmail.com</strong>' +
     '</div>';
  
   d.style.display = 'block';
   window.scrollTo(0,0);
-  try{ sessionStorage.removeItem('pedido_elena'); }catch(e){}
-}
-</script>
+  try{ localStorage.removeItem('pedido_elena'); }catch(e){}
+}</script>
 </body>
 </html>
