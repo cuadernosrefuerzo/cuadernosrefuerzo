@@ -876,10 +876,11 @@ function procesarPago(){
   var rojosTxt=[], amarillosTxt=[], verdesTxt=[];
   var temas = TEMAS[state.curso] && TEMAS[state.curso][state.asig] ? TEMAS[state.curso][state.asig] : [];
   temas.forEach(function(t){
-    var v = state.semaforo && state.semaforo[t];
-    if(v==='red'||v==='rojo') rojosTxt.push(t);
-    else if(v==='yellow'||v==='amarillo') amarillosTxt.push(t);
-    else if(v==='green'||v==='verde') verdesTxt.push(t);
+    var nombre = t.n || t;
+    var v = state.semaforo && state.semaforo[nombre];
+    if(v==='red'||v==='rojo') rojosTxt.push(nombre);
+    else if(v==='yellow'||v==='amarillo') amarillosTxt.push(nombre);
+    else if(v==='green'||v==='verde') verdesTxt.push(nombre);
   });
  
   var pedido = {
