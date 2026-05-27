@@ -184,15 +184,15 @@ textarea{resize:vertical;min-height:70px}
 </style>
 </head>
 <body>
- 
+
 <header>
   <h1>Cuadernillo de <em>Verano</em> ☀️</h1>
   <p>Rellena el diagnóstico y en menos de 24h tienes tu cuadernillo personalizado</p>
 </header>
 <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
- 
+
 <div class="form-wrap">
- 
+
 <!-- PASO 1 -->
 <div class="screen active" id="screen1">
   <div class="card">
@@ -237,7 +237,7 @@ textarea{resize:vertical;min-height:70px}
   </div>
   <div class="btn-row"><div></div><button class="btn btn-orange" onclick="ir(1,2)">Siguiente →</button></div>
 </div>
- 
+
 <!-- PASO 2 -->
 <div class="screen" id="screen2">
   <div class="card">
@@ -253,7 +253,7 @@ textarea{resize:vertical;min-height:70px}
   </div>
   <div class="btn-row"><button class="btn btn-ghost" onclick="ir(2,1)">← Atrás</button><button class="btn btn-orange" onclick="ir(2,3)">Siguiente →</button></div>
 </div>
- 
+
 <!-- PASO 3 -->
 <div class="screen" id="screen3">
   <div class="card">
@@ -292,7 +292,7 @@ textarea{resize:vertical;min-height:70px}
   </div>
   <div class="btn-row"><button class="btn btn-ghost" onclick="ir(3,2)">← Atrás</button><button class="btn btn-orange" onclick="iniciarGeneracion()">✨ Generar cuadernillo</button></div>
 </div>
- 
+
 <!-- GENERANDO -->
 <div class="screen" id="screenGen">
   <div class="gen-wrap">
@@ -312,7 +312,7 @@ textarea{resize:vertical;min-height:70px}
     </div>
   </div>
 </div>
- 
+
 <!-- PAGO -->
 <div class="screen" id="screenPago">
   <div class="pay-wrap">
@@ -337,7 +337,7 @@ textarea{resize:vertical;min-height:70px}
     </div>
   </div>
 </div>
- 
+
 <!-- DESCARGA -->
 <div class="screen" id="screenDesc">
   <div class="prev-wrap">
@@ -364,12 +364,12 @@ textarea{resize:vertical;min-height:70px}
     </div>
   </div>
 </div>
- 
+
 </div>
- 
+
 <script>emailjs.init('vxJciCaPPc8jb94q1');
 var ANT_KEY = 'PEGA_AQUI_TU_CLAVE_ANTHROPIC_sk-ant-api03-...';
- 
+
 var STRIPE_LINKS = {
   primaria: {
     basico:     'https://buy.stripe.com/fZu14naWHdx048LgxR1VK00',
@@ -396,7 +396,7 @@ function getStripeLink(){
   var nivel = getNivel(state.curso);
   return (STRIPE_LINKS[nivel] && STRIPE_LINKS[nivel][state.pack]) || null;
 }
- 
+
 var _cursoSel = '';
 var _asigSel = '';
 document.addEventListener('DOMContentLoaded', function(){
@@ -413,7 +413,21 @@ document.addEventListener('DOMContentLoaded', function(){
         nivel:pedido.nivel, pack:pedido.pack, precio:pedido.precio,
         temas_rojos:pedido.rojos, temas_amarillos:pedido.amarillos, temas_verdes:pedido.verdes,
         objetivos:pedido.objetivos, comentarios:pedido.comentarios
-      }).then(function(){console.log('Email OK');}).catch(function(e){console.log('Email error',e);});
+      }).then(function(){console.log('Email Elena OK');}).catch(function(e){console.log('Email Elena error',e);});
+      if(pedido.email){
+        emailjs.send('service_znpg0r3','template_57ruh7n',{
+          to_email:      pedido.email,
+          email:         pedido.email,
+          nombre:        pedido.nombre,
+          alumno:        pedido.alumno,
+          curso:         pedido.curso,
+          asignatura:    pedido.asig,
+          pack:          pedido.pack,
+          precio:        pedido.precio,
+          telefono_elena:'622 011 814',
+          email_elena:   'elenademp@gmail.com'
+        }).then(function(){console.log('Email cliente OK');}).catch(function(e){console.log('Email cliente error',e);});
+      }
     }
     mostrarConfirmacionFinal(pedido);
     return;
@@ -429,96 +443,96 @@ var CURSO_N = {'1P':'1º Primaria','2P':'2º Primaria','3P':'3º Primaria','4P':
 var ASIG_N = {'mates':'Matemáticas','valenciano':'Valenciano','castellano':'Castellano','ingles':'Inglés'};
 var PRECIOS = {'1P':{basico:30,pro:45,tutorizado:75},'2P':{basico:30,pro:45,tutorizado:75},'3P':{basico:30,pro:45,tutorizado:75},'4P':{basico:30,pro:45,tutorizado:75},'5P':{basico:30,pro:45,tutorizado:75},'6P':{basico:30,pro:45,tutorizado:75},'1E':{basico:35,pro:55,tutorizado:90},'2E':{basico:35,pro:55,tutorizado:90},'3E':{basico:35,pro:55,tutorizado:90},'4E':{basico:35,pro:55,tutorizado:90},'1B':{basico:45,pro:70,tutorizado:120},'2B':{basico:45,pro:70,tutorizado:120}};
 var DATOS_CURIOSOS = ['El cerebro tiene 86.000 millones de neuronas. Cada vez que aprendes algo nuevo, se forman conexiones entre ellas.','Estudiar en sesiones de 25 minutos con descansos es hasta un 40% más efectivo que estudiar horas seguidas.','Dormir bien después de estudiar consolida la memoria. El cerebro archiva lo aprendido mientras duermes.','El ejercicio físico aumenta el flujo de sangre al cerebro y mejora la concentración.','Escribir a mano activa más zonas del cerebro que leer en pantalla o subrayar.','Enseñar lo que has aprendido a otra persona es la técnica más potente para fijar el conocimiento.','El cerebro aprende mejor cuando conecta conceptos nuevos con cosas que ya conoce.','Los errores son esenciales para aprender. Cada vez que te equivocas, el cerebro refuerza el camino correcto.','Beber agua mejora el rendimiento cognitivo hasta un 30%. El cerebro es un 75% agua.','Estudiar en el mismo lugar y a la misma hora crea una rutina que ayuda al cerebro a concentrarse.'];
- 
+
 var TEMAS = {};
 var OBJETIVOS = {};
- 
+
 // Temas por curso y asignatura (versión compacta)
- 
+
 TEMAS['1P'] = {};
-TEMAS['1P']['mates'] = [{n:'Números del 1 al 100',e:'Ej: contar de 2 en 2 · ¿qué número va después del 47?'},{n:'Sumas sin llevar',e:'Ej: 23 + 14 = ? · ¿cuánto es 31 + 15?'},{n:'Restas sin llevar',e:'Ej: 35 – 12 = ? · ¿cuánto queda si tengo 28 y gasto 15?'},{n:'Sumas llevando',e:'Ej: 47 + 35 = ? · cuando la suma pasa de 10'},{n:'Figuras geométricas básicas',e:'Ej: círculo, cuadrado, triángulo, rectángulo · ¿cuántos lados tiene?'},{n:'Medidas: largo, corto, pesado, ligero',e:'Ej: ¿qué es más largo, un lápiz o una regla? · comparar objetos'},{n:'El dinero: monedas y billetes',e:'Ej: ¿cuánto cuestan 2 caramelos a 5 céntimos cada uno?'},{n:'Problemas sencillos de suma y resta',e:'Ej: tengo 8 manzanas y me dan 5 más, ¿cuántas tengo?'}];
-TEMAS['1P']['valenciano'] = [{n:'Lectura de sílabas i paraules senzilles',e:'Ej: llegir «ma-ma», «pa-pa», «ca-sa» sense errors'},{n:'Escriptura de paraules bàsiques',e:'Ej: escriure «sol», «mar», «gat» correctament'},{n:'Majúscules i minúscules',e:'Ej: saber quan s\'usa majúscula: noms propis, inici de frase'},{n:'Oracions senzilles',e:'Ej: «El gat juga» · «La nina menja poma» · saber on va el punt'},{n:'Vocabulari del cos humà',e:'Ej: cap, braç, cama, mà, nas, boca, ulls…'},{n:'Vocabulari de la família i l\'escola',e:'Ej: mare, pare, germà, mestre, pissarra, llapis…'},{n:'Rimes i cançons',e:'Ej: completar una rima senzilla · reconèixer sons iguals al final'}];
-TEMAS['1P']['castellano'] = [{n:'Lectura de sílabas y palabras sencillas',e:'Ej: leer «ma-má», «pa-pá», «ca-sa» sin errores'},{n:'Escritura de palabras básicas',e:'Ej: escribir «sol», «mar», «gato» correctamente'},{n:'Mayúsculas y minúsculas',e:'Ej: saber cuándo usar mayúscula: nombres propios, inicio de frase'},{n:'Oraciones sencillas',e:'Ej: «El gato juega» · «La niña come manzana» · saber dónde va el punto'},{n:'Vocabulario del cuerpo humano',e:'Ej: cabeza, brazo, pierna, mano, nariz, boca, ojos…'},{n:'Vocabulario de la familia y el colegio',e:'Ej: madre, padre, hermano, maestro, pizarra, lápiz…'},{n:'Rimas y canciones',e:'Ej: completar una rima sencilla · reconocer sonidos iguales al final'}];
-TEMAS['1P']['ingles'] = [{n:'Numbers 1-20',e:'Ej: count from 1 to 20 · What number is this? · one, two, three…'},{n:'Colours',e:'Ej: red, blue, green, yellow, pink, orange, purple, black, white'},{n:'Animals',e:'Ej: cat, dog, bird, fish, rabbit, horse, cow, elephant…'},{n:'Greetings and farewells',e:'Ej: Hello! / Goodbye! / Good morning! / How are you? / I\'m fine.'},{n:'Family members',e:'Ej: mum, dad, brother, sister, grandma, grandpa…'},{n:'Classroom objects',e:'Ej: book, pencil, ruler, bag, chair, table, board…'},{n:'Simple commands',e:'Ej: Stand up! / Sit down! / Open your book! / Listen!'}];
- 
+TEMAS['1P']['mates'] = [{n:'Números del 1 al 100',e:'Ej: contar de 2 en 2 · ¿qué número va después del 47?'},{n:'Sumas sin llevar',e:'Ej: 23 + 14 = ? · ¿cuánto es 31 + 15?'},{n:'Restas sin llevar',e:'Ej: 35 – 12 = ? · ¿cuánto queda si tengo 28 y gasto 15?'},{n:'Sumas llevando',e:'Ej: 47 + 35 = ? · cuando la suma pasa de 10'},{n:'Figuras geométricas básicas',e:'Ej: círculo, cuadrado, triángulo, rectángulo · ¿cuántos lados tiene?'},{n:'Medidas: largo, corto, pesado, ligero',e:'Ej: ¿qué es más largo, un lápiz o una regla? · comparar objetos'},{n:'El dinero: monedas y billetes',e:'Ej: ¿cuánto cuestan 2 caramelos a 5 céntimos cada uno?'},{n:'Problemas sencillos de suma y resta',e:'Ej: tengo 8 manzanas y me dan 5 más, ¿cuántas tengo?'},{n:'Decenas: agrupar de diez en diez',e:'Ej: 3 decenas = 30 · ¿cuántas decenas hay en 50? · contar de 10 en 10'},{n:'Ordenar y comparar números hasta 100',e:'Ej: ¿cuál es mayor, 34 o 43? · ordenar de menor a mayor: 72, 27, 17, 71'},{n:'El calendario: días, semanas y meses',e:'Ej: ¿qué día hay después del lunes? · ¿cuántos días hay en una semana? · los meses del año'}];
+TEMAS['1P']['valenciano'] = [{n:'Lectura de sílabas i paraules senzilles',e:'Ej: llegir «ma-ma», «pa-pa», «ca-sa» sense errors'},{n:'Escriptura de paraules bàsiques',e:'Ej: escriure «sol», «mar», «gat» correctament'},{n:'Majúscules i minúscules',e:'Ej: saber quan s\'usa majúscula: noms propis, inici de frase'},{n:'Oracions senzilles',e:'Ej: «El gat juga» · «La nina menja poma» · saber on va el punt'},{n:'Vocabulari del cos humà',e:'Ej: cap, braç, cama, mà, nas, boca, ulls…'},{n:'Vocabulari de la família i l\'escola',e:'Ej: mare, pare, germà, mestre, pissarra, llapis…'},{n:'Rimes i cançons',e:'Ej: completar una rima senzilla · reconèixer sons iguals al final'},{n:'Textos curts: receptes i instruccions',e:'Ej: llegir una recepta senzilla · escriure els passos per fer una manualitat'},{n:'Descripció d\'animals i objectes',e:'Ej: «El gos és gran i marró» · escriure 2-3 frases sobre l\'animal favorit'},{n:'Accentuació: reconèixer el cop de veu',e:'Ej: paraules de 2 síl·labes: «ca-sa», «ma-mà» · batre les síl·labes i trobar la tònica'},{n:'Ortografia: ús de majúscules',e:'Ej: inici de frase · noms propis de persona · Sílvia, Alacant, dilluns'},{n:'Categories: l\'article (el, la, els, les, un, una)',e:'Ej: «el gat», «la nena», «els xics», «les flors» · article davant nom masculí i femení'}];
+TEMAS['1P']['castellano'] = [{n:'Lectura de sílabas y palabras sencillas',e:'Ej: leer «ma-má», «pa-pá», «ca-sa» sin errores'},{n:'Escritura de palabras básicas',e:'Ej: escribir «sol», «mar», «gato» correctamente'},{n:'Mayúsculas y minúsculas',e:'Ej: saber cuándo usar mayúscula: nombres propios, inicio de frase'},{n:'Oraciones sencillas',e:'Ej: «El gato juega» · «La niña come manzana» · saber dónde va el punto'},{n:'Vocabulario del cuerpo humano',e:'Ej: cabeza, brazo, pierna, mano, nariz, boca, ojos…'},{n:'Vocabulario de la familia y el colegio',e:'Ej: madre, padre, hermano, maestro, pizarra, lápiz…'},{n:'Rimas y canciones',e:'Ej: completar una rima sencilla · reconocer sonidos iguales al final'},{n:'Textos cortos: recetas e instrucciones',e:'Ej: leer una receta sencilla · escribir los pasos para hacer una manualidad'},{n:'Descripción de animales y objetos',e:'Ej: «El perro es grande y marrón» · escribir 2-3 frases sobre el animal favorito'}];
+TEMAS['1P']['ingles'] = [{n:'Numbers 1-20',e:'Ej: count from 1 to 20 · What number is this? · one, two, three…'},{n:'Colours',e:'Ej: red, blue, green, yellow, pink, orange, purple, black, white'},{n:'Animals',e:'Ej: cat, dog, bird, fish, rabbit, horse, cow, elephant…'},{n:'Greetings and farewells',e:'Ej: Hello! / Goodbye! / Good morning! / How are you? / I\'m fine.'},{n:'Family members',e:'Ej: mum, dad, brother, sister, grandma, grandpa…'},{n:'Classroom objects',e:'Ej: book, pencil, ruler, bag, chair, table, board…'},{n:'Simple commands',e:'Ej: Stand up! / Sit down! / Open your book! / Listen!'},{n:'Verb \'to be\': am / is / are',e:'Ej: I am happy. / She is tall. / They are friends. / He is not sad.'},{n:'Articles: a / an',e:'Ej: a cat · an apple · a dog · an elephant — use a before consonant sound, an before vowel sound'},{n:'Personal pronouns: I, you, he, she, it, we, they',e:'Ej: He is my brother. / She is my teacher. / It is a big dog.'}];
+
 TEMAS['2P'] = {};
-TEMAS['2P']['mates'] = [{n:'Números hasta el 999',e:'Ej: leer y escribir 347 · ¿cuál es mayor, 528 o 582?'},{n:'Sumas y restas con llevadas',e:'Ej: 456 + 238 = ? · 521 – 167 = ?'},{n:'La multiplicación: las tablas del 1 al 5',e:'Ej: 3 × 4 = ? · ¿cuántas patas tienen 6 perros?'},{n:'División sencilla',e:'Ej: repartir 12 caramelos entre 3 amigos · 12 ÷ 3 = ?'},{n:'Medida del tiempo: horas y minutos',e:'Ej: ¿qué hora marca el reloj? · ¿cuánto falta para las 3?'},{n:'Longitud: metro y centímetro',e:'Ej: medir con la regla · ¿cuántos cm tiene un metro?'},{n:'Figuras planas: lados y vértices',e:'Ej: ¿cuántos lados tiene un hexágono? · dibujar un triángulo'},{n:'Problemas de 1 y 2 operaciones',e:'Ej: en una tienda hay 24 manzanas y venden 9, ¿cuántas quedan?'}];
-TEMAS['2P']['valenciano'] = [{n:'Lectura fluida de textos curts',e:'Ej: llegir un text de 5-6 línies sense parar-se molt'},{n:'Comprensió lectora bàsica',e:'Ej: respondre «qui», «on» i «quan» sobre un conte senzill'},{n:'Escriptura de frases amb sentit',e:'Ej: escriure 3 frases sobre el que has fet al matí'},{n:'L\'accent i els signes de puntuació bàsics',e:'Ej: posar el punt i la coma correctament · paraules amb accent'},{n:'El nom i l\'adjectiu',e:'Ej: «gat gris» → «gat» és el nom, «gris» és l\'adjectiu'},{n:'El verb: present i passat',e:'Ej: «juge» (ara) vs «jugava» (ahir) · conjugar «anar» i «fer»'},{n:'Sinònims senzills',e:'Ej: gran = enorme · content = alegre · xicotet = menut'},{n:'Descripció d\'una imatge o personatge',e:'Ej: escriure 4-5 frases descrivint un dibuix o un animal'}];
-TEMAS['2P']['castellano'] = [{n:'Lectura fluida de textos cortos',e:'Ej: leer un texto de 5-6 líneas sin parar mucho'},{n:'Comprensión lectora básica',e:'Ej: responder «quién», «dónde» y «cuándo» sobre un cuento sencillo'},{n:'Escritura de frases con sentido',e:'Ej: escribir 3 frases sobre lo que has hecho esta mañana'},{n:'El acento y los signos de puntuación básicos',e:'Ej: poner el punto y la coma correctamente · palabras con tilde'},{n:'El nombre y el adjetivo',e:'Ej: «gato gris» → «gato» es el nombre, «gris» es el adjetivo'},{n:'El verbo: presente y pasado',e:'Ej: «juego» (ahora) vs «jugaba» (ayer) · conjugar «ir» y «hacer»'},{n:'Sinónimos sencillos',e:'Ej: grande = enorme · contento = alegre · pequeño = diminuto'},{n:'Descripción de una imagen o personaje',e:'Ej: escribir 4-5 frases describiendo un dibujo o un animal'}];
-TEMAS['2P']['ingles'] = [{n:'Numbers 1-100',e:'Ej: count to 100 · twenty-three, forty-five, seventy… '},{n:'Colours and shapes',e:'Ej: a red circle · a blue square · a yellow triangle'},{n:'Food and drinks',e:'Ej: apple, banana, milk, water, bread, pizza, sandwich…'},{n:'Days of the week',e:'Ej: Monday, Tuesday… Sunday · What day is today?'},{n:'Weather',e:'Ej: It\'s sunny / rainy / cloudy / windy / cold / hot today.'},{n:'My body',e:'Ej: head, shoulders, knees and toes · I have two eyes.'},{n:'Simple sentences',e:'Ej: I like cats. / She has a dog. / We play football.'}];
- 
+TEMAS['2P']['mates'] = [{n:'Números hasta el 999',e:'Ej: leer y escribir 347 · ¿cuál es mayor, 528 o 582?'},{n:'Sumas y restas con llevadas',e:'Ej: 456 + 238 = ? · 521 – 167 = ?'},{n:'La multiplicación: las tablas del 1 al 5',e:'Ej: 3 × 4 = ? · ¿cuántas patas tienen 6 perros?'},{n:'División sencilla',e:'Ej: repartir 12 caramelos entre 3 amigos · 12 ÷ 3 = ?'},{n:'Medida del tiempo: horas y minutos',e:'Ej: ¿qué hora marca el reloj? · ¿cuánto falta para las 3?'},{n:'Longitud: metro y centímetro',e:'Ej: medir con la regla · ¿cuántos cm tiene un metro?'},{n:'Figuras planas: lados y vértices',e:'Ej: ¿cuántos lados tiene un hexágono? · dibujar un triángulo'},{n:'Problemas de 1 y 2 operaciones',e:'Ej: en una tienda hay 24 manzanas y venden 9, ¿cuántas quedan?'},{n:'Centenas: leer y escribir números de 3 cifras',e:'Ej: 347 → 3 centenas, 4 decenas, 7 unidades · ¿qué número es 5C 2D 8U?'},{n:'Cuadriláteros: tipos y propiedades',e:'Ej: cuadrado, rectángulo, rombo, trapecio · ¿cuántos lados tienen? · ¿cuál tiene los 4 lados iguales?'}];
+TEMAS['2P']['valenciano'] = [{n:'Lectura fluida de textos curts',e:'Ej: llegir un text de 5-6 línies sense parar-se molt'},{n:'Comprensió lectora bàsica',e:'Ej: respondre «qui», «on» i «quan» sobre un conte senzill'},{n:'Escriptura de frases amb sentit',e:'Ej: escriure 3 frases sobre el que has fet al matí'},{n:'L\'accent i els signes de puntuació bàsics',e:'Ej: posar el punt i la coma correctament · paraules amb accent'},{n:'El nom i l\'adjectiu',e:'Ej: «gat gris» → «gat» és el nom, «gris» és l\'adjectiu'},{n:'El verb: present i passat',e:'Ej: «juge» (ara) vs «jugava» (ahir) · conjugar «anar» i «fer»'},{n:'Sinònims senzills',e:'Ej: gran = enorme · content = alegre · xicotet = menut'},{n:'Descripció d\'una imatge o personatge',e:'Ej: escriure 4-5 frases descrivint un dibuix o un animal'},{n:'Text instructiu: la recepta i les normes',e:'Ej: llegir una recepta de cuina · escriure les normes de classe en ordre'},{n:'El diàleg en el còmic i la narració',e:'Ej: posar guions en un diàleg · llegir un còmic senzill i resumir-lo'},{n:'Accentuació: paraules amb accent gràfic i sense',e:'Ej: «mamà» porta accent · «mama» no porta · reconèixer on cau el cop de veu en paraules de 2 i 3 síl·labes'},{n:'Ortografia: punt, coma i interrogació',e:'Ej: posar punt al final · coma en llistes · signe d\'interrogació: «On vas?»'},{n:'Categories: pronoms personals bàsics',e:'Ej: «jo», «tu», «ell», «ella», «nosaltres», «vosaltres», «ells» · substituir el nom pel pronom'},{n:'Categories: el número del nom (singular i plural)',e:'Ej: «gat» → «gats» · «arbre» → «arbres» · «llum» → «llums» · excepcions freqüents'}];
+TEMAS['2P']['castellano'] = [{n:'Lectura fluida de textos cortos',e:'Ej: leer un texto de 5-6 líneas sin parar mucho'},{n:'Comprensión lectora básica',e:'Ej: responder «quién», «dónde» y «cuándo» sobre un cuento sencillo'},{n:'Escritura de frases con sentido',e:'Ej: escribir 3 frases sobre lo que has hecho esta mañana'},{n:'El acento y los signos de puntuación básicos',e:'Ej: poner el punto y la coma correctamente · palabras con tilde'},{n:'El nombre y el adjetivo',e:'Ej: «gato gris» → «gato» es el nombre, «gris» es el adjetivo'},{n:'El verbo: presente y pasado',e:'Ej: «juego» (ahora) vs «jugaba» (ayer) · conjugar «ir» y «hacer»'},{n:'Sinónimos sencillos',e:'Ej: grande = enorme · contento = alegre · pequeño = diminuto'},{n:'Descripción de una imagen o personaje',e:'Ej: escribir 4-5 frases describiendo un dibujo o un animal'},{n:'Texto instructivo: la receta y las normas',e:'Ej: leer una receta de cocina · escribir las normas de clase en orden'},{n:'El diálogo en el cómic y la narración',e:'Ej: poner guiones en un diálogo · leer un cómic sencillo y resumirlo'}];
+TEMAS['2P']['ingles'] = [{n:'Numbers 1-100',e:'Ej: count to 100 · twenty-three, forty-five, seventy… '},{n:'Colours and shapes',e:'Ej: a red circle · a blue square · a yellow triangle'},{n:'Food and drinks',e:'Ej: apple, banana, milk, water, bread, pizza, sandwich…'},{n:'Days of the week',e:'Ej: Monday, Tuesday… Sunday · What day is today?'},{n:'Weather',e:'Ej: It\'s sunny / rainy / cloudy / windy / cold / hot today.'},{n:'My body',e:'Ej: head, shoulders, knees and toes · I have two eyes.'},{n:'Simple sentences',e:'Ej: I like cats. / She has a dog. / We play football.'},{n:'Verb \'to have got\'',e:'Ej: I have got a dog. / She hasn\'t got a cat. / Have you got a brother? Yes, I have.'},{n:'Articles: a, an, the',e:'Ej: a dog (first mention) / the dog (already known) / an elephant · when to use each one'},{n:'Plural nouns: regular and irregular',e:'Ej: cat → cats / box → boxes / child → children / tooth → teeth / mouse → mice'},{n:'Prepositions of time: in, on, at',e:'Ej: in the morning / in July / on Monday / on 3rd May / at 7 o\'clock / at Christmas'}];
+
 TEMAS['3P'] = {};
-TEMAS['3P']['mates'] = [{n:'Números hasta el 9.999',e:'Ej: leer y escribir 4.762 · ordenar de mayor a menor'},{n:'Sumas y restas de varios dígitos',e:'Ej: 3.456 + 1.278 = ? · 5.000 – 2.347 = ?'},{n:'Tablas de multiplicar del 1 al 10',e:'Ej: 7 × 8 = ? · 9 × 6 = ? · repasar todas las tablas'},{n:'División con una cifra',e:'Ej: 84 ÷ 4 = ? · ¿cuántos grupos de 6 hay en 48?'},{n:'Fracciones básicas',e:'Ej: ¿qué es 1/2? · colorear 3/4 de una figura · ¿cuál es mayor?'},{n:'Medidas de longitud: km, m, cm, mm',e:'Ej: 2 km = 2.000 m · ¿cuántos cm hay en 3 metros?'},{n:'Medidas de peso: kg y g',e:'Ej: 1 kg = 1.000 g · ¿cuántos gramos son 2,5 kg?'},{n:'Perímetro de figuras',e:'Ej: perímetro de un rectángulo de 5×3 cm · sumar todos los lados'},{n:'Problemas de varias operaciones',e:'Ej: si compro 3 libros a 4€ cada uno y pago con 20€, ¿qué cambio me dan?'}];
-TEMAS['3P']['valenciano'] = [{n:'Comprensió de textos narratius',e:'Ej: llegir un conte i identificar personatges, lloc i temps'},{n:'Escriptura creativa: inventar un conte',e:'Ej: escriure un conte curt amb inici, nus i desenllaç'},{n:'L\'accent: paraules agudes, planes i esdrúixoles',e:'Ej: «camió» és aguda · «taula» és plana · «màquina» és esdrúixola'},{n:'Categories gramaticals: nom, adjectiu, verb, article',e:'Ej: «la gossa negra corre» → identificar cada categoria'},{n:'El plural i el femení',e:'Ej: «el gat» → «els gats» · «el nen» → «la nena»'},{n:'Els signes de puntuació',e:'Ej: punt, coma, punt i coma, interrogació, exclamació'},{n:'Vocabulari: sinònims i antònims',e:'Ej: sinònim de «content» · antònim de «ràpid»'},{n:'Textos informatius senzills',e:'Ej: llegir un text sobre un animal i respondre preguntes'}];
-TEMAS['3P']['castellano'] = [{n:'Comprensión de textos narrativos',e:'Ej: leer un cuento e identificar personajes, lugar y tiempo'},{n:'Escritura creativa: inventar un cuento',e:'Ej: escribir un cuento corto con inicio, nudo y desenlace'},{n:'El acento: palabras agudas, llanas y esdrújulas',e:'Ej: «camión» es aguda · «mesa» es llana · «máquina» es esdrújula'},{n:'Categorías gramaticales: nombre, adjetivo, verbo, artículo',e:'Ej: «la perra negra corre» → identificar cada categoría'},{n:'El plural y el femenino',e:'Ej: «el gato» → «los gatos» · «el niño» → «la niña»'},{n:'Los signos de puntuación',e:'Ej: punto, coma, punto y coma, interrogación, exclamación'},{n:'Vocabulario: sinónimos y antónimos',e:'Ej: sinónimo de «contento» · antónimo de «rápido»'},{n:'Textos informativos sencillos',e:'Ej: leer un texto sobre un animal y responder preguntas'}];
-TEMAS['3P']['ingles'] = [{n:'Numbers up to 1000',e:'Ej: one hundred and fifty · five hundred and twenty-three'},{n:'Describing people and things',e:'Ej: She has long brown hair. / The house is big and white.'},{n:'Present simple',e:'Ej: I eat breakfast at 7. / She likes cats. / Do you play football?'},{n:'Present continuous',e:'Ej: I am reading. / They are playing in the park.'},{n:'Months and seasons',e:'Ej: January, February… / In spring it is warm. / My birthday is in July.'},{n:'Places in town',e:'Ej: school, park, supermarket, library, hospital, swimming pool…'},{n:'Asking for and giving directions',e:'Ej: Turn left / right. / Go straight on. / It\'s next to the bank.'},{n:'Vocabulary: clothes and accessories',e:'Ej: shirt, trousers, dress, hat, shoes, jacket, scarf…'}];
- 
+TEMAS['3P']['mates'] = [{n:'Números hasta el 9.999',e:'Ej: leer y escribir 4.762 · ordenar de mayor a menor'},{n:'Sumas y restas de varios dígitos',e:'Ej: 3.456 + 1.278 = ? · 5.000 – 2.347 = ?'},{n:'Tablas de multiplicar del 1 al 10',e:'Ej: 7 × 8 = ? · 9 × 6 = ? · repasar todas las tablas'},{n:'División con una cifra',e:'Ej: 84 ÷ 4 = ? · ¿cuántos grupos de 6 hay en 48?'},{n:'Fracciones básicas',e:'Ej: ¿qué es 1/2? · colorear 3/4 de una figura · ¿cuál es mayor?'},{n:'Medidas de longitud: km, m, cm, mm',e:'Ej: 2 km = 2.000 m · ¿cuántos cm hay en 3 metros?'},{n:'Medidas de peso: kg y g',e:'Ej: 1 kg = 1.000 g · ¿cuántos gramos son 2,5 kg?'},{n:'Perímetro de figuras',e:'Ej: perímetro de un rectángulo de 5×3 cm · sumar todos los lados'},{n:'Problemas de varias operaciones',e:'Ej: si compro 3 libros a 4€ cada uno y pago con 20€, ¿qué cambio me dan?'},{n:'Múltiplos y divisores sencillos',e:'Ej: múltiplos de 3: 3, 6, 9, 12… · ¿es 4 divisor de 20? · divisores de 12'},{n:'Simetría: ejes y figuras simétricas',e:'Ej: ¿tiene eje de simetría un rectángulo? · completar una figura simétrica en cuadrícula'}];
+TEMAS['3P']['valenciano'] = [{n:'Comprensió de textos narratius',e:'Ej: llegir un conte i identificar personatges, lloc i temps'},{n:'Escriptura creativa: inventar un conte',e:'Ej: escriure un conte curt amb inici, nus i desenllaç'},{n:'L\'accent: paraules agudes, planes i esdrúixoles',e:'Ej: «camió» és aguda · «taula» és plana · «màquina» és esdrúixola'},{n:'Categories gramaticals: nom, adjectiu, verb, article',e:'Ej: «la gossa negra corre» → identificar cada categoria'},{n:'El plural i el femení',e:'Ej: «el gat» → «els gats» · «el nen» → «la nena»'},{n:'Els signes de puntuació',e:'Ej: punt, coma, punt i coma, interrogació, exclamació'},{n:'Vocabulari: sinònims i antònims',e:'Ej: sinònim de «content» · antònim de «ràpid»'},{n:'Textos informatius senzills',e:'Ej: llegir un text sobre un animal i respondre preguntes'},{n:'Text instructiu: receptes i instruccions',e:'Ej: escriure els passos per fer una recepta · llegir les normes del pati'},{n:'El diàleg: guions i ortografia',e:'Ej: escriure un diàleg entre dos personatges · posar guions i majúscules correctament'},{n:'Accentuació: regles de paraules agudes, planes i esdrúixoles',e:'Ej: «camió» aguda acabada en vocal porta accent · «àlbum» esdrúixola sempre porta · «taula» plana acabada en vocal no porta'},{n:'Ortografia: b/v i l·l geminada',e:'Ej: «beure» vs «veure» · «col·legi», «il·lusió», «paral·lel» · regles bàsiques'},{n:'Categories: determinants demostratius (aquest, aquell)',e:'Ej: «aquest gat» (proper) · «aquell arbre» (llunyà) · concordança amb el nom'},{n:'Categories: adverbis de lloc, temps i manera',e:'Ej: «ací», «allà», «ahir», «ara», «bé», «ràpidament» · la funció de modificar el verb'}];
+TEMAS['3P']['castellano'] = [{n:'Comprensión de textos narrativos',e:'Ej: leer un cuento e identificar personajes, lugar y tiempo'},{n:'Escritura creativa: inventar un cuento',e:'Ej: escribir un cuento corto con inicio, nudo y desenlace'},{n:'El acento: palabras agudas, llanas y esdrújulas',e:'Ej: «camión» es aguda · «mesa» es llana · «máquina» es esdrújula'},{n:'Categorías gramaticales: nombre, adjetivo, verbo, artículo',e:'Ej: «la perra negra corre» → identificar cada categoría'},{n:'El plural y el femenino',e:'Ej: «el gato» → «los gatos» · «el niño» → «la niña»'},{n:'Los signos de puntuación',e:'Ej: punto, coma, punto y coma, interrogación, exclamación'},{n:'Vocabulario: sinónimos y antónimos',e:'Ej: sinónimo de «contento» · antónimo de «rápido»'},{n:'Textos informativos sencillos',e:'Ej: leer un texto sobre un animal y responder preguntas'},{n:'Texto instructivo: recetas e instrucciones',e:'Ej: escribir los pasos para hacer una receta · leer las normas del recreo'},{n:'El diálogo: guiones y ortografía',e:'Ej: escribir un diálogo entre dos personajes · poner guiones y mayúsculas correctamente'}];
+TEMAS['3P']['ingles'] = [{n:'Numbers up to 1000',e:'Ej: one hundred and fifty · five hundred and twenty-three'},{n:'Describing people and things',e:'Ej: She has long brown hair. / The house is big and white.'},{n:'Present simple',e:'Ej: I eat breakfast at 7. / She likes cats. / Do you play football?'},{n:'Present continuous',e:'Ej: I am reading. / They are playing in the park.'},{n:'Months and seasons',e:'Ej: January, February… / In spring it is warm. / My birthday is in July.'},{n:'Places in town',e:'Ej: school, park, supermarket, library, hospital, swimming pool…'},{n:'Asking for and giving directions',e:'Ej: Turn left / right. / Go straight on. / It\'s next to the bank.'},{n:'Vocabulary: clothes and accessories',e:'Ej: shirt, trousers, dress, hat, shoes, jacket, scarf…'},{n:'Possessive adjectives and pronouns',e:'Ej: my, your, his, her, its, our, their · mine, yours, his, hers · This book is mine, not yours.'},{n:'There is / There are',e:'Ej: There is a park near here. / There are two cinemas. / Is there a supermarket? / There aren\'t any shops.'},{n:'Adverbs of frequency',e:'Ej: always, usually, often, sometimes, rarely, never · I always eat breakfast. / She never watches TV.'},{n:'Prepositions of place',e:'Ej: in, on, under, next to, between, in front of, behind · The cat is under the table. / The park is between the school and the bank.'}];
+
 TEMAS['4P'] = {};
-TEMAS['4P']['mates'] = [{n:'Números hasta el 99.999',e:'Ej: leer 74.382 · ordenar y comparar números de 5 cifras'},{n:'Operaciones con números grandes',e:'Ej: 23.456 + 41.307 = ? · 80.000 – 34.568 = ?'},{n:'Multiplicación de 2 cifras',e:'Ej: 34 × 12 = ? · 56 × 23 = ? · algoritmo de la multiplicación'},{n:'División con 2 cifras',e:'Ej: 144 ÷ 12 = ? · 256 ÷ 16 = ? · dividendo, divisor, cociente y resto'},{n:'Fracciones: equivalencia y comparación',e:'Ej: 1/2 = 2/4 · ¿cuál es mayor, 3/5 o 4/5?'},{n:'Números decimales: décimas y centésimas',e:'Ej: 3,5 · 2,47 · ¿qué significa cada cifra decimal?'},{n:'Ángulos y tipos',e:'Ej: ángulo recto (90°), agudo (menos de 90°), obtuso (más de 90°)'},{n:'Área y perímetro',e:'Ej: área de un rectángulo de 6×4 cm = 24 cm² · perímetro = 20 cm'},{n:'Estadística: tablas y gráficos de barras',e:'Ej: hacer una tabla con las notas de la clase · dibujar el gráfico'},{n:'Problemas complejos',e:'Ej: problemas con varias operaciones y datos innecesarios'}];
-TEMAS['4P']['valenciano'] = [{n:'Comprensió de textos variats',e:'Ej: llegir un text i distingir fets d\'opinions · idea principal'},{n:'Escriptura: descripció i narració',e:'Ej: descriure un paisatge · continuar una història donada'},{n:'Ortografia: paraules amb b/v, c/s/z, g/j',e:'Ej: «beure» o «veure» · «cercle» · «gira» o «jira»'},{n:'L\'oració: subjecte i predicat',e:'Ej: «La mare compra pa» → subjecte: la mare, predicat: compra pa'},{n:'Tipus d\'oracions',e:'Ej: enunciativa, interrogativa, exclamativa, imperativa · exemples'},{n:'El verb: persona, nombre i temps',e:'Ej: jo cante (1a persona, singular, present) · ells cantaven (passat)'},{n:'Família lèxica i camp semàntic',e:'Ej: família de «mar»: marina, mariner, marítim… · camp de colors'},{n:'Textos periodístics: la notícia',e:'Ej: parts d\'una notícia: titular, cos, qui, on, quan, com, per què'}];
-TEMAS['4P']['castellano'] = [{n:'Comprensión de textos variados',e:'Ej: leer un texto y distinguir hechos de opiniones · idea principal'},{n:'Escritura: descripción y narración',e:'Ej: describir un paisaje · continuar una historia dada'},{n:'Ortografía: palabras con b/v, c/s/z, g/j',e:'Ej: «beber» o «ver» · «circo» · «girar» o «jirar»'},{n:'La oración: sujeto y predicado',e:'Ej: «La madre compra pan» → sujeto: la madre, predicado: compra pan'},{n:'Tipos de oraciones',e:'Ej: enunciativa, interrogativa, exclamativa, imperativa · ejemplos'},{n:'El verbo: persona, número y tiempo',e:'Ej: yo canto (1ª persona, singular, presente) · ellos cantaban (pasado)'},{n:'Familia léxica y campo semántico',e:'Ej: familia de «mar»: marino, marinero, marítimo… · campo de colores'},{n:'Textos periodísticos: la noticia',e:'Ej: partes de una noticia: titular, cuerpo, quién, dónde, cuándo, cómo'}];
-TEMAS['4P']['ingles'] = [{n:'Present simple and present continuous',e:'Ej: She reads every day. / She is reading now. · ¿cuándo usar cada uno?'},{n:'Past simple: regular verbs',e:'Ej: I walked, I played, I watched · añadir -ed al verbo'},{n:'Past simple: irregular verbs',e:'Ej: go → went · eat → ate · see → saw · have → had'},{n:'There is / there are',e:'Ej: There is a cat. / There are three dogs. / Is there a park near here?'},{n:'Can and can\'t',e:'Ej: I can swim. / She can\'t fly. / Can you play the piano?'},{n:'Vocabulary: sports and hobbies',e:'Ej: swimming, cycling, painting, reading, cooking, dancing…'},{n:'Prepositions of place',e:'Ej: in, on, under, next to, between, in front of, behind…'},{n:'Writing: a short paragraph about my weekend',e:'Ej: Last weekend I went to the park. I played football with my friends.'}];
- 
+TEMAS['4P']['mates'] = [{n:'Números hasta el 99.999',e:'Ej: leer 74.382 · ordenar y comparar números de 5 cifras'},{n:'Operaciones con números grandes',e:'Ej: 23.456 + 41.307 = ? · 80.000 – 34.568 = ?'},{n:'Multiplicación de 2 cifras',e:'Ej: 34 × 12 = ? · 56 × 23 = ? · algoritmo de la multiplicación'},{n:'División con 2 cifras',e:'Ej: 144 ÷ 12 = ? · 256 ÷ 16 = ? · dividendo, divisor, cociente y resto'},{n:'Fracciones: equivalencia y comparación',e:'Ej: 1/2 = 2/4 · ¿cuál es mayor, 3/5 o 4/5?'},{n:'Números decimales: décimas y centésimas',e:'Ej: 3,5 · 2,47 · ¿qué significa cada cifra decimal?'},{n:'Ángulos y tipos',e:'Ej: ángulo recto (90°), agudo (menos de 90°), obtuso (más de 90°)'},{n:'Área y perímetro',e:'Ej: área de un rectángulo de 6×4 cm = 24 cm² · perímetro = 20 cm'},{n:'Estadística: tablas y gráficos de barras',e:'Ej: hacer una tabla con las notas de la clase · dibujar el gráfico'},{n:'Problemas complejos',e:'Ej: problemas con varias operaciones y datos innecesarios'},{n:'Múltiplos y divisores: MCD y MCM',e:'Ej: múltiplos de 6 · divisores de 24 · mínimo común múltiplo de 4 y 6 = 12'},{n:'Simetría y transformaciones geométricas',e:'Ej: trazar el eje de simetría · ¿es simétrico este triángulo? · traslación en cuadrícula'},{n:'Aproximaciones y redondeo',e:'Ej: redondear 3.476 a la decena más cercana · aproximar a la centena'},{n:'Unidades de medida: longitud, peso y capacidad',e:'Ej: 3 km = 3.000 m · 2,5 kg = 2.500 g · 1 l = 1.000 ml'},{n:'Multiplicación y división por la unidad seguida de ceros',e:'Ej: 34 × 100 = 3.400 · 4.500 ÷ 10 = 450 · 23 × 1.000 = 23.000'}];
+TEMAS['4P']['valenciano'] = [{n:'Comprensió de textos variats',e:'Ej: llegir un text i distingir fets d\'opinions · idea principal'},{n:'Escriptura: descripció i narració',e:'Ej: descriure un paisatge · continuar una història donada'},{n:'Ortografia: paraules amb b/v, c/s/z, g/j',e:'Ej: «beure» o «veure» · «cercle» · «gira» o «jira»'},{n:'L\'oració: subjecte i predicat',e:'Ej: «La mare compra pa» → subjecte: la mare, predicat: compra pa'},{n:'Tipus d\'oracions',e:'Ej: enunciativa, interrogativa, exclamativa, imperativa · exemples'},{n:'El verb: persona, nombre i temps',e:'Ej: jo cante (1a persona, singular, present) · ells cantaven (passat)'},{n:'Família lèxica i camp semàntic',e:'Ej: família de «mar»: marina, mariner, marítim… · camp de colors'},{n:'Textos periodístics: la notícia',e:'Ej: parts d\'una notícia: titular, cos, qui, on, quan, com, per què'},{n:'Text epistolar: la carta formal i informal',e:'Ej: escriure una carta a un amic · parts de la carta: salutació, cos i comiat'},{n:'El text publicitari: cartells i eslògans',e:'Ej: analitzar un anunci · crear un cartell amb eslògan · recursos persuasius'},{n:'Accentuació: diftongs i hiats',e:'Ej: «veïna» porta dièresi (hiat) · «quatre» no porta accent (diftong) · reconèixer quan dues vocals formen diftong'},{n:'Ortografia: g/j i x/ix',e:'Ej: «gira» (verb girar) · «caixa» escrit amb x · «baixar» · regles d\'ús del dígraf ix'},{n:'Categories: pronoms febles (el, la, els, les, li, hi, en)',e:'Ej: «el veig» (CD masculí) · «li done» (CI) · «n\'he agafat» (partitiu) · posició davant i darrere el verb'},{n:'Categories: preposicions i conjuncions bàsiques',e:'Ej: «a», «de», «en», «per», «amb» · conjuncions «però», «i», «que», «perquè» · funció en l\'oració'}];
+TEMAS['4P']['castellano'] = [{n:'Comprensión de textos variados',e:'Ej: leer un texto y distinguir hechos de opiniones · idea principal'},{n:'Escritura: descripción y narración',e:'Ej: describir un paisaje · continuar una historia dada'},{n:'Ortografía: palabras con b/v, c/s/z, g/j',e:'Ej: «beber» o «ver» · «circo» · «girar» o «jirar»'},{n:'La oración: sujeto y predicado',e:'Ej: «La madre compra pan» → sujeto: la madre, predicado: compra pan'},{n:'Tipos de oraciones',e:'Ej: enunciativa, interrogativa, exclamativa, imperativa · ejemplos'},{n:'El verbo: persona, número y tiempo',e:'Ej: yo canto (1ª persona, singular, presente) · ellos cantaban (pasado)'},{n:'Familia léxica y campo semántico',e:'Ej: familia de «mar»: marino, marinero, marítimo… · campo de colores'},{n:'Textos periodísticos: la noticia',e:'Ej: partes de una noticia: titular, cuerpo, quién, dónde, cuándo, cómo'},{n:'Texto epistolar: la carta formal e informal',e:'Ej: escribir una carta a un amigo · partes: encabezamiento, saludo, cuerpo y despedida'},{n:'El texto publicitario: carteles y eslóganes',e:'Ej: analizar un anuncio · crear un cartel con eslogan · recursos persuasivos'}];
+TEMAS['4P']['ingles'] = [{n:'Present simple and present continuous',e:'Ej: She reads every day. / She is reading now. · ¿cuándo usar cada uno?'},{n:'Past simple: regular verbs',e:'Ej: I walked, I played, I watched · añadir -ed al verbo'},{n:'Past simple: irregular verbs',e:'Ej: go → went · eat → ate · see → saw · have → had'},{n:'There is / there are',e:'Ej: There is a cat. / There are three dogs. / Is there a park near here?'},{n:'Can and can\'t',e:'Ej: I can swim. / She can\'t fly. / Can you play the piano?'},{n:'Vocabulary: sports and hobbies',e:'Ej: swimming, cycling, painting, reading, cooking, dancing…'},{n:'Prepositions of place',e:'Ej: in, on, under, next to, between, in front of, behind…'},{n:'Writing: a short paragraph about my weekend',e:'Ej: Last weekend I went to the park. I played football with my friends.'},{n:'Object pronouns: me, you, him, her, it, us, them',e:'Ej: She loves him. / Can you help me? / I see them every day. / Give it to her.'},{n:'Imperatives: positive and negative',e:'Ej: Open the book! / Don\'t run in class! / Be quiet, please! / Listen carefully!'},{n:'Some / any / no',e:'Ej: I have some apples. / I don\'t have any milk. / There are no chairs. / Do you have any brothers?'},{n:'Countable and uncountable nouns',e:'Ej: apples (countable) / milk (uncountable) · much water / many students / a lot of homework / a few friends'}];
+
 TEMAS['5P'] = {};
-TEMAS['5P']['mates'] = [{n:'Números naturales hasta millones',e:'Ej: leer 4.305.720 · ordenar números grandes'},{n:'Fracciones: concepto y comparación',e:'Ej: ¿Cuál es mayor, 3/4 o 2/3?'},{n:'Operaciones con fracciones',e:'Ej: 1/2 + 1/3 = ?'},{n:'Números decimales',e:'Ej: ordenar 2,4 / 2,04 / 2,40'},{n:'Operaciones con decimales',e:'Ej: 4,5 × 1,2 = ?'},{n:'Múltiplos y divisores',e:'Ej: múltiplos de 6 · ¿4 es divisor de 20?'},{n:'Potencias y raíces cuadradas',e:'Ej: 3² = 9 · √49 = ?'},{n:'Geometría: ángulos y polígonos',e:'Ej: ángulo recto · lados de un hexágono'},{n:'Perímetros y áreas',e:'Ej: perímetro de rectángulo 5×3'},{n:'Unidades de medida',e:'Ej: 3 km a metros · 500 g a kg'},{n:'Estadística: tablas y gráficas',e:'Ej: leer diagrama de barras · calcular media'},{n:'Problemas de varias operaciones',e:'Ej: problemas de 2-3 pasos'}];
-TEMAS['5P']['valenciano'] = [{n:'Comprensió lectora textos narratius',e:'Ej: llegir un conte i respondre preguntes'},{n:'Expressió escrita: redacció i descripció',e:'Ej: descriure un personatge'},{n:'Ortografia: accent, dièresi i apòstrof',e:'Ej: l\'home vs el home'},{n:'Classes de paraules: nom, adjectiu, verb',e:'Ej: identificar el verb en «el gat corre»'},{n:'Vocabulari i diccionari',e:'Ej: sinònims de «content»'},{n:'Sinònims, antònims i polisèmia',e:'Ej: antònim de «calent»'},{n:'Textos informatius i expositius',e:'Ej: llegir una notícia'},{n:'Puntuació: coma i punt i comes',e:'Ej: posar comes en una llista'},{n:'Literatura: rondalla i poesia',e:'Ej: parts d\'un poema'}];
-TEMAS['5P']['castellano'] = [{n:'Comprensión lectora: textos narrativos',e:'Ej: leer un cuento y contestar preguntas'},{n:'Expresión escrita: narración y descripción',e:'Ej: describir un personaje'},{n:'Ortografía: b/v, g/j, h, mayúsculas',e:'Ej: ¿«vaca» o «baca»?'},{n:'Clases de palabras: sustantivo, adjetivo, verbo',e:'Ej: identificar el verbo en «el perro corre»'},{n:'Vocabulario y diccionario',e:'Ej: sinónimos de «feliz»'},{n:'Sinónimos, antónimos y polisemia',e:'Ej: antónimo de «caliente»'},{n:'Textos informativos y expositivos',e:'Ej: leer una noticia'},{n:'Puntuación: coma y punto y coma',e:'Ej: poner comas en una lista'},{n:'Literatura: fábulas y poesía',e:'Ej: la moraleja de una fábula'}];
-TEMAS['5P']['ingles'] = [{n:'Vocabulary: daily routines and hobbies',e:'Ej: I wake up at 7. I like swimming.'},{n:'Reading comprehension',e:'Ej: True/False sobre un texto'},{n:'Present simple',e:'Ej: She plays / Do you like music?'},{n:'Present continuous',e:'Ej: I am reading. / What are you doing?'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went / I ate'},{n:'Questions: Wh- and yes/no',e:'Ej: Where do you live? / Did you eat?'},{n:'Comparatives and superlatives',e:'Ej: bigger than · the tallest'},{n:'Future: going to',e:'Ej: I\'m going to travel this summer.'},{n:'Writing: short paragraphs',e:'Ej: 5 frases sobre tu familia'},{n:'Numbers, dates and time',e:'Ej: It\'s half past three.'}];
- 
+TEMAS['5P']['mates'] = [{n:'Números naturales hasta millones',e:'Ej: leer 4.305.720 · ordenar números grandes'},{n:'Fracciones: concepto y comparación',e:'Ej: ¿Cuál es mayor, 3/4 o 2/3?'},{n:'Operaciones con fracciones',e:'Ej: 1/2 + 1/3 = ?'},{n:'Números decimales',e:'Ej: ordenar 2,4 / 2,04 / 2,40'},{n:'Operaciones con decimales',e:'Ej: 4,5 × 1,2 = ?'},{n:'Múltiplos y divisores',e:'Ej: múltiplos de 6 · ¿4 es divisor de 20?'},{n:'Potencias y raíces cuadradas',e:'Ej: 3² = 9 · √49 = ?'},{n:'Geometría: ángulos y polígonos',e:'Ej: ángulo recto · lados de un hexágono'},{n:'Perímetros y áreas',e:'Ej: perímetro de rectángulo 5×3'},{n:'Unidades de medida',e:'Ej: 3 km a metros · 500 g a kg'},{n:'Estadística: tablas y gráficas',e:'Ej: leer diagrama de barras · calcular media'},{n:'Problemas de varias operaciones',e:'Ej: problemas de 2-3 pasos'},{n:'Propiedad distributiva de la multiplicación',e:'Ej: 4 × (3 + 2) = 4×3 + 4×2 = 20 · calcular 7 × 99 = 7×100 – 7'},{n:'Estimaciones y cálculo aproximado',e:'Ej: estimar 48 × 21 ≈ 50 × 20 = 1.000 · redondear para obtener resultados aproximados'},{n:'Divisiones con 2 cifras en el divisor',e:'Ej: 756 ÷ 12 = ? · 1.428 ÷ 14 = ? · verificar: cociente × divisor + resto = dividendo'},{n:'Fracciones: números mixtos',e:'Ej: 7/2 = 3½ · convertir fracción impropia a número mixto y viceversa · comparar 2⅓ y 2¼'},{n:'Porcentajes: cálculo y aplicaciones',e:'Ej: el 25% de 200 = 50 · descuento del 10% sobre 80€ · ¿qué porcentaje es 15 de 60?'},{n:'Medida del tiempo: horas, minutos y segundos',e:'Ej: 1 hora = 60 min · 1 min = 60 s · sumar 2h 30min + 1h 45min = 4h 15min'}];
+TEMAS['5P']['valenciano'] = [{n:'Comprensió lectora textos narratius',e:'Ej: llegir un conte i respondre preguntes'},{n:'Expressió escrita: redacció i descripció',e:'Ej: descriure un personatge'},{n:'Ortografia: accent, dièresi i apòstrof',e:'Ej: l\'home vs el home'},{n:'Classes de paraules: nom, adjectiu, verb',e:'Ej: identificar el verb en «el gat corre»'},{n:'Vocabulari i diccionari',e:'Ej: sinònims de «content»'},{n:'Sinònims, antònims i polisèmia',e:'Ej: antònim de «calent»'},{n:'Textos informatius i expositius',e:'Ej: llegir una notícia'},{n:'Puntuació: coma i punt i comes',e:'Ej: posar comes en una llista'},{n:'Literatura: rondalla i poesia',e:'Ej: parts d\'un poema'},{n:'Text argumentatiu bàsic',e:'Ej: donar arguments a favor i en contra · estructura: tesi, arguments, conclusió'},{n:'Prefixos i sufixos',e:'Ej: «im-» = impossible · «-ment» = ràpidament · formar 5 paraules noves'},{n:'La crònica i el reportatge',e:'Ej: llegir una crònica esportiva · diferències entre notícia i crònica'},{n:'Accentuació: accent diacrític',e:'Ej: «és» (verb) vs «es» (pronom) · «sé» vs «se» · «mà» vs «ma» · «ús» vs «us» · llista completa de parells'},{n:'Ortografia: apòstrof i contracció',e:'Ej: «l\'arbre» (l\' davant vocal) · «del» = de + el · «al» = a + el · quan no s\'apostrofa (la, les)'},{n:'Categories: adjectius qualificatius i determinatius',e:'Ej: «gran», «roig» (qualificatius) vs «aquest», «algun», «cada» (determinatius) · graus: positiu, comparatiu, superlatiu'},{n:'Categories: verbs — conjugació temps principals',e:'Ej: present, imperfet i futur de «anar», «fer», «ser» · verbs irregulars freqüents · 1a, 2a i 3a conjugació'}];
+TEMAS['5P']['castellano'] = [{n:'Comprensión lectora: textos narrativos',e:'Ej: leer un cuento y contestar preguntas'},{n:'Expresión escrita: narración y descripción',e:'Ej: describir un personaje'},{n:'Ortografía: b/v, g/j, h, mayúsculas',e:'Ej: ¿«vaca» o «baca»?'},{n:'Clases de palabras: sustantivo, adjetivo, verbo',e:'Ej: identificar el verbo en «el perro corre»'},{n:'Vocabulario y diccionario',e:'Ej: sinónimos de «feliz»'},{n:'Sinónimos, antónimos y polisemia',e:'Ej: antónimo de «caliente»'},{n:'Textos informativos y expositivos',e:'Ej: leer una noticia'},{n:'Puntuación: coma y punto y coma',e:'Ej: poner comas en una lista'},{n:'Literatura: fábulas y poesía',e:'Ej: la moraleja de una fábula'},{n:'Texto argumentativo básico',e:'Ej: dar argumentos a favor y en contra · estructura: tesis, argumentos, conclusión'},{n:'Prefijos y sufijos',e:'Ej: «in-» = incorrecto · «-ción» = natación · formar 5 palabras nuevas'},{n:'La crónica y el reportaje',e:'Ej: leer una crónica deportiva · diferencias entre noticia y crónica'}];
+TEMAS['5P']['ingles'] = [{n:'Vocabulary: daily routines and hobbies',e:'Ej: I wake up at 7. I like swimming.'},{n:'Reading comprehension',e:'Ej: True/False sobre un texto'},{n:'Present simple',e:'Ej: She plays / Do you like music?'},{n:'Present continuous',e:'Ej: I am reading. / What are you doing?'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went / I ate'},{n:'Questions: Wh- and yes/no',e:'Ej: Where do you live? / Did you eat?'},{n:'Comparatives and superlatives',e:'Ej: bigger than · the tallest'},{n:'Future: going to',e:'Ej: I\'m going to travel this summer.'},{n:'Writing: short paragraphs',e:'Ej: 5 frases sobre tu familia'},{n:'Numbers, dates and time',e:'Ej: It\'s half past three.'},{n:'Past simple: negatives and questions',e:'Ej: She didn\'t go to school. / Did you see the film? / Where did they go last weekend?'},{n:'Much / many / a lot of / a few / a little',e:'Ej: much water / many books / a lot of homework / a few friends / a little time'},{n:'Connectors: and, but, because, so, although',e:'Ej: I was tired but I studied. / She passed because she worked hard. / Although it rained, we went out.'},{n:'Adjective order',e:'Ej: a big red car · a small old wooden table · opinion → size → colour → material'}];
+
 TEMAS['6P'] = {};
-TEMAS['6P']['mates'] = [{n:'Números naturales y operaciones',e:'Ej: divisiones de varias cifras'},{n:'Fracciones equivalentes y operaciones',e:'Ej: 2/4 = 1/2 · fracciones distintos denominadores'},{n:'Números decimales: operaciones',e:'Ej: 3,14 × 2,5'},{n:'Porcentajes',e:'Ej: el 20% de 80'},{n:'Proporcionalidad directa',e:'Ej: si 3 kg cuestan 6€, ¿cuánto 7 kg?'},{n:'Geometría: circunferencia y círculo',e:'Ej: perímetro y área de un círculo'},{n:'Áreas y volúmenes básicos',e:'Ej: área de triángulo · volumen de cubo'},{n:'Unidades de medida',e:'Ej: 2,5 horas a minutos'},{n:'Estadística: media, moda y mediana',e:'Ej: media de 5,7,8,6,7'},{n:'Probabilidad básica',e:'Ej: probabilidad de sacar un 3 en un dado'},{n:'Problemas complejos',e:'Ej: problemas con varias preguntas'}];
-TEMAS['6P']['valenciano'] = [{n:'Comprensió de textos argumentatius',e:'Ej: llegir carta d\'opinió i identificar arguments'},{n:'Expressió oral: debat i exposició',e:'Ej: explicar un tema davant la classe'},{n:'Ortografia avançada: puntuació',e:'Ej: ús correcte del punt i la coma'},{n:'Categories gramaticals: pronoms i adverbis',e:'Ej: substituir «la Maria» per «ella»'},{n:'Sintagma nominal i verbal',e:'Ej: quin és el sintagma nominal?'},{n:'Oració simple: subjecte i predicat',e:'Ej: subjecte de «Els xiquets juguen»'},{n:'Textos periodístics i publicitaris',e:'Ej: distingir notícia d\'anunci'},{n:'Figures literàries bàsiques',e:'Ej: reconèixer una metàfora'},{n:'Creació literària: conte i poema',e:'Ej: poema amb rima · conte curt'}];
-TEMAS['6P']['castellano'] = [{n:'Comprensión de textos argumentativos',e:'Ej: carta de opinión e identificar argumentos'},{n:'Expresión oral: debate y exposición',e:'Ej: explicar un tema ante la clase'},{n:'Ortografía avanzada: acentuación diacrítica',e:'Ej: «él» vs «el»'},{n:'Pronombres y adverbios',e:'Ej: sustituir «María» por «ella»'},{n:'Sintagma nominal y verbal',e:'Ej: ¿cuál es el sintagma nominal?'},{n:'Oración simple: sujeto y predicado',e:'Ej: sujeto de «Los niños juegan»'},{n:'Textos periodísticos y publicitarios',e:'Ej: distinguir noticia de anuncio'},{n:'Figuras literarias básicas',e:'Ej: reconocer una metáfora'},{n:'Creación literaria: cuento y poema',e:'Ej: poema con rima · cuento corto'}];
-TEMAS['6P']['ingles'] = [{n:'Vocabulary: environment and technology',e:'Ej: recycle, pollution, screen time'},{n:'Present simple and continuous',e:'Ej: She reads / She is reading.'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went. Did she call?'},{n:'Modal verbs: must, should, can',e:'Ej: You should study.'},{n:'Future: going to and will',e:'Ej: I\'m going to travel. / I think it will rain.'},{n:'Comparatives and superlatives',e:'Ej: more interesting than · the most popular'},{n:'Reading: short texts',e:'Ej: leer texto de 2 párrafos y responder'},{n:'Writing: emails and paragraphs',e:'Ej: email a un amigo'},{n:'Vocabulary: daily life and feelings',e:'Ej: excited, nervous, bored'},{n:'Pronunciation basics',e:'Ej: entonación en preguntas'}];
- 
+TEMAS['6P']['mates'] = [{n:'Números naturales y operaciones',e:'Ej: divisiones de varias cifras'},{n:'Fracciones equivalentes y operaciones',e:'Ej: 2/4 = 1/2 · fracciones distintos denominadores'},{n:'Números decimales: operaciones',e:'Ej: 3,14 × 2,5'},{n:'Porcentajes',e:'Ej: el 20% de 80'},{n:'Proporcionalidad directa',e:'Ej: si 3 kg cuestan 6€, ¿cuánto 7 kg?'},{n:'Geometría: circunferencia y círculo',e:'Ej: perímetro y área de un círculo'},{n:'Áreas y volúmenes básicos',e:'Ej: área de triángulo · volumen de cubo'},{n:'Unidades de medida',e:'Ej: 2,5 horas a minutos'},{n:'Estadística: media, moda y mediana',e:'Ej: media de 5,7,8,6,7'},{n:'Probabilidad básica',e:'Ej: probabilidad de sacar un 3 en un dado'},{n:'Problemas complejos',e:'Ej: problemas con varias preguntas'},{n:'Números negativos: introducción',e:'Ej: temperatura de –3°C · sumar –5 + 3 = –2 · ordenar en la recta numérica'},{n:'Sucesiones y patrones numéricos',e:'Ej: 2, 4, 8, 16, 32… ¿qué sigue? · encontrar la regla de la serie'},{n:'Coordenadas cartesianas y recta numérica entera',e:'Ej: situar el punto (3, –2) en los ejes · representar –4 y 5 en la recta numérica · cuadrantes'},{n:'Números mixtos: operaciones',e:'Ej: 2½ + 1¾ = ? · 3⅓ × 2 = ? · convertir a fracción impropia para operar'},{n:'Fracciones mixtas: suma y resta con distinto denominador',e:'Ej: 3/4 – 1/6 = ? · mínimo común denominador · simplificar resultado'},{n:'Operaciones con decimales: multiplicación y división',e:'Ej: 2,5 × 1,4 = 3,5 · 7,2 ÷ 0,4 = 18 · dónde colocar la coma decimal'},{n:'Suma y resta de ángulos',e:'Ej: 45° + 37° = 82° · 180° – 65° = 115° · ángulos complementarios y suplementarios'}];
+TEMAS['6P']['valenciano'] = [{n:'Comprensió de textos argumentatius',e:'Ej: llegir carta d\'opinió i identificar arguments'},{n:'Expressió oral: debat i exposició',e:'Ej: explicar un tema davant la classe'},{n:'Ortografia avançada: puntuació',e:'Ej: ús correcte del punt i la coma'},{n:'Categories gramaticals: pronoms i adverbis',e:'Ej: substituir «la Maria» per «ella»'},{n:'Sintagma nominal i verbal',e:'Ej: quin és el sintagma nominal?'},{n:'Oració simple: subjecte i predicat',e:'Ej: subjecte de «Els xiquets juguen»'},{n:'Textos periodístics i publicitaris',e:'Ej: distingir notícia d\'anunci'},{n:'Figures literàries bàsiques',e:'Ej: reconèixer una metàfora'},{n:'Creació literària: conte i poema',e:'Ej: poema amb rima · conte curt'},{n:'Discurs directe i indirecte',e:'Ej: «Va dir: "Vinc ara"» → Va dir que venia · transformar 5 frases'},{n:'Refranys i faules: comprensió i moraleja',e:'Ej: llegir una faula · explicar el significat d\'un refrany · escriure la moraleja amb les teves paraules'},{n:'Planificació i revisió de textos escrits',e:'Ej: fer l\'esquema → escriure → revisar ortografia i puntuació'},{n:'Accentuació: casos especials i mots homòfons',e:'Ej: «sòl» (terra) vs «sol» (astre) · «bé» (adverbi) vs «be» (lletra) · practicar parells mínims en context'},{n:'Ortografia: dièresi i consonants finals',e:'Ej: «traduir», «veïna», «lingüística» · consonants finals: «fred», «club», «llop» → pronunciació i escriptura'},{n:'Categories: pronoms relatius i interrogatius',e:'Ej: «que» (relatiu) vs «que» (subordinant) · «qui», «el qual», «la qual» · «on», «quan» com a relatius'},{n:'Categories: adverbis i locucions adverbials',e:'Ej: «tanmateix», «de vegades», «tot seguit» · adverbis de negació «no», «mai», «tampoc» · adverbis de dubte «potser», «tal vegada»'}];
+TEMAS['6P']['castellano'] = [{n:'Comprensión de textos argumentativos',e:'Ej: carta de opinión e identificar argumentos'},{n:'Expresión oral: debate y exposición',e:'Ej: explicar un tema ante la clase'},{n:'Ortografía avanzada: acentuación diacrítica',e:'Ej: «él» vs «el»'},{n:'Pronombres y adverbios',e:'Ej: sustituir «María» por «ella»'},{n:'Sintagma nominal y verbal',e:'Ej: ¿cuál es el sintagma nominal?'},{n:'Oración simple: sujeto y predicado',e:'Ej: sujeto de «Los niños juegan»'},{n:'Textos periodísticos y publicitarios',e:'Ej: distinguir noticia de anuncio'},{n:'Figuras literarias básicas',e:'Ej: reconocer una metáfora'},{n:'Creación literaria: cuento y poema',e:'Ej: poema con rima · cuento corto'},{n:'Discurso directo e indirecto',e:'Ej: «Dijo: "Vengo ahora"» → Dijo que venía · transformar 5 frases'},{n:'Refranes y fábulas: comprensión y moraleja',e:'Ej: leer una fábula · explicar el significado de un refrán · escribir la moraleja con tus palabras'},{n:'Planificación y revisión de textos escritos',e:'Ej: hacer el esquema → escribir → revisar ortografía y puntuación'}];
+TEMAS['6P']['ingles'] = [{n:'Vocabulary: environment and technology',e:'Ej: recycle, pollution, screen time'},{n:'Present simple and continuous',e:'Ej: She reads / She is reading.'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went. Did she call?'},{n:'Modal verbs: must, should, can',e:'Ej: You should study.'},{n:'Future: going to and will',e:'Ej: I\'m going to travel. / I think it will rain.'},{n:'Comparatives and superlatives',e:'Ej: more interesting than · the most popular'},{n:'Reading: short texts',e:'Ej: leer texto de 2 párrafos y responder'},{n:'Writing: emails and paragraphs',e:'Ej: email a un amigo'},{n:'Vocabulary: daily life and feelings',e:'Ej: excited, nervous, bored'},{n:'Pronunciation basics',e:'Ej: entonación en preguntas'},{n:'Present perfect: have/has + past participle',e:'Ej: I have visited Paris. / She has never eaten sushi. / Have you ever seen this film? · yet, already, just, since, for'},{n:'Zero and first conditional',e:'Ej: If you heat water to 100°C, it boils. (zero) / If it rains tomorrow, I will stay home. (first)'},{n:'Gerunds and infinitives (basic)',e:'Ej: I love swimming. / She wants to study. / He enjoys reading. / They decided to leave.'},{n:'Reported speech (basic statements)',e:'Ej: She said "I am happy" → She said (that) she was happy. / He told me he was tired.'}];
+
 TEMAS['1E'] = {};
-TEMAS['1E']['mates'] = [{n:'Números enteros y operaciones',e:'Ej: –3 + 5 = ? · recta numérica'},{n:'Potencias y raíces',e:'Ej: 2⁵ = 32 · √81 = 9'},{n:'Divisibilidad: MCD y MCM',e:'Ej: MCD(12,18) = 6'},{n:'Fracciones: operaciones',e:'Ej: 2/3 + 3/4 · simplificar 12/16'},{n:'Decimales y porcentajes',e:'Ej: el 15% de 200'},{n:'Proporcionalidad directa e inversa',e:'Ej: 4 obreros tardan 6 días, ¿cuánto 3?'},{n:'Álgebra: ecuaciones 1er grado',e:'Ej: 2x + 3 = 11 → x = ?'},{n:'Geometría plana: triángulos',e:'Ej: tipos de triángulos · ángulos = 180°'},{n:'Teorema de Pitágoras',e:'Ej: a² + b² = c²'},{n:'Estadística y probabilidad básica',e:'Ej: tabla de frecuencias'},{n:'Funciones: concepto y representación',e:'Ej: representar y = 2x en ejes'},{n:'Problemas de aplicación',e:'Ej: problemas de velocidad, precio con IVA'}];
-TEMAS['1E']['valenciano'] = [{n:'Comprensió lectora textos literaris i no literaris',e:'Ej: llegir un poema · llegir una notícia'},{n:'Expressió escrita: tipologia textual',e:'Ej: text narratiu, descriptiu o argumentatiu'},{n:'Ortografia: normes generals del valencià',e:'Ej: apòstrof, contracció (del, al)'},{n:'Morfologia: nom, adjectiu i article',e:'Ej: concordança «els gats negres»'},{n:'Morfologia: el verb — present i passat',e:'Ej: conjugar «cantar» en present'},{n:'Sintaxi: subjecte i predicat',e:'Ej: subjecte de «La professora explica»'},{n:'Sintaxi: complements del verb',e:'Ej: CD, CI i CC en oracions senzilles'},{n:'Semàntica: sinònims i antònims',e:'Ej: sinònim de «gran»'},{n:'Textos narratius: estructura i elements',e:'Ej: narrador, personatges, espai, temps'},{n:'Connectors bàsics',e:'Ej: «però», «per tant», «a més»'}];
-TEMAS['1E']['castellano'] = [{n:'Comprensión lectora textos literarios y no literarios',e:'Ej: leer un poema · leer una noticia'},{n:'Expresión escrita: tipología textual',e:'Ej: texto narrativo, descriptivo o argumentativo'},{n:'Ortografía: normas generales',e:'Ej: uso de b/v, g/j, h'},{n:'Morfología: nombre, adjetivo y artículo',e:'Ej: concordancia «los gatos negros»'},{n:'Morfología: el verbo — presente y pasado',e:'Ej: conjugar «cantar» en presente'},{n:'Sintaxis: sujeto y predicado',e:'Ej: sujeto de «La maestra explica»'},{n:'Sintaxis: complementos del verbo',e:'Ej: CD, CI y CC en oraciones sencillas'},{n:'Semántica: sinónimos y antónimos',e:'Ej: sinónimo de «grande»'},{n:'Textos narrativos: estructura y elementos',e:'Ej: narrador, personajes, espacio, tiempo'},{n:'Conectores básicos',e:'Ej: «pero», «por tanto», «además»'}];
-TEMAS['1E']['ingles'] = [{n:'Present simple',e:'Ej: I study / She studies. / Do you like?'},{n:'Present continuous',e:'Ej: I am studying. / Are they playing?'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went / She saw.'},{n:'Future: going to and will',e:'Ej: I\'m going to visit / I think it will be fun.'},{n:'Modal verbs: can, must, should',e:'Ej: Can I help? / You must be quiet.'},{n:'Comparatives and superlatives',e:'Ej: bigger than · the tallest'},{n:'Vocabulary: school, family, free time',e:'Ej: classmates, siblings, hang out'},{n:'Reading comprehension',e:'Ej: leer texto y responder preguntas'},{n:'Writing: short paragraphs',e:'Ej: describir a tu mejor amigo'},{n:'Phrasal verbs básicos',e:'Ej: wake up, give up, look for'}];
- 
+TEMAS['1E']['mates'] = [{n:'Números enteros y operaciones',e:'Ej: –3 + 5 = ? · recta numérica'},{n:'Potencias y raíces',e:'Ej: 2⁵ = 32 · √81 = 9'},{n:'Divisibilidad: MCD y MCM',e:'Ej: MCD(12,18) = 6'},{n:'Fracciones: operaciones',e:'Ej: 2/3 + 3/4 · simplificar 12/16'},{n:'Decimales y porcentajes',e:'Ej: el 15% de 200'},{n:'Proporcionalidad directa e inversa',e:'Ej: 4 obreros tardan 6 días, ¿cuánto 3?'},{n:'Álgebra: ecuaciones 1er grado',e:'Ej: 2x + 3 = 11 → x = ?'},{n:'Geometría plana: triángulos',e:'Ej: tipos de triángulos · ángulos = 180°'},{n:'Teorema de Pitágoras',e:'Ej: a² + b² = c²'},{n:'Estadística y probabilidad básica',e:'Ej: tabla de frecuencias'},{n:'Funciones: concepto y representación',e:'Ej: representar y = 2x en ejes'},{n:'Problemas de aplicación',e:'Ej: problemas de velocidad, precio con IVA'},{n:'Números decimales: operaciones y valor posicional',e:'Ej: 3,14 + 2,7 = ? · ordenar 0,3 / 0,03 / 0,33 · décimas, centésimas, milésimas'},{n:'Sistema métrico decimal: conversiones',e:'Ej: 3,5 km = 3.500 m · 250 cl = 2,5 l · 4.200 g = 4,2 kg · tabla de equivalencias completa'},{n:'Rectas y ángulos: clasificación y propiedades',e:'Ej: rectas paralelas, perpendiculares, secantes · ángulos opuestos por el vértice · ángulos con paralelas y secante'}];
+TEMAS['1E']['valenciano'] = [{n:'Comprensió lectora textos literaris i no literaris',e:'Ej: llegir un poema · llegir una notícia'},{n:'Expressió escrita: tipologia textual',e:'Ej: text narratiu, descriptiu o argumentatiu'},{n:'Ortografia: normes generals del valencià',e:'Ej: apòstrof, contracció (del, al)'},{n:'Morfologia: nom, adjectiu i article',e:'Ej: concordança «els gats negres»'},{n:'Morfologia: el verb — present i passat',e:'Ej: conjugar «cantar» en present'},{n:'Sintaxi: subjecte i predicat',e:'Ej: subjecte de «La professora explica»'},{n:'Sintaxi: complements del verb',e:'Ej: CD, CI i CC en oracions senzilles'},{n:'Semàntica: sinònims i antònims',e:'Ej: sinònim de «gran»'},{n:'Textos narratius: estructura i elements',e:'Ej: narrador, personatges, espai, temps'},{n:'Connectors bàsics',e:'Ej: «però», «per tant», «a més»'},{n:'El text expositiu: estructura i recursos',e:'Ej: escriure l\'exposició d\'un tema científic · introducció, desenvolupament, conclusió'},{n:'Comprensió lectora: vocabulari en context',e:'Ej: llegir un text i deduir el significat de 5 paraules desconegudes · exercicis de sinònims i antònims'},{n:'Accentuació: revisió i casos complexos',e:'Ej: paraules compostes amb guionet · accent en diftongs creixents (ia, ie, io, ua, ue) · mots esdrúixols compostos'},{n:'Ortografia: signes de puntuació avançats',e:'Ej: els dos punts per introduir llistes · el punt i coma entre oracions llargues · el guió llarg en el diàleg · ús dels parèntesis'},{n:'Categories: determinants — quantitatius i possessius',e:'Ej: «molt», «poc», «bastant», «cap», «algun» · formes plenes del possessiu: «meu», «teua», «seua» vs formes àtones «ma», «ta», «sa»'},{n:'Categories: pronoms febles — posició i combinació bàsica',e:'Ej: posició enclítica (darrere verb): «dóna-me\'l» · posició proclítica (davant verb): «me\'l dóna» · combinació de CD i CI: «te\'l», «li\'l»'}];
+TEMAS['1E']['castellano'] = [{n:'Comprensión lectora textos literarios y no literarios',e:'Ej: leer un poema · leer una noticia'},{n:'Expresión escrita: tipología textual',e:'Ej: texto narrativo, descriptivo o argumentativo'},{n:'Ortografía: normas generales',e:'Ej: uso de b/v, g/j, h'},{n:'Morfología: nombre, adjetivo y artículo',e:'Ej: concordancia «los gatos negros»'},{n:'Morfología: el verbo — presente y pasado',e:'Ej: conjugar «cantar» en presente'},{n:'Sintaxis: sujeto y predicado',e:'Ej: sujeto de «La maestra explica»'},{n:'Sintaxis: complementos del verbo',e:'Ej: CD, CI y CC en oraciones sencillas'},{n:'Semántica: sinónimos y antónimos',e:'Ej: sinónimo de «grande»'},{n:'Textos narrativos: estructura y elementos',e:'Ej: narrador, personajes, espacio, tiempo'},{n:'Conectores básicos',e:'Ej: «pero», «por tanto», «además»'},{n:'El texto expositivo: estructura y recursos',e:'Ej: escribir la exposición de un tema · introducción, desarrollo, conclusión'},{n:'Comprensión lectora: vocabulario en contexto',e:'Ej: leer un texto y deducir el significado de 5 palabras desconocidas · ejercicios de sinónimos y antónimos'}];
+TEMAS['1E']['ingles'] = [{n:'Present simple',e:'Ej: I study / She studies. / Do you like?'},{n:'Present continuous',e:'Ej: I am studying. / Are they playing?'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went / She saw.'},{n:'Future: going to and will',e:'Ej: I\'m going to visit / I think it will be fun.'},{n:'Modal verbs: can, must, should',e:'Ej: Can I help? / You must be quiet.'},{n:'Comparatives and superlatives',e:'Ej: bigger than · the tallest'},{n:'Vocabulary: school, family, free time',e:'Ej: classmates, siblings, hang out'},{n:'Reading comprehension',e:'Ej: leer texto y responder preguntas'},{n:'Writing: short paragraphs',e:'Ej: describir a tu mejor amigo'},{n:'Phrasal verbs básicos',e:'Ej: wake up, give up, look for'},{n:'Present perfect vs past simple',e:'Ej: I have lived here for 3 years (still now) vs I lived in Madrid last year (finished) · yet, already, since, for, ever, never'},{n:'Passive voice (basic)',e:'Ej: The book was written by Cervantes. / English is spoken all over the world. / The window was broken.'},{n:'Reported speech: statements',e:'Ej: She said she was studying. / He told me he would call. / They said they had visited London.'},{n:'Gerunds and infinitives',e:'Ej: stop + -ing (stop talking) vs to (stop to buy) · love, hate, enjoy, avoid + -ing · want, need, decide + to infinitive'},{n:'Articles: definite, indefinite, zero article',e:'Ej: I play the piano. / I like music (zero article). / She is a doctor. / The Amazon is the longest river.'}];
+
 TEMAS['2E'] = {};
-TEMAS['2E']['mates'] = [{n:'Números racionales y decimales',e:'Ej: comparar –3/4 con –0,8'},{n:'Potencias: propiedades',e:'Ej: a³ × a² = a⁵ · a⁰ = 1'},{n:'Proporcionalidad y porcentajes',e:'Ej: precio con 30% de descuento'},{n:'Álgebra: polinomios y ecuaciones 1er grado',e:'Ej: resolver 2x – 5 = x + 3'},{n:'Sistemas de ecuaciones 1er grado',e:'Ej: {x+y=10, x–y=2}'},{n:'Funciones lineales y afines',e:'Ej: y = 2x – 1 · ¿qué es la pendiente?'},{n:'Estadística: media, mediana y moda',e:'Ej: media de una lista de notas'},{n:'Geometría: figuras planas y áreas',e:'Ej: área de trapezoide, rombo'},{n:'Semejanza y escalas',e:'Ej: mapa escala 1:50.000'},{n:'Cuerpos geométricos y volúmenes',e:'Ej: volumen de un prisma'},{n:'Probabilidad',e:'Ej: lanzar dos monedas'},{n:'Problemas contextualizados',e:'Ej: movimiento, mezclas, edades'}];
-TEMAS['2E']['valenciano'] = [{n:'Comprensió textos expositius i argumentatius',e:'Ej: separar fets d\'opinions'},{n:'Producció textos: narració i descripció',e:'Ej: text descriptiu d\'un lloc'},{n:'Ortografia: b/v, g/j, h i puntuació',e:'Ej: usar correctament la coma'},{n:'Morfologia: el verb — temps i modes',e:'Ej: imperfet vs indefinit'},{n:'Morfologia: pronoms febles',e:'Ej: «el veig» vs «li dic»'},{n:'Sintaxi: oració simple completa',e:'Ej: analitzar S+V+CD+CC'},{n:'Sintaxi: oració composta coordinada',e:'Ej: coordinada adversativa'},{n:'Lèxic: formació de paraules',e:'Ej: prefixos in-, des-'},{n:'Textos literaris: narració i poesia',e:'Ej: elements d\'un conte · versos'},{n:'Cohesió i coherència textual',e:'Ej: connectors per lligar paràgrafs'}];
-TEMAS['2E']['castellano'] = [{n:'Comprensión textos expositivos y argumentativos',e:'Ej: separar hechos de opiniones'},{n:'Producción textos: narración y descripción',e:'Ej: texto descriptivo de un lugar'},{n:'Ortografía: b/v, g/j, h y puntuación',e:'Ej: usar correctamente la coma'},{n:'Morfología: el verbo — tiempos y modos',e:'Ej: imperfecto vs indefinido'},{n:'Morfología: pronombres personales',e:'Ej: le/les vs lo/la'},{n:'Sintaxis: oración simple completa',e:'Ej: analizar S+V+CD+CC'},{n:'Sintaxis: oración compuesta coordinada',e:'Ej: coordinada adversativa'},{n:'Léxico: formación de palabras',e:'Ej: prefijos in-, des-'},{n:'Textos literarios: narración y poesía',e:'Ej: elementos de un cuento · versos'},{n:'Cohesión y coherencia textual',e:'Ej: conectores para enlazar párrafos'}];
-TEMAS['2E']['ingles'] = [{n:'Present simple and continuous',e:'Ej: She reads / She is reading.'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went. Did she call?'},{n:'Past continuous',e:'Ej: I was reading when she called.'},{n:'Future: will and going to',e:'Ej: I\'ll help you. vs I\'m going to travel.'},{n:'Present perfect (introducción)',e:'Ej: I have eaten. / Have you ever been?'},{n:'Modal verbs: must, should, can, might',e:'Ej: You should eat less.'},{n:'Comparatives and superlatives',e:'Ej: more interesting · as tall as'},{n:'Vocabulary: health, media, environment',e:'Ej: symptoms, headline, carbon footprint'},{n:'Reading comprehension',e:'Ej: artículo y preguntas'},{n:'Writing: paragraphs and informal emails',e:'Ej: email a un amigo sobre vacaciones'}];
- 
+TEMAS['2E']['mates'] = [{n:'Números racionales y decimales',e:'Ej: comparar –3/4 con –0,8'},{n:'Potencias: propiedades',e:'Ej: a³ × a² = a⁵ · a⁰ = 1'},{n:'Proporcionalidad y porcentajes',e:'Ej: precio con 30% de descuento'},{n:'Álgebra: polinomios y ecuaciones 1er grado',e:'Ej: resolver 2x – 5 = x + 3'},{n:'Sistemas de ecuaciones 1er grado',e:'Ej: {x+y=10, x–y=2}'},{n:'Funciones lineales y afines',e:'Ej: y = 2x – 1 · ¿qué es la pendiente?'},{n:'Estadística: media, mediana y moda',e:'Ej: media de una lista de notas'},{n:'Geometría: figuras planas y áreas',e:'Ej: área de trapezoide, rombo'},{n:'Semejanza y escalas',e:'Ej: mapa escala 1:50.000'},{n:'Cuerpos geométricos y volúmenes',e:'Ej: volumen de un prisma'},{n:'Probabilidad',e:'Ej: lanzar dos monedas'},{n:'Problemas contextualizados',e:'Ej: movimiento, mezclas, edades'},{n:'Fracciones: operaciones con números racionales',e:'Ej: 2/3 + 3/4 = 17/12 · 5/6 × 3/10 = 1/4 · 7/2 ÷ 3/4 = ? · simplificar y comparar fracciones'},{n:'Teorema de Pitágoras',e:'Ej: a² + b² = c² · hipotenusa si catetos son 3 y 4 cm · comprobar si un triángulo es rectángulo'}];
+TEMAS['2E']['valenciano'] = [{n:'Comprensió textos expositius i argumentatius',e:'Ej: separar fets d\'opinions'},{n:'Producció textos: narració i descripció',e:'Ej: text descriptiu d\'un lloc'},{n:'Ortografia: b/v, g/j, h i puntuació',e:'Ej: usar correctament la coma'},{n:'Morfologia: el verb — temps i modes',e:'Ej: imperfet vs indefinit'},{n:'Morfologia: pronoms febles',e:'Ej: «el veig» vs «li dic»'},{n:'Sintaxi: oració simple completa',e:'Ej: analitzar S+V+CD+CC'},{n:'Sintaxi: oració composta coordinada',e:'Ej: coordinada adversativa'},{n:'Lèxic: formació de paraules',e:'Ej: prefixos in-, des-'},{n:'Textos literaris: narració i poesia',e:'Ej: elements d\'un conte · versos'},{n:'Cohesió i coherència textual',e:'Ej: connectors per lligar paràgrafs'},{n:'Varietats del català: dialectes principals',e:'Ej: trets del valencià · diferències entre el valencià i el català de Barcelona'},{n:'Comprensió lectora: textos variats amb exercicis',e:'Ej: llegir un text curt i respondre preguntes de comprensió, vocabulari i opinió personal'},{n:'Accentuació i ortografia: casos avançats',e:'Ej: dièresi en síl·laba àtona «lingüística» · repàs accent diacrític · homòfons freqüents: «a»/«ha», «han»/«an»'},{n:'Categories: el verb — mode subjuntiu',e:'Ej: present de subjuntiu: «que cante», «que bega», «que dorma» · usos: desig, dubte, oracions subordinades substantives'},{n:'Categories: pronoms relatius avançats',e:'Ej: «el qual / la qual / els quals / les quals» · «qui» com a pronom relatiu · frases de relatiu especificatives vs explicatives'},{n:'Categories: adverbis i locucions conjuntives',e:'Ej: «tanmateix» (adversatiu) · «per tant» (consecutiu) · «tot i que» (concessiu) · funció connectora en el text argumentatiu'}];
+TEMAS['2E']['castellano'] = [{n:'Comprensión textos expositivos y argumentativos',e:'Ej: separar hechos de opiniones'},{n:'Producción textos: narración y descripción',e:'Ej: texto descriptivo de un lugar'},{n:'Ortografía: b/v, g/j, h y puntuación',e:'Ej: usar correctamente la coma'},{n:'Morfología: el verbo — tiempos y modos',e:'Ej: imperfecto vs indefinido'},{n:'Morfología: pronombres personales',e:'Ej: le/les vs lo/la'},{n:'Sintaxis: oración simple completa',e:'Ej: analizar S+V+CD+CC'},{n:'Sintaxis: oración compuesta coordinada',e:'Ej: coordinada adversativa'},{n:'Léxico: formación de palabras',e:'Ej: prefijos in-, des-'},{n:'Textos literarios: narración y poesía',e:'Ej: elementos de un cuento · versos'},{n:'Cohesión y coherencia textual',e:'Ej: conectores para enlazar párrafos'},{n:'Variedades del español: dialectos y español de América',e:'Ej: castellano, andaluz, canario · el voseo en Argentina · español neutro'},{n:'Comprensión lectora: textos variados con ejercicios',e:'Ej: leer un texto corto y responder preguntas de comprensión, vocabulario y opinión personal'}];
+TEMAS['2E']['ingles'] = [{n:'Present simple and continuous',e:'Ej: She reads / She is reading.'},{n:'Past simple (regular & irregular)',e:'Ej: I walked / I went. Did she call?'},{n:'Past continuous',e:'Ej: I was reading when she called.'},{n:'Future: will and going to',e:'Ej: I\'ll help you. vs I\'m going to travel.'},{n:'Present perfect (introducción)',e:'Ej: I have eaten. / Have you ever been?'},{n:'Modal verbs: must, should, can, might',e:'Ej: You should eat less.'},{n:'Comparatives and superlatives',e:'Ej: more interesting · as tall as'},{n:'Vocabulary: health, media, environment',e:'Ej: symptoms, headline, carbon footprint'},{n:'Reading comprehension',e:'Ej: artículo y preguntas'},{n:'Writing: paragraphs and informal emails',e:'Ej: email a un amigo sobre vacaciones'},{n:'Reported speech: questions and commands',e:'Ej: She asked if I liked music. / He asked where I lived. / She told me to sit down. / He warned us not to enter.'},{n:'Second conditional',e:'Ej: If I were you, I would study more. / If I had a car, I would drive to school. / What would you do if you won the lottery?'},{n:'Linking words: contrast and result',e:'Ej: however, therefore, although, in spite of, despite, on the other hand, as a result, in addition'},{n:'Quantifiers: few / a few / little / a little / both / either / neither',e:'Ej: few friends (negative) vs a few friends (positive) · little time vs a little time · both of them / neither option'}];
+
 TEMAS['3E'] = {};
-TEMAS['3E']['mates'] = [{n:'Números reales: racionales e irracionales',e:'Ej: π, √2 · representar √3 en recta'},{n:'Potencias: propiedades avanzadas',e:'Ej: (a²)³ = a⁶ · notación científica'},{n:'Álgebra: factorización de polinomios',e:'Ej: x² – 4 = (x+2)(x–2)'},{n:'Ecuaciones de 2º grado',e:'Ej: x² – 5x + 6 = 0 · fórmula general'},{n:'Inecuaciones',e:'Ej: 2x + 3 > 7 → x > 2'},{n:'Sistemas de ecuaciones',e:'Ej: {2x+y=5, x–y=1}'},{n:'Geometría analítica: recta y distancias',e:'Ej: ecuación de la recta y = mx + n'},{n:'Funciones: estudio y representación',e:'Ej: dominio, recorrido, máximos y mínimos'},{n:'Estadística: varianza y desviación típica',e:'Ej: calcular varianza de una lista'},{n:'Probabilidad: regla de Laplace',e:'Ej: probabilidad de sacar bola roja'},{n:'Trigonometría básica',e:'Ej: seno, coseno y tangente'},{n:'Problemas de geometría aplicada',e:'Ej: altura de árbol con trigonometría'}];
-TEMAS['3E']['valenciano'] = [{n:'Comprensió i anàlisi textos complexos',e:'Ej: editorial de premsa · identificar tesi'},{n:'Expressió escrita: text argumentatiu',e:'Ej: assaig amb introducció, cos i conclusió'},{n:'Ortografia avançada',e:'Ej: homòfones · dièresi · puntuació'},{n:'Morfologia: el verb — tots els temps',e:'Ej: futur, condicional, subjuntiu'},{n:'Morfologia: pronoms febles avançats',e:'Ej: «se li», «me\'l», «li\'n»'},{n:'Sintaxi: oració composta subordinada',e:'Ej: «Crec que vindràs» → subordinada'},{n:'Sintaxi: anàlisi oracional completa',e:'Ej: subjecte, predicat i complements'},{n:'Lèxic: formació de paraules i camp semàntic',e:'Ej: prefixos, sufixos · família lèxica'},{n:'Gèneres literaris: narrativa, poesia, teatre',e:'Ej: trets de cada gènere'},{n:'Registres lingüístics',e:'Ej: formal vs col·loquial'}];
-TEMAS['3E']['castellano'] = [{n:'Comprensión y análisis textos complejos',e:'Ej: editorial de prensa · identificar tesis'},{n:'Expresión escrita: texto argumentativo',e:'Ej: ensayo con introducción, cuerpo, conclusión'},{n:'Ortografía avanzada',e:'Ej: homófonas · tilde diacrítica · puntuación'},{n:'Morfología: el verbo — todos los tiempos',e:'Ej: futuro, condicional, subjuntivo'},{n:'Morfología: pronombres — tipos y uso',e:'Ej: personales, relativos, indefinidos'},{n:'Sintaxis: oración compuesta subordinada',e:'Ej: «Creo que vendrás» → subordinada'},{n:'Sintaxis: análisis oracional completo',e:'Ej: sujeto, predicado y complementos'},{n:'Léxico: formación de palabras y campo semántico',e:'Ej: prefijos, sufijos · familia léxica'},{n:'Géneros literarios: narrativa, poesía, teatro',e:'Ej: rasgos de cada género'},{n:'Registros lingüísticos',e:'Ej: formal vs coloquial'}];
-TEMAS['3E']['ingles'] = [{n:'Present simple and continuous',e:'Ej: She studies every day. / She is studying.'},{n:'Past simple and past continuous',e:'Ej: I was watching when she called.'},{n:'Present perfect',e:'Ej: I have never tried sushi. / since vs for'},{n:'Future: will, going to, present continuous',e:'Ej: It will rain. / I\'m going to study.'},{n:'Modal verbs (completo)',e:'Ej: must/have to · should · might · can/could'},{n:'Passive voice',e:'Ej: The letter was written by Ana.'},{n:'Conditionals: 0, 1st and 2nd',e:'Ej: If I study, I\'ll pass. / If I were rich…'},{n:'Relative clauses',e:'Ej: The girl who lives next door.'},{n:'Vocabulary: technology and global issues',e:'Ej: artificial intelligence, climate change'},{n:'Writing: opinion essays and emails',e:'Ej: essay con argumentos a favor y en contra'}];
- 
+TEMAS['3E']['mates'] = [{n:'Números reales: racionales e irracionales',e:'Ej: π, √2 · representar √3 en recta'},{n:'Potencias: propiedades avanzadas',e:'Ej: (a²)³ = a⁶ · notación científica'},{n:'Álgebra: factorización de polinomios',e:'Ej: x² – 4 = (x+2)(x–2)'},{n:'Ecuaciones de 2º grado',e:'Ej: x² – 5x + 6 = 0 · fórmula general'},{n:'Inecuaciones',e:'Ej: 2x + 3 > 7 → x > 2'},{n:'Sistemas de ecuaciones',e:'Ej: {2x+y=5, x–y=1}'},{n:'Geometría analítica: recta y distancias',e:'Ej: ecuación de la recta y = mx + n'},{n:'Funciones: estudio y representación',e:'Ej: dominio, recorrido, máximos y mínimos'},{n:'Estadística: varianza y desviación típica',e:'Ej: calcular varianza de una lista'},{n:'Probabilidad: regla de Laplace',e:'Ej: probabilidad de sacar bola roja'},{n:'Trigonometría básica',e:'Ej: seno, coseno y tangente'},{n:'Problemas de geometría aplicada',e:'Ej: altura de árbol con trigonometría'},{n:'Fracciones algebraicas: simplificación y operaciones',e:'Ej: simplificar (x²–4)/(x+2) · sumar fracciones algebraicas con distinto denominador'},{n:'Progresiones aritméticas y geométricas',e:'Ej: término general de 2, 5, 8, 11… · suma de los 10 primeros términos · razón de una progresión geométrica'}];
+TEMAS['3E']['valenciano'] = [{n:'Comprensió i anàlisi textos complexos',e:'Ej: editorial de premsa · identificar tesi'},{n:'Expressió escrita: text argumentatiu',e:'Ej: assaig amb introducció, cos i conclusió'},{n:'Ortografia avançada',e:'Ej: homòfones · dièresi · puntuació'},{n:'Morfologia: el verb — tots els temps',e:'Ej: futur, condicional, subjuntiu'},{n:'Morfologia: pronoms febles avançats',e:'Ej: «se li», «me\'l», «li\'n»'},{n:'Sintaxi: oració composta subordinada',e:'Ej: «Crec que vindràs» → subordinada'},{n:'Sintaxi: anàlisi oracional completa',e:'Ej: subjecte, predicat i complements'},{n:'Lèxic: formació de paraules i camp semàntic',e:'Ej: prefixos, sufixos · família lèxica'},{n:'Gèneres literaris: narrativa, poesia, teatre',e:'Ej: trets de cada gènere'},{n:'Registres lingüístics',e:'Ej: formal vs col·loquial'},{n:'Redacció guiada: text argumentatiu',e:'Ej: escriure un text d\'opinió de 150 paraules sobre un tema d\'actualitat amb introducció, arguments i conclusió'},{n:'Premsa digital i gèneres actuals',e:'Ej: diferència entre article i blog · com detectar fake news · periodisme ciutadà'},{n:'Accentuació: normativa completa i excepcions',e:'Ej: monosíl·labs amb accent: «és», «sóc», «véns» · adverbis en «-ment»: «ràpidament» perd l\'accent · topònims valencians'},{n:'Ortografia: consonants problemàtiques i cultismes',e:'Ej: l·l geminada en cultismes «col·lectiu», «il·legal» · distinció ig: «puig», «raig», «boig» · doble s: «massa», «necessari»'},{n:'Categories: les preposicions — règim verbal',e:'Ej: verbs que regeixen «a» (anar a, aprendre a) · «de» (tractar de, cansar-se de) · «en» (pensar en, confiar en)'},{n:'Categories: mode condicional i valor modal',e:'Ej: «cantaria», «vindria», «faria» · oracions condicionals: «Si estudies, aprovaràs» · valor modal: petició cortesa, hipòtesi'}];
+TEMAS['3E']['castellano'] = [{n:'Comprensión y análisis textos complejos',e:'Ej: editorial de prensa · identificar tesis'},{n:'Expresión escrita: texto argumentativo',e:'Ej: ensayo con introducción, cuerpo, conclusión'},{n:'Ortografía avanzada',e:'Ej: homófonas · tilde diacrítica · puntuación'},{n:'Morfología: el verbo — todos los tiempos',e:'Ej: futuro, condicional, subjuntivo'},{n:'Morfología: pronombres — tipos y uso',e:'Ej: personales, relativos, indefinidos'},{n:'Sintaxis: oración compuesta subordinada',e:'Ej: «Creo que vendrás» → subordinada'},{n:'Sintaxis: análisis oracional completo',e:'Ej: sujeto, predicado y complementos'},{n:'Léxico: formación de palabras y campo semántico',e:'Ej: prefijos, sufijos · familia léxica'},{n:'Géneros literarios: narrativa, poesía, teatro',e:'Ej: rasgos de cada género'},{n:'Registros lingüísticos',e:'Ej: formal vs coloquial'},{n:'Redacción guiada: texto argumentativo',e:'Ej: escribir un texto de opinión de 150 palabras sobre un tema de actualidad con introducción, argumentos y conclusión'},{n:'Periodismo digital y géneros actuales',e:'Ej: diferencia entre artículo y blog · cómo detectar fake news · periodismo ciudadano'}];
+TEMAS['3E']['ingles'] = [{n:'Present simple and continuous',e:'Ej: She studies every day. / She is studying.'},{n:'Past simple and past continuous',e:'Ej: I was watching when she called.'},{n:'Present perfect',e:'Ej: I have never tried sushi. / since vs for'},{n:'Future: will, going to, present continuous',e:'Ej: It will rain. / I\'m going to study.'},{n:'Modal verbs (completo)',e:'Ej: must/have to · should · might · can/could'},{n:'Passive voice',e:'Ej: The letter was written by Ana.'},{n:'Conditionals: 0, 1st and 2nd',e:'Ej: If I study, I\'ll pass. / If I were rich…'},{n:'Relative clauses',e:'Ej: The girl who lives next door.'},{n:'Vocabulary: technology and global issues',e:'Ej: artificial intelligence, climate change'},{n:'Writing: opinion essays and emails',e:'Ej: essay con argumentos a favor y en contra'},{n:'Reported speech: all types and reporting verbs',e:'Ej: He admitted stealing. / She suggested going out. / They warned us not to enter. · advise, deny, promise, refuse, insist'},{n:'Third conditional and mixed conditionals',e:'Ej: If I had studied, I would have passed. / If I had worked harder, I would be rich now. (mixed)'},{n:'Gerunds vs infinitives: advanced',e:'Ej: remember + -ing (past memory) vs to (future duty) · try + -ing (experiment) vs to (attempt) · forget, stop, regret'},{n:'Quantifiers and determiners (advanced)',e:'Ej: each / every · all / both / neither / either · the whole / all the · hardly any'},{n:'Linking words: purpose, contrast, result',e:'Ej: in order to / so as to / so that · although / even though / despite / in spite of · as a result / consequently'},{n:'Emphatic structures',e:'Ej: It was Maria who called first. / What I need is more time. / The thing that surprised me most was…'}];
+
 TEMAS['4E'] = {};
-TEMAS['4E']['mates'] = [{n:'Números reales y aproximación',e:'Ej: redondear 3,14159 · error absoluto'},{n:'Álgebra: ecuaciones de 2º grado',e:'Ej: x² – 5x + 6 = 0 · bicuadradas'},{n:'Álgebra: sistemas de ecuaciones',e:'Ej: {2x+y=7, x–y=2}'},{n:'Funciones: dominio y tendencias',e:'Ej: dominio de f(x) = 1/(x–2) · asíntotas'},{n:'Funciones polinómicas y racionales',e:'Ej: representar f(x) = x² – 3x + 2'},{n:'Función exponencial y logarítmica (básico)',e:'Ej: y = 2ˣ · gráfica básica'},{n:'Probabilidad y combinatoria básica',e:'Ej: ¿de cuántas formas ordenar 3 libros?'},{n:'Geometría: vectores en el plano',e:'Ej: sumar vectores · módulo'},{n:'Trigonometría: razones y triángulos',e:'Ej: sin, cos, tan · calcular lado desconocido'},{n:'Introducción al análisis: límites',e:'Ej: lím(x→2) de x² = 4'},{n:'Matemáticas financieras básicas',e:'Ej: interés simple y compuesto'},{n:'Problemas de optimización',e:'Ej: caja de máximo volumen'}];
-TEMAS['4E']['valenciano'] = [{n:'Comprensió textos periodístics i assagístics',e:'Ej: article d\'opinió · recursos retòrics'},{n:'Producció textos formals i acadèmics',e:'Ej: instància, currículum, informe'},{n:'Ortografia: normes avançades i puntuació',e:'Ej: guió, parèntesis, comes en oracions complexes'},{n:'Morfologia: verb — subjuntiu i condicional',e:'Ej: subjuntiu present i imperfet'},{n:'Morfologia: pronoms febles — tots els casos',e:'Ej: «se\'ls», «me\'n», «hi», «en»'},{n:'Sintaxi oracional: anàlisi completa',e:'Ej: oració composta amb subordinades'},{n:'Sintaxi: proposicions subordinades',e:'Ej: substantives, adjectives i adverbials'},{n:'Lèxic: tecnicismes i neologismes',e:'Ej: «selfie», «hacker» · tecnicismes mèdics'},{n:'Varietats i registres del valencià',e:'Ej: col·loquial vs formal'},{n:'La comunicació: funcions i factors',e:'Ej: emissor, receptor, canal, codi'}];
-TEMAS['4E']['castellano'] = [{n:'Comprensión textos periodísticos y ensayísticos',e:'Ej: artículo de opinión · recursos retóricos'},{n:'Producción textos formales y académicos',e:'Ej: instancia, currículum, informe'},{n:'Ortografía: normas avanzadas y puntuación',e:'Ej: guión, paréntesis, comas en oraciones complejas'},{n:'Morfología: verbo — subjuntivo y condicional',e:'Ej: subjuntivo presente e imperfecto'},{n:'Morfología: pronombres — todos los tipos',e:'Ej: relativos, indefinidos · leísmo y laísmo'},{n:'Sintaxis oracional: análisis completo',e:'Ej: oración compuesta con subordinadas'},{n:'Sintaxis: proposiciones subordinadas',e:'Ej: sustantivas, adjetivas y adverbiales'},{n:'Léxico: tecnicismos y neologismos',e:'Ej: «selfie», «hacker» · tecnicismos médicos'},{n:'Variedades y registros del español',e:'Ej: coloquial vs formal'},{n:'La comunicación: funciones y factores',e:'Ej: emisor, receptor, canal, código'}];
+TEMAS['4E']['mates'] = [{n:'Números reales y aproximación',e:'Ej: redondear 3,14159 · error absoluto'},{n:'Álgebra: ecuaciones de 2º grado',e:'Ej: x² – 5x + 6 = 0 · bicuadradas'},{n:'Álgebra: sistemas de ecuaciones',e:'Ej: {2x+y=7, x–y=2}'},{n:'Funciones: dominio y tendencias',e:'Ej: dominio de f(x) = 1/(x–2) · asíntotas'},{n:'Funciones polinómicas y racionales',e:'Ej: representar f(x) = x² – 3x + 2'},{n:'Función exponencial y logarítmica (básico)',e:'Ej: y = 2ˣ · gráfica básica'},{n:'Probabilidad y combinatoria básica',e:'Ej: ¿de cuántas formas ordenar 3 libros?'},{n:'Geometría: vectores en el plano',e:'Ej: sumar vectores · módulo'},{n:'Trigonometría: razones y triángulos',e:'Ej: sin, cos, tan · calcular lado desconocido'},{n:'Introducción al análisis: límites',e:'Ej: lím(x→2) de x² = 4'},{n:'Matemáticas financieras básicas',e:'Ej: interés simple y compuesto'},{n:'Problemas de optimización',e:'Ej: caja de máximo volumen'},{n:'Inecuaciones: resolución y representación',e:'Ej: 3x – 5 > 7 → x > 4 · inecuaciones de 2º grado · representar la solución en la recta real'}];
+TEMAS['4E']['valenciano'] = [{n:'Comprensió textos periodístics i assagístics',e:'Ej: article d\'opinió · recursos retòrics'},{n:'Producció textos formals i acadèmics',e:'Ej: instància, currículum, informe'},{n:'Ortografia: normes avançades i puntuació',e:'Ej: guió, parèntesis, comes en oracions complexes'},{n:'Morfologia: verb — subjuntiu i condicional',e:'Ej: subjuntiu present i imperfet'},{n:'Morfologia: pronoms febles — tots els casos',e:'Ej: «se\'ls», «me\'n», «hi», «en»'},{n:'Sintaxi oracional: anàlisi completa',e:'Ej: oració composta amb subordinades'},{n:'Sintaxi: proposicions subordinades',e:'Ej: substantives, adjectives i adverbials'},{n:'Lèxic: tecnicismes i neologismes',e:'Ej: «selfie», «hacker» · tecnicismes mèdics'},{n:'Varietats i registres del valencià',e:'Ej: col·loquial vs formal'},{n:'La comunicació: funcions i factors',e:'Ej: emissor, receptor, canal, codi'},{n:'Anàlisi de textos periodístics: article d\'opinió',e:'Ej: llegir un article d\'opinió i identificar tesi, arguments a favor, en contra i conclusió'},{n:'Preparació comentari de text (accés Batxillerat)',e:'Ej: resum, tema, estructura i valoració personal d\'un text argumentatiu'},{n:'Accentuació i ortografia: preparació selectivitat',e:'Ej: repàs complet de totes les regles d\'accentuació · errors freqüents: confusió b/v, accent diacrític, apòstrof'},{n:'Categories: anàlisi morfosintàctica completa',e:'Ej: categoria + funció de cada mot en l\'oració · adjectiu predicatiu vs atribut · complement agent en la veu passiva'},{n:'Categories: les conjuncions — coordinants i subordinants',e:'Ej: coordinants: «i», «però», «ni», «o», «sinó que» · subordinants: «que», «perquè», «malgrat que», «encara que»'},{n:'Categories: tots els determinants',e:'Ej: articles, demostratius, possessius, indefinits «algun/cap», numerals ordinals · formes i funcions · errors freqüents'}];
+TEMAS['4E']['castellano'] = [{n:'Comprensión textos periodísticos y ensayísticos',e:'Ej: artículo de opinión · recursos retóricos'},{n:'Producción textos formales y académicos',e:'Ej: instancia, currículum, informe'},{n:'Ortografía: normas avanzadas y puntuación',e:'Ej: guión, paréntesis, comas en oraciones complejas'},{n:'Morfología: verbo — subjuntivo y condicional',e:'Ej: subjuntivo presente e imperfecto'},{n:'Morfología: pronombres — todos los tipos',e:'Ej: relativos, indefinidos · leísmo y laísmo'},{n:'Sintaxis oracional: análisis completo',e:'Ej: oración compuesta con subordinadas'},{n:'Sintaxis: proposiciones subordinadas',e:'Ej: sustantivas, adjetivas y adverbiales'},{n:'Léxico: tecnicismos y neologismos',e:'Ej: «selfie», «hacker» · tecnicismos médicos'},{n:'Variedades y registros del español',e:'Ej: coloquial vs formal'},{n:'La comunicación: funciones y factores',e:'Ej: emisor, receptor, canal, código'},{n:'Análisis de textos periodísticos: artículo de opinión',e:'Ej: leer un artículo de opinión e identificar tesis, argumentos a favor, en contra y conclusión'},{n:'Preparación comentario de texto (acceso Bachillerato)',e:'Ej: resumen, tema, estructura y valoración personal de un texto argumentativo'}];
 TEMAS['4E']['ingles'] = [{n:'Present simple and continuous (repaso)',e:'Ej: state verbs: know, love, have…'},{n:'Past simple and past continuous (repaso)',e:'Ej: While vs when'},{n:'Present perfect simple and continuous',e:'Ej: I\'ve been studying for 2 hours.'},{n:'Past perfect',e:'Ej: When I arrived, she had already left.'},{n:'Future forms (will, going to, present cont.)',e:'Ej: planes, predicciones y decisiones'},{n:'Modal verbs (todos)',e:'Ej: must/can\'t · should have · would'},{n:'Conditionals: 1st, 2nd and 3rd',e:'Ej: If I had studied, I would have passed.'},{n:'Passive voice',e:'Ej: The film was directed by Spielberg.'},{n:'Relative clauses',e:'Ej: defining vs non-defining'},{n:'Vocabulary advanced (B1)',e:'Ej: society, environment, technology'},{n:'Writing: essays and formal emails (B1)',e:'Ej: essay argumentativo · email formal'},{n:'Reading and listening strategies (B1)',e:'Ej: skimming, scanning'}];
- 
+
 TEMAS['1B'] = {};
 TEMAS['1B']['mates'] = [{n:'Números reales: propiedades',e:'Ej: intervalos · valor absoluto'},{n:'Polinomios: operaciones y factorización',e:'Ej: Ruffini · teorema del resto'},{n:'Ecuaciones y sistemas avanzados',e:'Ej: sistemas no lineales · bicuadradas'},{n:'Inecuaciones y sistemas',e:'Ej: resolver 2x² – x – 3 > 0'},{n:'Geometría analítica: recta y cónicas',e:'Ej: ecuación de la recta · parábola'},{n:'Funciones: dominio y estudio',e:'Ej: dominio de √(x–2) · asíntotas'},{n:'Funciones elementales y gráficas',e:'Ej: polinómica, racional, exponencial'},{n:'Límites y continuidad',e:'Ej: lím(x→∞) · indeterminaciones'},{n:'Derivadas: concepto y reglas',e:'Ej: derivada de x³ = 3x² · regla cadena'},{n:'Aplicaciones de la derivada',e:'Ej: máximos y mínimos · optimización'},{n:'Trigonometría avanzada',e:'Ej: sin²x + cos²x = 1 · radianes'},{n:'Estadística y probabilidad',e:'Ej: probabilidad condicionada · Bayes'}];
-TEMAS['1B']['valenciano'] = [{n:'Comprensió textos complexos i acadèmics',e:'Ej: analitzar assaig · resumir text periodístic'},{n:'Producció textos argumentatius',e:'Ej: comentari de text · assaig d\'opinió'},{n:'Ortografia: normativa avançada del valencià',e:'Ej: accentuació de diftongs · dièresi'},{n:'Morfologia: verb — tots els temps i modes',e:'Ej: subjuntiu imperfet · plusquamperfet'},{n:'Morfologia: pronoms febles — combinació completa',e:'Ej: «se\'ls», «me\'n dóna»'},{n:'Sintaxi: subordinades substantives',e:'Ej: «Vull que vingues»'},{n:'Sintaxi: subordinades adjectives i adverbials',e:'Ej: relatives · causals, finals, concessives'},{n:'Lèxic: etimologia i neologismes',e:'Ej: origen llatí i grec · préstecs actuals'},{n:'La comunicació i els mitjans',e:'Ej: funcions del llenguatge · gèneres periodístics'},{n:'Variació lingüística i sociolingüística',e:'Ej: diglòssia · política lingüística'}];
-TEMAS['1B']['castellano'] = [{n:'Comprensión textos complejos y académicos',e:'Ej: analizar ensayo · resumir texto periodístico'},{n:'Producción textos argumentativos',e:'Ej: comentario de texto · ensayo de opinión'},{n:'Ortografía: normativa avanzada',e:'Ej: acentuación de diptongos y hiatos'},{n:'Morfología: verbo — todos los tiempos',e:'Ej: subjuntivo imperfecto · pluscuamperfecto'},{n:'Morfología: pronombres — uso avanzado',e:'Ej: leísmo, laísmo, loísmo · dequeísmo'},{n:'Sintaxis: subordinadas sustantivas',e:'Ej: «Quiero que vengas»'},{n:'Sintaxis: subordinadas adjetivas y adverbiales',e:'Ej: relativas · causales, finales, concesivas'},{n:'Léxico: etimología y neologismos',e:'Ej: origen latino y griego · préstamos actuales'},{n:'La comunicación y los medios',e:'Ej: funciones del lenguaje · géneros periodísticos'},{n:'Variación lingüística y sociolingüística',e:'Ej: diglosia · política lingüística en España'}];
+TEMAS['1B']['valenciano'] = [{n:'Comprensió textos complexos i acadèmics',e:'Ej: analitzar assaig · resumir text periodístic'},{n:'Producció textos argumentatius',e:'Ej: comentari de text · assaig d\'opinió'},{n:'Ortografia: normativa avançada del valencià',e:'Ej: accentuació de diftongs · dièresi'},{n:'Morfologia: verb — tots els temps i modes',e:'Ej: subjuntiu imperfet · plusquamperfet'},{n:'Morfologia: pronoms febles — combinació completa',e:'Ej: «se\'ls», «me\'n dóna»'},{n:'Sintaxi: subordinades substantives',e:'Ej: «Vull que vingues»'},{n:'Sintaxi: subordinades adjectives i adverbials',e:'Ej: relatives · causals, finals, concessives'},{n:'Lèxic: etimologia i neologismes',e:'Ej: origen llatí i grec · préstecs actuals'},{n:'La comunicació i els mitjans',e:'Ej: funcions del llenguatge · gèneres periodístics'},{n:'Variació lingüística i sociolingüística',e:'Ej: diglòssia · política lingüística'},{n:'Comentari de text: resum i identificació del tema',e:'Ej: resumir un text argumentatiu en 80-100 paraules · identificar el tema central i l\'estructura'},{n:'Anàlisi lingüística pràctica en textos reals',e:'Ej: identificar categories gramaticals, connectors i figures expressives en un text autèntic'}];
+TEMAS['1B']['castellano'] = [{n:'Comprensión textos complejos y académicos',e:'Ej: analizar ensayo · resumir texto periodístico'},{n:'Producción textos argumentativos',e:'Ej: comentario de texto · ensayo de opinión'},{n:'Ortografía: normativa avanzada',e:'Ej: acentuación de diptongos y hiatos'},{n:'Morfología: verbo — todos los tiempos',e:'Ej: subjuntivo imperfecto · pluscuamperfecto'},{n:'Morfología: pronombres — uso avanzado',e:'Ej: leísmo, laísmo, loísmo · dequeísmo'},{n:'Sintaxis: subordinadas sustantivas',e:'Ej: «Quiero que vengas»'},{n:'Sintaxis: subordinadas adjetivas y adverbiales',e:'Ej: relativas · causales, finales, concesivas'},{n:'Léxico: etimología y neologismos',e:'Ej: origen latino y griego · préstamos actuales'},{n:'La comunicación y los medios',e:'Ej: funciones del lenguaje · géneros periodísticos'},{n:'Variación lingüística y sociolingüística',e:'Ej: diglosia · política lingüística en España'},{n:'Comentario de texto: resumen e identificación del tema',e:'Ej: resumir un texto argumentativo en 80-100 palabras · identificar el tema central y la estructura'},{n:'Análisis lingüístico práctico en textos reales',e:'Ej: identificar categorías gramaticales, conectores y figuras expresivas en un texto auténtico'}];
 TEMAS['1B']['ingles'] = [{n:'Present, past and perfect tenses (repaso)',e:'Ej: state verbs · all present/past forms'},{n:'Past simple, continuous and perfect',e:'Ej: I had left before she arrived.'},{n:'Future forms (todos)',e:'Ej: will / going to / future perfect'},{n:'Conditionals: 1st, 2nd, 3rd and mixed',e:'Ej: If I had studied, I would be a doctor now.'},{n:'Modal verbs: deduction and speculation',e:'Ej: must be, can\'t be, might be'},{n:'Passive voice (advanced)',e:'Ej: It is said that… / causative have'},{n:'Reported speech (completo)',e:'Ej: She said she was tired.'},{n:'Relative clauses and linking words',e:'Ej: however, nevertheless, in addition…'},{n:'Vocabulary: advanced topics (B2)',e:'Ej: society, ethics, technology, environment'},{n:'Writing: essays and reports (B2)',e:'Ej: essay argumentativo de 250+ palabras'},{n:'Listening and reading strategies (B2)',e:'Ej: entender textos auténticos'},{n:'Speaking: debates and presentations',e:'Ej: argumentar y rebatir'}];
- 
+
 TEMAS['2B'] = {};
 TEMAS['2B']['mates'] = [{n:'Álgebra: matrices y determinantes',e:'Ej: multiplicar matrices · matriz inversa'},{n:'Sistemas de ecuaciones: Gauss y Cramer',e:'Ej: resolver sistema 3×3'},{n:'Geometría analítica en el espacio',e:'Ej: ecuación del plano · recta en espacio'},{n:'Funciones: límites y continuidad avanzados',e:'Ej: indeterminaciones · L\'Hôpital básico'},{n:'Derivadas: reglas y aplicaciones avanzadas',e:'Ej: optimización · representación completa'},{n:'Integrales: cálculo y técnicas',e:'Ej: por partes · por sustitución'},{n:'Aplicaciones de la integral',e:'Ej: área entre curvas · área bajo la curva'},{n:'Probabilidad: distribuciones binomial y normal',e:'Ej: P(X=3) en B(10,0.3) · tabla normal'},{n:'Estadística inferencial básica',e:'Ej: intervalo de confianza'},{n:'Trigonometría y números complejos',e:'Ej: forma trigonométrica · fórmula Euler'},{n:'Cónicas: elipse, hipérbola y parábola',e:'Ej: ecuación reducida · elementos'},{n:'Resolución problemas tipo EBAU',e:'Ej: problemas de las últimas convocatorias'}];
-TEMAS['2B']['valenciano'] = [{n:'Comprensió i comentari de text (EBAU)',e:'Ej: resumir, tema, estructura, comentari lingüístic'},{n:'Producció text argumentatiu (EBAU)',e:'Ej: text d\'opinió ben estructurat'},{n:'Ortografia: normativa completa del valencià',e:'Ej: tots els casos d\'accentuació · dièresi'},{n:'Morfologia: anàlisi morfològica completa',e:'Ej: qualsevol categoria gramatical'},{n:'Sintaxi: anàlisi oracional completa (EBAU)',e:'Ej: oracions compostes amb subordinades'},{n:'Lèxic: semàntica i recursos expressius',e:'Ej: polisèmia, homonímia · figures retòriques'},{n:'Variació lingüística: dialectes i registres',e:'Ej: trets dialectes valencians'},{n:'Sociolingüística: situació del valencià',e:'Ej: diglòssia · normalització lingüística'},{n:'Gèneres periodístics i textuals',e:'Ej: notícia, editorial, crònica'},{n:'Literatura valenciana contemporània',e:'Ej: autors s. XX · context i trets'}];
-TEMAS['2B']['castellano'] = [{n:'Comprensión y comentario de texto (EBAU)',e:'Ej: resumir, tema, estructura, comentario lingüístico'},{n:'Producción texto argumentativo (EBAU)',e:'Ej: texto de opinión estructurado'},{n:'Ortografía: normativa completa',e:'Ej: todos los casos de acentuación'},{n:'Morfología: análisis morfológico completo',e:'Ej: cualquier categoría gramatical'},{n:'Sintaxis: análisis oracional completo (EBAU)',e:'Ej: oraciones compuestas con subordinadas'},{n:'Léxico: semántica y recursos expresivos',e:'Ej: polisemia, homonimia · figuras retóricas'},{n:'Variación lingüística: dialectos y registros',e:'Ej: rasgos dialectos españoles'},{n:'Sociolingüística: situación del español',e:'Ej: diglosia · lenguas cooficiales'},{n:'Géneros periodísticos y textuales',e:'Ej: noticia, editorial, crónica'},{n:'Literatura española contemporánea',e:'Ej: autores s. XX · movimientos literarios'}];
+TEMAS['2B']['valenciano'] = [{n:'Comprensió i comentari de text (EBAU)',e:'Ej: resumir, tema, estructura, comentari lingüístic'},{n:'Producció text argumentatiu (EBAU)',e:'Ej: text d\'opinió ben estructurat'},{n:'Ortografia: normativa completa del valencià',e:'Ej: tots els casos d\'accentuació · dièresi'},{n:'Morfologia: anàlisi morfològica completa',e:'Ej: qualsevol categoria gramatical'},{n:'Sintaxi: anàlisi oracional completa (EBAU)',e:'Ej: oracions compostes amb subordinades'},{n:'Lèxic: semàntica i recursos expressius',e:'Ej: polisèmia, homonímia · figures retòriques'},{n:'Variació lingüística: dialectes i registres',e:'Ej: trets dialectes valencians'},{n:'Sociolingüística: situació del valencià',e:'Ej: diglòssia · normalització lingüística'},{n:'Gèneres periodístics i textuals',e:'Ej: notícia, editorial, crònica'},{n:'Literatura valenciana contemporània',e:'Ej: autors s. XX · context i trets'},{n:'Comentari de text complet (EBAU)',e:'Ej: practicar el comentari complet: resum, tema, estructura, anàlisi lingüística i valoració personal'},{n:'Producció de textos: assaig d\'opinió (EBAU)',e:'Ej: redactar un assaig de 200-250 paraules sobre un tema d\'actualitat amb arguments ben estructurats'}];
+TEMAS['2B']['castellano'] = [{n:'Comprensión y comentario de texto (EBAU)',e:'Ej: resumir, tema, estructura, comentario lingüístico'},{n:'Producción texto argumentativo (EBAU)',e:'Ej: texto de opinión estructurado'},{n:'Ortografía: normativa completa',e:'Ej: todos los casos de acentuación'},{n:'Morfología: análisis morfológico completo',e:'Ej: cualquier categoría gramatical'},{n:'Sintaxis: análisis oracional completo (EBAU)',e:'Ej: oraciones compuestas con subordinadas'},{n:'Léxico: semántica y recursos expresivos',e:'Ej: polisemia, homonimia · figuras retóricas'},{n:'Variación lingüística: dialectos y registros',e:'Ej: rasgos dialectos españoles'},{n:'Sociolingüística: situación del español',e:'Ej: diglosia · lenguas cooficiales'},{n:'Géneros periodísticos y textuales',e:'Ej: noticia, editorial, crónica'},{n:'Literatura española contemporánea',e:'Ej: autores s. XX · movimientos literarios'},{n:'Comentario de texto completo (EBAU)',e:'Ej: practicar el comentario completo: resumen, tema, estructura, análisis lingüístico y valoración personal'},{n:'Producción de textos: ensayo de opinión (EBAU)',e:'Ej: redactar un ensayo de 200-250 palabras sobre un tema de actualidad con argumentos bien estructurados'}];
 TEMAS['2B']['ingles'] = [{n:'Grammar review: all tenses (B2/C1)',e:'Ej: repaso completo de todos los tiempos'},{n:'Conditionals: all types and variations',e:'Ej: mixed conditionals · wish / if only'},{n:'Modal verbs: advanced uses',e:'Ej: deducción · arrepentimiento · probabilidad'},{n:'Passive voice and causative structures',e:'Ej: It is believed that… / have sth done'},{n:'Reported speech: all structures',e:'Ej: reporting verbs (admit, suggest, deny)'},{n:'Relative, adverbial and noun clauses',e:'Ej: whoever, whenever · embedded questions'},{n:'Inversion and emphasis structures',e:'Ej: Never have I seen… / Not only did she…'},{n:'Advanced vocabulary: idioms and collocations',e:'Ej: break the ice, carry out a task…'},{n:'Academic writing: essays and reports (B2/C1)',e:'Ej: essay de 300+ palabras'},{n:'Reading: complex authentic texts (B2/C1)',e:'Ej: artículos de prensa académicos'},{n:'Listening: advanced authentic material',e:'Ej: podcasts y noticias en inglés nativo'},{n:'Speaking: EBAU oral and debates',e:'Ej: presentación y defensa de opiniones'}];
- 
+
 OBJETIVOS['mates'] = ['Aprobar en septiembre','Mejorar la nota','Repasar el curso','Ganar confianza con los números','Entender los problemas','Mejorar el cálculo mental','Preparar la EBAU'];
 OBJETIVOS['valenciano'] = ['Aprobar en septiembre','Millorar la nota','Millorar la comprensió lectora','Millorar l\'expressió escrita','Dominar l\'ortografia','Preparar la EBAU'];
 OBJETIVOS['castellano'] = ['Aprobar en septiembre','Mejorar la nota','Mejorar la comprensión lectora','Mejorar la expresión escrita','Dominar la ortografía','Preparar la EBAU'];
 OBJETIVOS['ingles'] = ['Aprobar en septiembre','Mejorar la nota','Mejorar el vocabulario','Mejorar la gramática','Ganar fluidez hablando','Preparar examen oficial (B1/B2)','Preparar la EBAU'];
- 
+
 // ── ESTADO ──
 var state = {nombre:'',telefono:'',alumno:'',curso:'',asig:'',semaforo:{},objetivos:[],nivel:'',pack:'',precio:0,descuento:0,comentarios:'',generatedContent:null,precioFinal:0};
 var datoInterval = null;
- 
+
 // ── PROGRESO ──
 function setProg(p){document.getElementById('progressBar').style.width = p + '%';}
- 
+
 // ── NAVEGACIÓN ──
 function ir(de, a){
   if(a > de && !validar(de)) return;
@@ -529,7 +543,7 @@ function ir(de, a){
   setProg(Math.round((a-1)/3*70));
   window.scrollTo(0,0);
 }
- 
+
 // ── VALIDACIÓN ──
 function validar(step){
   var ok = true;
@@ -573,7 +587,7 @@ function validar(step){
   }
   return ok;
 }
- 
+
 // ── TEMAS ──
 function renderTemas(){
   var temas = (TEMAS[state.curso] && TEMAS[state.curso][state.asig]) ? TEMAS[state.curso][state.asig] : [];
@@ -621,7 +635,7 @@ function renderTemas(){
     list.appendChild(row);
   });
 }
- 
+
 function setSem(idx, color){
   var row = document.getElementById('row' + idx);
   var tema = row.getAttribute('data-tema');
@@ -633,7 +647,7 @@ function setSem(idx, color){
   row.className = 'topic-row st-' + color;
   document.getElementById('sem-error').style.display = 'none';
 }
- 
+
 // ── OBJETIVOS ──
 function renderObjetivos(){
   state.objetivos = [];
@@ -663,7 +677,7 @@ function renderObjetivos(){
     grid.appendChild(wrap);
   });
 }
- 
+
 // ── PACKS ──
 function renderPacks(){
   var p = PRECIOS[state.curso] || PRECIOS['1E'];
@@ -697,7 +711,7 @@ function renderPacks(){
     grid.appendChild(wrap);
   });
 }
- 
+
 // ── CÓDIGO DESCUENTO ──
 function aplicarCodigo(){
   var input = document.getElementById('codigoDesc');
@@ -718,7 +732,7 @@ function aplicarCodigo(){
     err.style.display = 'block';
   }
 }
- 
+
 // ── DATOS CURIOSOS ──
 function startDatos(){
   var el = document.getElementById('datoText');
@@ -733,7 +747,7 @@ function startDatos(){
 function stopDatos(){
   if(datoInterval) clearInterval(datoInterval);
 }
- 
+
 // ── ANIMACIÓN GENERACIÓN ──
 function animarGeneracion(){
   var steps = ['gs1','gs2','gs3','gs4'];
@@ -754,7 +768,7 @@ function animarGeneracion(){
   }
   next();
 }
- 
+
 // ── GENERACIÓN CON IA ──
 function iniciarGeneracion(){
   if(!validar(3)) return;
@@ -764,7 +778,7 @@ function iniciarGeneracion(){
   window.scrollTo(0,0);
   animarGeneracion();
   startDatos();
- 
+
   var rojos = [];
   var amarillos = [];
   var verdes = [];
@@ -773,7 +787,7 @@ function iniciarGeneracion(){
     else if(state.semaforo[k] === 'yellow') amarillos.push(k);
     else verdes.push(k);
   });
- 
+
   var instrObjetos = [];
   state.objetivos.forEach(function(o){
     var ol = o.toLowerCase();
@@ -786,7 +800,7 @@ function iniciarGeneracion(){
     if(ol.indexOf('gramàtic') !== -1 || ol.indexOf('gramátic') !== -1 || ol.indexOf('grammar') !== -1) instrObjetos.push('PRIORIZA gramática con reglas claras y muchos ejemplos');
     if(ol.indexOf('ortograf') !== -1) instrObjetos.push('AÑADE ejercicios de ortografía: dictados, completar palabras');
   });
- 
+
   var promptParts = [];
   promptParts.push('Eres Elena De Miguel, profesora especializada en Pedagogia Terapeutica con 7 anos de experiencia. Creas cuadernillos de verano personalizados, dinamicos y motivadores para alumnos de primaria, ESO y bachillerato.');
   promptParts.push('Crea un cuadernillo de repaso de verano COMPLETO, VARIADO Y EXTENSO para:\n- Alumno/a: ' + state.alumno + '\n- Curso: ' + (CURSO_N[state.curso]||'') + '\n- Asignatura: ' + (ASIG_N[state.asig]||'') + '\n- Nivel: ' + (state.nivel||'Medio') + '\n- Objetivos: ' + (state.objetivos.join(', ')||'Repasar y mejorar'));
@@ -795,9 +809,9 @@ function iniciarGeneracion(){
   promptParts.push('SEMAFORO - numero EXACTO de ejercicios por tema:\n- TEMAS ROJOS (domina mal): ' + (rojos.join(', ')||'ninguno') + ' --> 10 ejercicios cada uno\n- TEMAS AMARILLOS (nivel regular): ' + (amarillos.join(', ')||'ninguno') + ' --> 8 ejercicios cada uno\n- TEMAS VERDES (buen nivel): ' + (verdes.join(', ')||'ninguno') + ' --> 5 ejercicios cada uno\nOrden: primero todos los rojos, luego amarillos, luego verdes.');
   promptParts.push('INSTRUCCIONES OBLIGATORIAS:\n1. Ejercicios REALES y CONCRETOS con datos, palabras y numeros reales. Nunca vacios ni genericos.\n2. mini_explicacion de 2-3 frases claras y cercanas por tema.\n3. Truco mnemonico cuando sea util.\n4. TIPOS VARIADOS obligatorios: desarrollo, completar, relacionar, verdadero_falso, multiple_choice, ordenar, calculo, redaccion. Mezcla los tipos dentro de cada tema.\n5. AUTOEVALUACION al final de cada tema: exactamente 3 preguntas tipo test con 4 opciones A B C D.\n6. Soluciones COMPLETAS con desarrollo paso a paso.\n7. Lenguaje cercano, animado y adaptado al nivel del alumno. Usa emojis y frases de animo.\n8. MINIMO 60 PAGINAS de trabajo real. Para llegar, los enunciados deben ser largos y detallados, los ejercicios de desarrollo con espacio generoso, la redaccion con instrucciones completas.\n9. mensaje_motivador personalizado para ' + state.alumno + ': 3-4 frases de animo referidas a su asignatura y situacion.');
   promptParts.push('RESPONDE UNICAMENTE con este JSON (sin texto extra, sin backticks, sin explicaciones):\n{"secciones":[{"tema":"nombre del tema","nivel_semaforo":"rojo|amarillo|verde","mini_explicacion":"2-3 frases","truco":"truco o cadena vacia","ejercicios":[{"num":1,"tipo":"desarrollo|completar|relacionar|verdadero_falso|multiple_choice|ordenar|calculo|redaccion","enunciado":"enunciado completo y detallado","opciones":["A) ...","B) ...","C) ...","D) ..."],"columna_a":["item1","item2"],"columna_b":["match1","match2"],"solucion":"solucion completa paso a paso"}],"autoevaluacion":[{"pregunta":"pregunta","opciones":["A) ...","B) ...","C) ...","D) ..."],"correcta":"A"}]}],"total_ejercicios":0,"mensaje_motivador":"mensaje"}');
- 
+
   var prompt = promptParts.join('\n\n');
- 
+
   
 fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -831,7 +845,7 @@ fetch('https://api.anthropic.com/v1/messages', {
     mostrarPago(cuad);
   });
 }
- 
+
 function generarDemo(rojos, amarillos, verdes){
   var secciones = [];
   rojos.forEach(function(t){ secciones.push({tema:t, nivel_semaforo:'rojo', mini_explicacion:'Repasa este tema con atención.', ejercicios:[{num:1,enunciado:'Ejercicio de práctica 1 sobre este tema.',solucion:'Solución incluida'},{num:2,enunciado:'Ejercicio de práctica 2, mayor dificultad.',solucion:'Solución paso a paso'}]}); });
@@ -839,40 +853,40 @@ function generarDemo(rojos, amarillos, verdes){
   verdes.forEach(function(t){ secciones.push({tema:t, nivel_semaforo:'verde', mini_explicacion:'Lo dominas bien.', ejercicios:[{num:1,enunciado:'Ejercicio de repaso rápido.',solucion:'Solución incluida'}]}); });
   return {secciones:secciones, total_ejercicios:secciones.length*3, mensaje_motivador:'¡Hola ' + state.alumno + '! Con constancia lo conseguirás. ¡Ánimo! ☀️'};
 }
- 
+
 // ── MOSTRAR PAGO ──
 function mostrarPago(cuad){
   var totalPag = Math.max(40, Math.min(50, Math.round((cuad.total_ejercicios||30)*1.2)));
   state.precioFinal = Math.max(0, state.precio - (state.descuento||0));
   state._totalPag = totalPag;
- 
+
   document.getElementById('screenGen').classList.remove('active');
   document.getElementById('screenPago').classList.add('active');
   setProg(85);
   window.scrollTo(0,0);
- 
+
   document.getElementById('pay-alumno').textContent = state.alumno;
   document.getElementById('pay-asig').textContent = (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'');
   document.getElementById('pay-pack').textContent = state.pack.charAt(0).toUpperCase() + state.pack.slice(1);
   document.getElementById('pay-total').textContent = state.precioFinal + '€';
   document.getElementById('pay-btn-amt').textContent = state.precioFinal + '€';
- 
+
   var descRow = document.getElementById('pay-desc-row');
   if(state.descuento > 0 && descRow){
     descRow.style.display = 'flex';
     document.getElementById('pay-desc-val').textContent = '-' + state.descuento + '€';
   }
 }
- 
+
 // ── PROCESAR PAGO ──
 function procesarPago(){
   var link = getStripeLink();
   if(!link){ alert('Error: enlace de pago no encontrado.'); return; }
- 
+
   var precio = PRECIOS[state.curso] ? PRECIOS[state.curso][state.pack] : 0;
   var desc = state.descuento || 0;
   var final = precio - desc;
- 
+
   var rojosTxt=[], amarillosTxt=[], verdesTxt=[];
   var temas = TEMAS[state.curso] && TEMAS[state.curso][state.asig] ? TEMAS[state.curso][state.asig] : [];
   temas.forEach(function(t){
@@ -882,7 +896,7 @@ function procesarPago(){
     else if(v==='yellow'||v==='amarillo') amarillosTxt.push(nombre);
     else if(v==='green'||v==='verde') verdesTxt.push(nombre);
   });
- 
+
   var pedido = {
     nombre:    state.nombre||'',
     telefono:  state.telefono||'',
@@ -899,10 +913,10 @@ function procesarPago(){
     objetivos: state.objetivos ? state.objetivos.join(', ') : '',
     comentarios: state.comentarios||''
   };
- 
+
   // Guardar en localStorage (persiste entre navegaciones del mismo dominio)
   try{ localStorage.setItem('pedido_elena', JSON.stringify(pedido)); localStorage.setItem('pedido_elena_recibo', JSON.stringify(pedido)); }catch(e){}
- 
+
   // Redirigir a Stripe
   window.location.href = link;
 }
@@ -912,7 +926,7 @@ function mostrarEsperaPago(importe){
     var el = document.getElementById(id);
     if(el) el.classList.remove('active');
   });
- 
+
   var d = document.getElementById('screenEspera');
   if(!d){
     d = document.createElement('div');
@@ -937,26 +951,25 @@ function mostrarEsperaPago(importe){
 function confirmarPago(){
   var d = document.getElementById('paso-espera-pago');
   if(d) d.style.display = 'none';
-  enviarEmailElena();
   mostrarDescarga();
 }
 function pagarBizum(){
   var msg = 'PAGO CUADERNILLO DE VERANO\n' + state.alumno + '\n' + (ASIG_N[state.asig]||'') + ' · ' + (CURSO_N[state.curso]||'') + '\nPack ' + state.pack + ' · ' + state.precioFinal + '€';
   window.open('https://wa.me/34622011814?text=' + encodeURIComponent(msg), '_blank', 'noopener');
 }
- 
+
 // ── MOSTRAR DESCARGA ──
 function mostrarDescarga(){
   // Ocultar screenEspera
   var esp = document.getElementById('screenEspera');
   if(esp) esp.style.display = 'none';
- 
+
   // Ocultar todos los screens
   ['screen1','screen2','screen3','screenGen','screenPago','screenDesc'].forEach(function(id){
     var el = document.getElementById(id);
     if(el) el.classList.remove('active');
   });
- 
+
   var d = document.getElementById('screenConfirmacion');
   if(!d){
     d = document.createElement('div');
@@ -991,13 +1004,13 @@ function mostrarDescarga(){
 function descargar(){
   var btn = document.getElementById('btnDl');
   if(btn){ btn.disabled=true; btn.textContent='\u23F3 Generando...'; }
- 
+
   var cuad = state.generatedContent;
   var secciones = cuad.secciones || [];
   var ejHTML = '';
   var solHTML = '';
   var numEjGlobal = 0;
- 
+
   secciones.forEach(function(sec){
     var semEmoji = sec.nivel_semaforo==='rojo'?'\uD83D\uDD34':sec.nivel_semaforo==='amarillo'?'\uD83D\uDFE1':'\uD83D\uDFE2';
     ejHTML += '<div style="page-break-before:always;margin-bottom:32px">';
@@ -1060,14 +1073,14 @@ function descargar(){
     }
     ejHTML += '</div></div>';
   });
- 
+
   var nombre=(state.alumno||'alumno').replace(/\s+/g,'_');
   var asigN=(ASIG_N[state.asig]||state.asig||'').replace(/\s+/g,'_');
   var packN=state.pack==='basico'?'B\u00e1sico':state.pack==='pro'?'PRO':'Tutorizado';
   var cursoN=CURSO_N[state.curso]||state.curso||'';
   var asigLabel=ASIG_N[state.asig]||state.asig||'';
   var totalTemas=secciones.length;
- 
+
   // ── PORTADA IGUAL AL EJEMPLO DE LA WEB ──
   var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Cuadernillo '+(state.alumno||'')+'</title>';
   html+='<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">';
@@ -1102,7 +1115,7 @@ function descargar(){
   html+='.sol-content{padding:0 44px 44px}';
   html+='.footer-pag{text-align:center;font-size:10px;color:#C4A882;padding:20px;border-top:1px solid #F0E4CC}';
   html+='@media print{body{padding:0}.cover{min-height:100vh}}</style></head><body>';
- 
+
   // PORTADA HTML
   html+='<div class="cover">';
   html+='<div class="cover-label">Material educativo personalizado &nbsp;\u00B7&nbsp; Elena De Miguel &nbsp;\u00B7&nbsp; Profesora especializada</div>';
@@ -1124,7 +1137,7 @@ function descargar(){
   html+='</div>';
   html+='<div class="cover-footer"><span>Revisado personalmente por Elena De Miguel &nbsp;\u00B7&nbsp; 622 011 814</span><span>Verano 2026</span></div>';
   html+='</div>';
- 
+
   // ÍNDICE
   html+='<div class="indice"><h2>\uD83D\uDCCB \u00CDndice de temas</h2>';
   html+='<div class="indice-sub">Organizado de m\u00e1s dif\u00edcil (\uD83D\uDD34) a m\u00e1s dominado (\uD83D\uDFE2)</div>';
@@ -1135,14 +1148,14 @@ function descargar(){
     html+='<div class="indice-item"><div class="indice-dot" style="background:'+dotColor+'"></div><span style="flex:1">'+sec.tema+'</span><span style="color:#92745C;font-size:12px">'+semEmoji+' '+ejN+' ejercicios</span></div>';
   });
   html+='</div>';
- 
+
   html+='<div class="main">'+ejHTML+'</div>';
   html+='<div class="sol-portada">\u2705 Soluciones y Autoevaluaci\u00f3n</div>';
   html+='<div class="sol-note">Intenta resolver todos los ejercicios antes de consultar las soluciones.</div>';
   html+='<div class="sol-content">'+solHTML+'</div>';
   html+='<div class="footer-pag">Elena De Miguel Palau &nbsp;\u00B7&nbsp; NIF: 20867543B &nbsp;\u00B7&nbsp; Calle del Sol 30, Guadassuar, Valencia &nbsp;\u00B7&nbsp; Tel: 622 011 814</div>';
   html+='</body></html>';
- 
+
   var blob=new Blob([html],{type:'text/html;charset=utf-8'});
   var url=URL.createObjectURL(blob);
   var a=document.createElement('a');
@@ -1162,11 +1175,11 @@ function descargarRecibo(){
     var raw = localStorage.getItem('pedido_elena_recibo');
     if(raw) pedidoGuardado = JSON.parse(raw);
   }catch(e){}
- 
+
   var fecha = new Date().toLocaleDateString('es-ES',{year:'numeric',month:'long',day:'numeric'});
   var n = new Date();
   var numRec = 'REC-' + n.getFullYear() + String(n.getMonth()+1).padStart(2,'0') + String(n.getDate()).padStart(2,'0') + '-' + Math.floor(Math.random()*900+100);
- 
+
   var alumno   = pedidoGuardado.alumno   || state.alumno  || '';
   var asigN    = pedidoGuardado.asig     || (ASIG_N[state.asig]||state.asig||'');
   var cursoN   = pedidoGuardado.curso    || (CURSO_N[state.curso]||state.curso||'');
@@ -1174,7 +1187,7 @@ function descargarRecibo(){
   var packN    = packRaw==='BASICO'||packRaw==='basico' ? 'Básico' : packRaw==='PRO'||packRaw==='pro' ? 'PRO' : 'Tutorizado';
   var nombre   = pedidoGuardado.nombre   || state.nombre  || '';
   var precioStr = pedidoGuardado.precio  || '';
- 
+
   // Extraer número de precio
   var baseImponible = 0;
   if(precioStr){
@@ -1183,11 +1196,11 @@ function descargarRecibo(){
   } else {
     baseImponible = Math.max(0, (state.precio||0) - (state.descuento||0));
   }
- 
+
   var ivaPct = 4;
   var ivaAmt = Math.round(baseImponible / (1 + ivaPct/100) * ivaPct/100 * 100) / 100;
   var base   = Math.round((baseImponible - ivaAmt) * 100) / 100;
- 
+
   var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Recibo ' + numRec + '</title>';
   html += '<style>body{font-family:Georgia,serif;max-width:600px;margin:40px auto;padding:40px;color:#2C1810}';
   html += '.header{text-align:center;border-bottom:3px solid #1E3A5F;padding-bottom:24px;margin-bottom:28px}';
@@ -1228,7 +1241,7 @@ function descargarRecibo(){
   html += 'Calle del Sol 30, Guadassuar, Valencia<br>';
   html += 'Este documento tiene validez como justificante de pago</div>';
   html += '</body></html>';
- 
+
   var blob = new Blob([html], {type:'text/html;charset=utf-8'});
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
@@ -1243,7 +1256,7 @@ function mostrarConfirmacionFinal(pedido){
     var el = document.getElementById(id);
     if(el){ el.classList.remove('active'); el.style.display='none'; }
   });
- 
+
   var d = document.getElementById('screenConfirmacion');
   if(!d){
     d = document.createElement('div');
@@ -1251,12 +1264,12 @@ function mostrarConfirmacionFinal(pedido){
     d.style.cssText = 'max-width:560px;margin:40px auto;padding:40px 28px;font-family:inherit';
     document.querySelector('.container') ? document.querySelector('.container').appendChild(d) : document.body.appendChild(d);
   }
- 
+
   var alumno = (pedido && pedido.alumno) ? pedido.alumno : '';
   var pack = (pedido && pedido.pack) ? pedido.pack : '';
   var esPro = pack==='PRO' || pack==='TUTORIZADO';
   var esTutor = pack==='TUTORIZADO';
- 
+
   d.innerHTML =
     '<div style="text-align:center;margin-bottom:28px">' +
     '<div style="font-size:64px;margin-bottom:12px">&#127881;</div>' +
@@ -1286,10 +1299,10 @@ function mostrarConfirmacionFinal(pedido){
     '&iquest;Tienes alguna duda? Escribe a Elena directamente:<br>' +
     '<strong>WhatsApp: 622 011 814</strong> &nbsp;&middot;&nbsp; <strong>elenademp@gmail.com</strong>' +
     '</div>';
- 
+
   d.style.display = 'block';
   window.scrollTo(0,0);
- 
+
   // Email a Elena con datos del pedido
   emailjs.send('service_znpg0r3', 'template_th47y9c', {
     nombre:          pedido.nombre||'',
@@ -1308,9 +1321,26 @@ function mostrarConfirmacionFinal(pedido){
     comentarios:     pedido.comentarios||''
   }).then(function(){ console.log('Email Elena OK'); })
     .catch(function(e){ console.log('Email Elena error:', JSON.stringify(e)); });
- 
- 
- 
+
+  // Email de recibo automático al cliente
+  if(pedido.email){
+    emailjs.send('service_znpg0r3', 'template_57ruh7n', {
+      to_email:       pedido.email||'',
+      nombre:         pedido.nombre||'',
+      alumno:         pedido.alumno||'',
+      curso:          pedido.curso||'',
+      asignatura:     pedido.asig||'',
+      pack:           pedido.pack||'',
+      precio:         pedido.precio||'',
+      telefono_elena: '622 011 814',
+      email_elena:    'elenademp@gmail.com'
+    }).then(function(){ console.log('Email cliente OK'); })
+      .catch(function(e){ console.log('Email cliente error:', JSON.stringify(e)); });
+
+  }
+
+
+
   try{ localStorage.removeItem('pedido_elena'); }catch(e){}
 }
 function abrirStripe(){
